@@ -7,6 +7,8 @@ var_dump($update);
 //=========
 mkdir("data/$chat_id2/settings");
 mkdir("data/$chat_id2");
+$test_var = $update->
+
 $chat_id = $update->message->chat->id;
 $message_id = $update->message->message_id;
 $from_id = $update->message->from->id;
@@ -216,7 +218,7 @@ function apiRequest($method, $parameters)
 	return curl_exec($handle);
 }
 
-function makereq($method, $datas = [])
+function send_reply($method, $datas = [])
 {
 	$url = "https://api.telegram.org/bot" . API_KEY . "/" . $method;
 	$ch = curl_init();
@@ -267,7 +269,7 @@ function getChatMembersCount($chat_id, $token)
 
 function SendMessage($ChatId, $TextMsg)
 {
-	makereq('sendMessage', [
+	send_reply('sendMessage', [
 		'chat_id' => $ChatId,
 		'text' => $TextMsg,
 		'parse_mode' => "MarkDown"
@@ -276,7 +278,7 @@ function SendMessage($ChatId, $TextMsg)
 
 function SendMessage2($ChatId, $TextMsg)
 {
-	makereq('sendMessage', [
+	send_reply('sendMessage', [
 		'chat_id' => $ChatId,
 		'text' => $TextMsg,
 	]);
@@ -284,7 +286,7 @@ function SendMessage2($ChatId, $TextMsg)
 
 function SendSticker($ChatId, $sticker_ID)
 {
-	makereq('sendSticker', [
+	send_reply('sendSticker', [
 		'chat_id' => $ChatId,
 		'sticker' => $sticker_ID
 	]);
@@ -292,7 +294,7 @@ function SendSticker($ChatId, $sticker_ID)
 
 function Forward($KojaShe, $AzKoja, $KodomMSG)
 {
-	makereq('ForwardMessage', [
+	send_reply('ForwardMessage', [
 		'chat_id' => $KojaShe,
 		'from_chat_id' => $AzKoja,
 		'message_id' => $KodomMSG
@@ -312,7 +314,7 @@ function save($filename, $TXTdata)
 
 
 if ($textmessage == "test" && $admin == $from_id) {
-	makereq('sendMessage', [
+	send_reply('sendMessage', [
 		'chat_id' => $chat_id,
 		'text' => "test: $linkjsa",
 	]);
@@ -370,7 +372,7 @@ if ($textmessage == "Yes i am sure" && $admin == $from_id || $textmessage == "Ye
 	save("data/$chat_id/settings/warnmedia.txt", "❌");
 	save("data/$chat_id/settings/muteuser.txt", "❌");
 	save("data/$chat_id/settings/cmd.txt", "❌");
-	makereq('sendMessage', [
+	send_reply('sendMessage', [
 		'chat_id' => $chat_id,
 		'text' => "تنظیمات گروه با موفقیت ریست شد",
 	]);
@@ -472,7 +474,7 @@ if ($type2 == "supergroup" || $type2 == "group") {
 if (strpos($textmessage, "/") !== false  && $mstatus != "administrator" || strpos($textmessage, "!") !== false  && $mstatus != "administrator" || strpos($textmessage, "#") !== false && $mstatus != "administrator") {
 	if ($owner == $from_id || $admin == $from_id || strpos($modlist, "$from_id") !== false) {
 		if ($type2 == "supergroup" || $type2 == "group") {
-			var_dump(makereq('sendMessage', [
+			var_dump(send_reply('sendMessage', [
 				'chat_id' => $chat_id,
 				"text" => '',
 				'reply_markup' => json_encode([
@@ -488,7 +490,7 @@ if (strpos($textmessage, "/") !== false  && $mstatus != "administrator" || strpo
 }
 if ($data == "nasbandroidgp") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'وارد گروه شوید
@@ -517,7 +519,7 @@ if ($data == "nasbandroidgp") {
 }
 if ($data == "nasbiosgp") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'وارد گروه شوید
@@ -545,7 +547,7 @@ if ($data == "nasbiosgp") {
 
 if ($data == "closetab") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => '⚫️بسته شد',
@@ -561,14 +563,14 @@ if ($data == "closetab") {
 }
 
 if ($type2 == "channel") {
-	makereq('leaveChat', [
+	send_reply('leaveChat', [
 		'chat_id' => $chat_id
 	]);
 }
 
 if ($data == "group_media") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -614,7 +616,7 @@ if ($data == "group_media") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -623,7 +625,7 @@ if ($data == "group_media") {
 
 if ($data == "reStArT") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			'text' => "برای ریست کردن کل تنظیمات گروه متن زیر را بفرستید
@@ -637,7 +639,7 @@ Yes i am sure",
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -646,7 +648,7 @@ Yes i am sure",
 
 if ($textmessage == '/settings' || $textmessage == '!settings' || $textmessage == '#settings') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false) {
-		var_dump(makereq('sendMessage', [
+		var_dump(send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			"text" => 'یکی از دکمه های زیر را انتخاب کنید.',
 			'parse_mode' => "Markdown",
@@ -695,7 +697,7 @@ if ($textmessage == '/settings' || $textmessage == '!settings' || $textmessage =
 }
 if ($data == "settings") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group And Bot Info',
@@ -741,7 +743,7 @@ if ($data == "settings") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -749,7 +751,7 @@ if ($data == "settings") {
 }
 if ($data == "adminlock") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'Admin Settings  (Modlist Settings)  :
@@ -785,7 +787,7 @@ if ($data == "adminlock") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "فقط اونر گروه میتواند به این بخش دست رسی داشته باشد! 🏷",
 		]);
@@ -794,7 +796,7 @@ if ($data == "adminlock") {
 
 if ($data == "floodandwarn") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "✅") {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'Bot && Warn Settings⚙️',
@@ -822,7 +824,7 @@ if ($data == "floodandwarn") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -831,7 +833,7 @@ if ($data == "floodandwarn") {
 
 if ($data == "filterlist") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'Filter List:
@@ -845,7 +847,7 @@ if ($data == "filterlist") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -854,7 +856,7 @@ if ($data == "filterlist") {
 
 if ($data == "whitelist") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'White List:
@@ -868,7 +870,7 @@ if ($data == "whitelist") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -878,7 +880,7 @@ if ($data == "whitelist") {
 
 if ($data == "muteuserlist") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'MuteUser List:
@@ -892,7 +894,7 @@ if ($data == "muteuserlist") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -901,7 +903,7 @@ if ($data == "muteuserlist") {
 
 if ($data == "banlist") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'Ban List:
@@ -915,7 +917,7 @@ if ($data == "banlist") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -924,7 +926,7 @@ if ($data == "banlist") {
 
 if ($data == "gpinfo") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group And Bot Info
@@ -979,7 +981,7 @@ if ($data == "gpinfo") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -988,7 +990,7 @@ if ($data == "gpinfo") {
 
 if ($data == "gpinfo2") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group And Bot Info
@@ -1043,7 +1045,7 @@ if ($data == "gpinfo2") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -1053,7 +1055,7 @@ if ($data == "gpinfo2") {
 
 if ($data == "group_settings") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false) {
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1114,7 +1116,7 @@ if ($data == "group_settings") {
 			])
 		]));
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -1124,7 +1126,7 @@ if ($data == "group_settings") {
 if ($data == "minflood") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		if ($_floods == 3) {
-			makereq('answerCallbackQuery', [
+			send_reply('answerCallbackQuery', [
 				'callback_query_id' => $update->callback_query->id,
 				'text' => "تعداد سیل باید بین 3 تا 15 باشد ! 🏷",
 			]);
@@ -1132,7 +1134,7 @@ if ($data == "minflood") {
 		if ($_floods > 3) {
 			$setflood = $_floods - 1;
 			save("data/$chat_id2/settings/floods.txt", "$setflood");
-			var_dump(makereq('editMessageText', [
+			var_dump(send_reply('editMessageText', [
 				'chat_id' => $chat_id2,
 				'message_id' => $message_id2,
 				"text" => 'Bot && Warn Settings⚙️',
@@ -1160,7 +1162,7 @@ if ($data == "minflood") {
 				])
 			]));
 		} else {
-			makereq('answerCallbackQuery', [
+			send_reply('answerCallbackQuery', [
 				'callback_query_id' => $update->callback_query->id,
 				'text' => "شما ادمین نیستید! 🏷",
 			]);
@@ -1171,7 +1173,7 @@ if ($data == "minflood") {
 if ($data == "maxflood") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		if ($_floods == 15) {
-			makereq('answerCallbackQuery', [
+			send_reply('answerCallbackQuery', [
 				'callback_query_id' => $update->callback_query->id,
 				'text' => "تعداد سیل باید بین 3 تا 15 باشد ! 🏷",
 			]);
@@ -1179,7 +1181,7 @@ if ($data == "maxflood") {
 		if ($_floods < 15) {
 			$setflood = $_floods + 1;
 			save("data/$chat_id2/settings/floods.txt", "$setflood");
-			var_dump(makereq('editMessageText', [
+			var_dump(send_reply('editMessageText', [
 				'chat_id' => $chat_id2,
 				'message_id' => $message_id2,
 				"text" => 'Bot && Warn Settings⚙️',
@@ -1207,7 +1209,7 @@ if ($data == "maxflood") {
 				])
 			]));
 		} else {
-			makereq('answerCallbackQuery', [
+			send_reply('answerCallbackQuery', [
 				'callback_query_id' => $update->callback_query->id,
 				'text' => "شما ادمین نیستید! 🏷",
 			]);
@@ -1219,7 +1221,7 @@ if ($data == "maxflood") {
 if ($data == "minwarn") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		if ($warnlists2 == 1) {
-			makereq('answerCallbackQuery', [
+			send_reply('answerCallbackQuery', [
 				'callback_query_id' => $update->callback_query->id,
 				'text' => "تعداد اخطار باید بین 1 تا 9 باشد ! 🏷",
 			]);
@@ -1227,7 +1229,7 @@ if ($data == "minwarn") {
 		if ($warnlists2 > 1) {
 			$setwarn = $warnlists2 - 1;
 			save("data/$chat_id2/settings/warnlists.txt", "$setwarn");
-			var_dump(makereq('editMessageText', [
+			var_dump(send_reply('editMessageText', [
 				'chat_id' => $chat_id2,
 				'message_id' => $message_id2,
 				"text" => 'Bot && Warn Settings⚙️',
@@ -1255,7 +1257,7 @@ if ($data == "minwarn") {
 				])
 			]));
 		} else {
-			makereq('answerCallbackQuery', [
+			send_reply('answerCallbackQuery', [
 				'callback_query_id' => $update->callback_query->id,
 				'text' => "شما ادمین نیستید! 🏷",
 			]);
@@ -1266,7 +1268,7 @@ if ($data == "minwarn") {
 if ($data == "maxwarn") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		if ($warnlists2 == 9) {
-			makereq('answerCallbackQuery', [
+			send_reply('answerCallbackQuery', [
 				'callback_query_id' => $update->callback_query->id,
 				'text' => "تعداد اخطار باید بین 1 تا 9 باشد ! 🏷",
 			]);
@@ -1274,7 +1276,7 @@ if ($data == "maxwarn") {
 		if ($warnlists2 < 9) {
 			$setwarn = $warnlists2 + 1;
 			save("data/$chat_id2/settings/warnlists.txt", "$setwarn");
-			var_dump(makereq('editMessageText', [
+			var_dump(send_reply('editMessageText', [
 				'chat_id' => $chat_id2,
 				'message_id' => $message_id2,
 				"text" => 'Bot && Warn Settings⚙️',
@@ -1302,7 +1304,7 @@ if ($data == "maxwarn") {
 				])
 			]));
 		} else {
-			makereq('answerCallbackQuery', [
+			send_reply('answerCallbackQuery', [
 				'callback_query_id' => $update->callback_query->id,
 				'text' => "شما ادمین نیستید! 🏷",
 			]);
@@ -1313,7 +1315,7 @@ if ($data == "maxwarn") {
 if ($data == "lock_cmd" && $_lockcmd == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/cmd.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'Bot && Warn Settings⚙️',
@@ -1340,12 +1342,12 @@ if ($data == "lock_cmd" && $_lockcmd == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "دستورات برای کاربران غیر فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1355,7 +1357,7 @@ if ($data == "lock_cmd" && $_lockcmd == "❌") {
 if ($data == "lock_cmd" && $_lockcmd == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/cmd.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'Bot && Warn Settings⚙️',
@@ -1382,12 +1384,12 @@ if ($data == "lock_cmd" && $_lockcmd == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "دستورات برای کاربران فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1398,7 +1400,7 @@ if ($data == "lock_cmd" && $_lockcmd == "✅") {
 if ($data == "lock_kick" && $_kick == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/kick.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1434,12 +1436,12 @@ if ($data == "lock_kick" && $_kick == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "اخراج برای ادمین قفل شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1449,7 +1451,7 @@ if ($data == "lock_kick" && $_kick == "❌") {
 if ($data == "lock_kick" && $_kick == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/kick.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1485,12 +1487,12 @@ if ($data == "lock_kick" && $_kick == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "اخراج برای ادمین فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1501,7 +1503,7 @@ if ($data == "lock_kick" && $_kick == "✅") {
 if ($data == "lock_ban" && $_ban == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/ban.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1537,12 +1539,12 @@ if ($data == "lock_ban" && $_ban == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "بن برای ادمین قفل شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1552,7 +1554,7 @@ if ($data == "lock_ban" && $_ban == "❌") {
 if ($data == "lock_ban" && $_ban == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/ban.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1588,12 +1590,12 @@ if ($data == "lock_ban" && $_ban == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "بن برای ادمین فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1603,7 +1605,7 @@ if ($data == "lock_ban" && $_ban == "✅") {
 if ($data == "lock_unban" && $_unban == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/unban.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1639,12 +1641,12 @@ if ($data == "lock_unban" && $_unban == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "ان بن برای ادمین قفل شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1654,7 +1656,7 @@ if ($data == "lock_unban" && $_unban == "❌") {
 if ($data == "lock_unban" && $_unban == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/unban.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1690,12 +1692,12 @@ if ($data == "lock_unban" && $_unban == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "ان بن برای ادمین فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1705,7 +1707,7 @@ if ($data == "lock_unban" && $_unban == "✅") {
 if ($data == "lock_muteuser" && $_muteuser == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/muteuser.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1741,12 +1743,12 @@ if ($data == "lock_muteuser" && $_muteuser == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "میوت کردن برای ادمین قفل شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1756,7 +1758,7 @@ if ($data == "lock_muteuser" && $_muteuser == "❌") {
 if ($data == "lock_muteuser" && $_muteuser == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/muteuser.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1792,12 +1794,12 @@ if ($data == "lock_muteuser" && $_muteuser == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "میوت کردن برای ادمین فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1807,7 +1809,7 @@ if ($data == "lock_muteuser" && $_muteuser == "✅") {
 if ($data == "lock_settings" && $_settings == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/settings.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1843,12 +1845,12 @@ if ($data == "lock_settings" && $_settings == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "تنظیمات برای ادمین قفل شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1858,7 +1860,7 @@ if ($data == "lock_settings" && $_settings == "❌") {
 if ($data == "lock_settings" && $_settings == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/settings.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1894,12 +1896,12 @@ if ($data == "lock_settings" && $_settings == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "ستینگ برای ادمین فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1909,7 +1911,7 @@ if ($data == "lock_settings" && $_settings == "✅") {
 if ($data == "lock_media" && $_media == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/media.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1945,12 +1947,12 @@ if ($data == "lock_media" && $_media == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "مدیا برای ادمین قفل شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -1960,7 +1962,7 @@ if ($data == "lock_media" && $_media == "❌") {
 if ($data == "lock_media" && $_media == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/media.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -1996,12 +1998,12 @@ if ($data == "lock_media" && $_media == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "مدیا برای ادمین فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -2011,7 +2013,7 @@ if ($data == "lock_media" && $_media == "✅") {
 if ($data == "lock_warn" && $_warn == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/warn.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2047,12 +2049,12 @@ if ($data == "lock_warn" && $_warn == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "اخطار برای ادمین قفل شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -2062,7 +2064,7 @@ if ($data == "lock_warn" && $_warn == "❌") {
 if ($data == "lock_warn" && $_warn == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/warn.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2098,12 +2100,12 @@ if ($data == "lock_warn" && $_warn == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "اخطار برای ادمین فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
@@ -2113,7 +2115,7 @@ if ($data == "lock_warn" && $_warn == "✅") {
 if ($data == "lock_flood" && $_flood == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/flood.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2173,12 +2175,12 @@ if ($data == "lock_flood" && $_flood == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل سیل فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2188,7 +2190,7 @@ if ($data == "lock_flood" && $_flood == "❌") {
 if ($data == "lock_flood" && $_flood == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/flood.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2248,12 +2250,12 @@ if ($data == "lock_flood" && $_flood == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل سیل غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2263,7 +2265,7 @@ if ($data == "lock_flood" && $_flood == "✅") {
 if ($data == "lock_links" && $_link == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/link.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2323,12 +2325,12 @@ if ($data == "lock_links" && $_link == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل لینک فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2338,7 +2340,7 @@ if ($data == "lock_links" && $_link == "❌") {
 if ($data == "lock_links" && $_link == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/link.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2398,12 +2400,12 @@ if ($data == "lock_links" && $_link == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل لینک غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2413,7 +2415,7 @@ if ($data == "lock_links" && $_link == "✅") {
 if ($data == "lock_tag" && $_tag == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/tag.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2473,12 +2475,12 @@ if ($data == "lock_tag" && $_tag == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل هشتگ فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2488,7 +2490,7 @@ if ($data == "lock_tag" && $_tag == "❌") {
 if ($data == "lock_tag" && $_tag == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/tag.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2548,12 +2550,12 @@ if ($data == "lock_tag" && $_tag == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل هشتگ غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2564,7 +2566,7 @@ if ($data == "lock_tag" && $_tag == "✅") {
 if ($data == "lock_username" && $_username == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/username.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2624,12 +2626,12 @@ if ($data == "lock_username" && $_username == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل یوزرنیم فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2639,7 +2641,7 @@ if ($data == "lock_username" && $_username == "❌") {
 if ($data == "lock_username" && $_username == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/username.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2699,12 +2701,12 @@ if ($data == "lock_username" && $_username == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل یوزرنیم غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2714,7 +2716,7 @@ if ($data == "lock_username" && $_username == "✅") {
 if ($data == "lock_number" && $_num == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/num.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2774,12 +2776,12 @@ if ($data == "lock_number" && $_num == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل عدد فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2789,7 +2791,7 @@ if ($data == "lock_number" && $_num == "❌") {
 if ($data == "lock_number" && $_num == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/num.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2849,12 +2851,12 @@ if ($data == "lock_number" && $_num == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل عدد غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2864,7 +2866,7 @@ if ($data == "lock_number" && $_num == "✅") {
 if ($data == "lock_web" && $_web == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/web.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2924,12 +2926,12 @@ if ($data == "lock_web" && $_web == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل وبسایت فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -2939,7 +2941,7 @@ if ($data == "lock_web" && $_web == "❌") {
 if ($data == "lock_web" && $_web == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/web.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -2999,12 +3001,12 @@ if ($data == "lock_web" && $_web == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل وبسایت غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3014,7 +3016,7 @@ if ($data == "lock_web" && $_web == "✅") {
 if ($data == "lock_chat" && $_chat == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/chat.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3074,12 +3076,12 @@ if ($data == "lock_chat" && $_chat == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل چت فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3089,7 +3091,7 @@ if ($data == "lock_chat" && $_chat == "❌") {
 if ($data == "lock_chat" && $_chat == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/chat.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3149,12 +3151,12 @@ if ($data == "lock_chat" && $_chat == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل چت غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3164,7 +3166,7 @@ if ($data == "lock_chat" && $_chat == "✅") {
 if ($data == "lock_fwd" && $_fwd == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/fwd.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3224,12 +3226,12 @@ if ($data == "lock_fwd" && $_fwd == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل فوروارد فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3239,7 +3241,7 @@ if ($data == "lock_fwd" && $_fwd == "❌") {
 if ($data == "lock_fwd" && $_fwd == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/fwd.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3299,12 +3301,12 @@ if ($data == "lock_fwd" && $_fwd == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل فوروارد غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3314,7 +3316,7 @@ if ($data == "lock_fwd" && $_fwd == "✅") {
 if ($data == "lock_reply" && $_reply == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/reply.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3374,12 +3376,12 @@ if ($data == "lock_reply" && $_reply == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل ریپلی فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3389,7 +3391,7 @@ if ($data == "lock_reply" && $_reply == "❌") {
 if ($data == "lock_reply" && $_reply == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/reply.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3449,12 +3451,12 @@ if ($data == "lock_reply" && $_reply == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل ریپلی غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3465,7 +3467,7 @@ if ($data == "lock_reply" && $_reply == "✅") {
 if ($data == "lock_edit" && $_edit == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/edit.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3525,12 +3527,12 @@ if ($data == "lock_edit" && $_edit == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل ادیت فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3540,7 +3542,7 @@ if ($data == "lock_edit" && $_edit == "❌") {
 if ($data == "lock_edit" && $_edit == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/edit.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3600,12 +3602,12 @@ if ($data == "lock_edit" && $_edit == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل ادیت غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3616,7 +3618,7 @@ if ($data == "lock_edit" && $_edit == "✅") {
 if ($data == "lock_eng" && $_eng == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/eng.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3676,12 +3678,12 @@ if ($data == "lock_eng" && $_eng == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل انگلیسی فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3691,7 +3693,7 @@ if ($data == "lock_eng" && $_eng == "❌") {
 if ($data == "lock_eng" && $_eng == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/eng.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3751,12 +3753,12 @@ if ($data == "lock_eng" && $_eng == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل انگلیسی غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3766,7 +3768,7 @@ if ($data == "lock_eng" && $_eng == "✅") {
 if ($data == "lock_arab" && $_arab == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/arab.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3826,12 +3828,12 @@ if ($data == "lock_arab" && $_arab == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل عربی/فارسی فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3841,7 +3843,7 @@ if ($data == "lock_arab" && $_arab == "❌") {
 if ($data == "lock_arab" && $_arab == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/arab.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3901,12 +3903,12 @@ if ($data == "lock_arab" && $_arab == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل عربی/فارسی غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3917,7 +3919,7 @@ if ($data == "lock_arab" && $_arab == "✅") {
 if ($data == "lock_join" && $_join == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/join.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -3974,12 +3976,12 @@ if ($data == "lock_join" && $_join == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل عضویت فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -3989,7 +3991,7 @@ if ($data == "lock_join" && $_join == "❌") {
 if ($data == "lock_join" && $_join == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/join.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -4046,12 +4048,12 @@ if ($data == "lock_join" && $_join == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل عضویت غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -4062,7 +4064,7 @@ if ($data == "lock_join" && $_join == "✅") {
 if ($data == "lock_kickme" && $_kickme == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/kickme.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -4122,12 +4124,12 @@ if ($data == "lock_kickme" && $_kickme == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل اخراج فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -4137,7 +4139,7 @@ if ($data == "lock_kickme" && $_kickme == "❌") {
 if ($data == "lock_kickme" && $_kickme == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/kickme.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -4197,12 +4199,12 @@ if ($data == "lock_kickme" && $_kickme == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل اخراج غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -4212,7 +4214,7 @@ if ($data == "lock_kickme" && $_kickme == "✅") {
 if ($data == "lock_bots" && $_bot == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/bot.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -4272,12 +4274,12 @@ if ($data == "lock_bots" && $_bot == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل وروود ربات فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -4287,7 +4289,7 @@ if ($data == "lock_bots" && $_bot == "❌") {
 if ($data == "lock_bots" && $_bot == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/bot.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Settings Manager⚙️
@@ -4347,12 +4349,12 @@ if ($data == "lock_bots" && $_bot == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل وروود ربات غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -4362,7 +4364,7 @@ if ($data == "lock_bots" && $_bot == "✅") {
 if ($textmessage == '/lock links' || $textmessage == '!lock links' || $textmessage == '#lock links') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/link.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $update->message->chat->id,
@@ -4377,7 +4379,7 @@ if ($textmessage == '/lock links' || $textmessage == '!lock links' || $textmessa
 if ($textmessage == '/unlock links' || $textmessage == '!unlock links'  || $textmessage == '#unlock links') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/link.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4391,7 +4393,7 @@ if ($textmessage == '/unlock links' || $textmessage == '!unlock links'  || $text
 if ($textmessage == '/lock join' || $textmessage == '!lock join' || $textmessage == '#lock join') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/join.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $update->message->chat->id,
@@ -4406,7 +4408,7 @@ if ($textmessage == '/lock join' || $textmessage == '!lock join' || $textmessage
 if ($textmessage == '/unlock join' || $textmessage == '!unlock join' || $textmessage == '#unlock join') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/join.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4420,7 +4422,7 @@ if ($textmessage == '/unlock join' || $textmessage == '!unlock join' || $textmes
 if ($textmessage == '/lock chat' || $textmessage == '!lock chat' || $textmessage == '#lock chat') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/chat.txt", "✅");
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#Done
 *Chat  has been locked*',
@@ -4431,7 +4433,7 @@ if ($textmessage == '/lock chat' || $textmessage == '!lock chat' || $textmessage
 if ($textmessage == '/unlock chat' || $textmessage == '!unlock chat' || $textmessage == '#unlock chat') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/chat.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4445,7 +4447,7 @@ if ($textmessage == '/unlock chat' || $textmessage == '!unlock chat' || $textmes
 if ($textmessage == '/lock web' || $textmessage == '!lock web' || $textmessage == '#lock web') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/web.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $update->message->chat->id,
@@ -4460,7 +4462,7 @@ if ($textmessage == '/lock web' || $textmessage == '!lock web' || $textmessage =
 if ($textmessage == '/unlock web' || $textmessage == '!unlock web' || $textmessage == '#unlock web') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/web.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4474,7 +4476,7 @@ if ($textmessage == '/unlock web' || $textmessage == '!unlock web' || $textmessa
 if ($textmessage == '/lock number' || $textmessage == '!lock number' || $textmessage == '#lock number') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/num.txt", "✅");
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#Done
 *Number has been locked*',
@@ -4485,7 +4487,7 @@ if ($textmessage == '/lock number' || $textmessage == '!lock number' || $textmes
 if ($textmessage == '/unlock number' || $textmessage == '!unlock number' || $textmessage == '#unlock number') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/num.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4499,7 +4501,7 @@ if ($textmessage == '/unlock number' || $textmessage == '!unlock number' || $tex
 if ($textmessage == '/lock tag' || $textmessage == '!lock tag' || $textmessage == '#lock tag') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/tag.txt", "✅");
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#Done
 *Tag has been locked*',
@@ -4510,7 +4512,7 @@ if ($textmessage == '/lock tag' || $textmessage == '!lock tag' || $textmessage =
 if ($textmessage == '/unlock tag' || $textmessage == '!unlock tag' || $textmessage == '#unlock tag') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/tag.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4524,7 +4526,7 @@ if ($textmessage == '/unlock tag' || $textmessage == '!unlock tag' || $textmessa
 if ($textmessage == '/lock username' || $textmessage == '!lock username' || $textmessage == '#lock username') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/username.txt", "✅");
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#Done
 *Username has been locked*',
@@ -4535,7 +4537,7 @@ if ($textmessage == '/lock username' || $textmessage == '!lock username' || $tex
 if ($textmessage == '/unlock username' || $textmessage == '!unlock username' || $textmessage == '#unlock username') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/username.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4550,7 +4552,7 @@ if ($textmessage == '/unlock username' || $textmessage == '!unlock username' || 
 if ($textmessage == '/lock flood' || $textmessage == '!lock flood' || $textmessage == '#lock flood') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/flood.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4564,7 +4566,7 @@ if ($textmessage == '/lock flood' || $textmessage == '!lock flood' || $textmessa
 if ($textmessage == '/unlock flood' || $textmessage == '!unlock flood' || $textmessage == '#unlock flood') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/flood.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4578,7 +4580,7 @@ if ($textmessage == '/unlock flood' || $textmessage == '!unlock flood' || $textm
 if ($textmessage == '/lock forward' || $textmessage == '!lock forward' || $textmessage == '#lock forward') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/fwd.txt", "✅");
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#Done
 *Forward has been locked*',
@@ -4589,7 +4591,7 @@ if ($textmessage == '/lock forward' || $textmessage == '!lock forward' || $textm
 if ($textmessage == '/unlock forward' || $textmessage == '!unlock forward' || $textmessage == '#unlock forward') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/fwd.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4603,7 +4605,7 @@ if ($textmessage == '/unlock forward' || $textmessage == '!unlock forward' || $t
 if ($textmessage == '/lock reply' || $textmessage == '!lock reply' || $textmessage == '#lock reply') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/reply.txt", "✅");
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#Done
 *Reply has been locked*',
@@ -4614,7 +4616,7 @@ if ($textmessage == '/lock reply' || $textmessage == '!lock reply' || $textmessa
 if ($textmessage == '/unlock reply' || $textmessage == '!unlock reply' || $textmessage == '#unlock reply') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/reply.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4628,7 +4630,7 @@ if ($textmessage == '/unlock reply' || $textmessage == '!unlock reply' || $textm
 if ($textmessage == '/lock edit' || $textmessage == '!lock edit' || $textmessage == '#lock edit') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/edit.txt", "✅");
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#Done
 *eEdit has been locked*',
@@ -4639,7 +4641,7 @@ if ($textmessage == '/lock edit' || $textmessage == '!lock edit' || $textmessage
 if ($textmessage == '/unlock edit' || $textmessage == '!unlock edit' || $textmessage == '#unlock edit') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/edit.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4653,7 +4655,7 @@ if ($textmessage == '/unlock edit' || $textmessage == '!unlock edit' || $textmes
 if ($textmessage == '/lock english' || $textmessage == '!lock english'  || $textmessage == '#lock english') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/eng.txt", "✅");
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#Done
 *English has been locked*',
@@ -4664,7 +4666,7 @@ if ($textmessage == '/lock english' || $textmessage == '!lock english'  || $text
 if ($textmessage == '/unlock english' || $textmessage == '!unlock english' || $textmessage == '#unlock english') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/eng.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4678,7 +4680,7 @@ if ($textmessage == '/unlock english' || $textmessage == '!unlock english' || $t
 if ($textmessage == '/lock kickme' || $textmessage == '!lock kickme' || $textmessage == '#lock kickme') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/kickme.txt", "✅");
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#Done
 *Kickme has been locked*',
@@ -4689,7 +4691,7 @@ if ($textmessage == '/lock kickme' || $textmessage == '!lock kickme' || $textmes
 if ($textmessage == '/unlock kickme' || $textmessage == '!unlock kickme' || $textmessage == '#unlock kickme') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/kickme.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4703,7 +4705,7 @@ if ($textmessage == '/unlock kickme' || $textmessage == '!unlock kickme' || $tex
 if ($textmessage == '/lock arabic' || $textmessage == '!lock arabic' || $textmessage == '#lock arabic') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/arab.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4717,7 +4719,7 @@ if ($textmessage == '/lock arabic' || $textmessage == '!lock arabic' || $textmes
 if ($textmessage == '/unlock arabic' || $textmessage == '!unlock arabic' || $textmessage == '#unlock arabic') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/arab.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -4733,7 +4735,7 @@ if ($textmessage == '/unlock arabic' || $textmessage == '!unlock arabic' || $tex
 if ($data == "lock_sticker" && $_sticker == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/sticker.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -4778,12 +4780,12 @@ if ($data == "lock_sticker" && $_sticker == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل استیکر فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -4793,7 +4795,7 @@ if ($data == "lock_sticker" && $_sticker == "❌") {
 if ($data == "lock_sticker" && $_sticker == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/sticker.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -4838,12 +4840,12 @@ if ($data == "lock_sticker" && $_sticker == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل استیکر غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -4854,7 +4856,7 @@ if ($data == "lock_sticker" && $_sticker == "✅") {
 if ($data == "lock_photo" && $_photo == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/photo.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -4899,12 +4901,12 @@ if ($data == "lock_photo" && $_photo == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل عکس فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -4914,7 +4916,7 @@ if ($data == "lock_photo" && $_photo == "❌") {
 if ($data == "lock_photo" && $_photo == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/photo.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -4959,12 +4961,12 @@ if ($data == "lock_photo" && $_photo == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل عکس غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -4974,7 +4976,7 @@ if ($data == "lock_photo" && $_photo == "✅") {
 if ($data == "lock_video" && $_video == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/video.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5019,12 +5021,12 @@ if ($data == "lock_video" && $_video == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل فیلم فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5034,7 +5036,7 @@ if ($data == "lock_video" && $_video == "❌") {
 if ($data == "lock_video" && $_video == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/video.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5079,12 +5081,12 @@ if ($data == "lock_video" && $_video == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل فیلم غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5094,7 +5096,7 @@ if ($data == "lock_video" && $_video == "✅") {
 if ($data == "lock_voice" && $_voice == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/voice.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5139,12 +5141,12 @@ if ($data == "lock_voice" && $_voice == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل وییس فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5154,7 +5156,7 @@ if ($data == "lock_voice" && $_voice == "❌") {
 if ($data == "lock_voice" && $_voice == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/voice.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5199,12 +5201,12 @@ if ($data == "lock_voice" && $_voice == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل وییس غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5214,7 +5216,7 @@ if ($data == "lock_voice" && $_voice == "✅") {
 if ($data == "lock_music" && $_music == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/music.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5259,12 +5261,12 @@ if ($data == "lock_music" && $_music == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل اهنگ فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5274,7 +5276,7 @@ if ($data == "lock_music" && $_music == "❌") {
 if ($data == "lock_music" && $_music == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/music.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5319,12 +5321,12 @@ if ($data == "lock_music" && $_music == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل اهنگ غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5335,7 +5337,7 @@ if ($data == "lock_music" && $_music == "✅") {
 if ($data == "lock_gif" && $_gif == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/gif.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5380,12 +5382,12 @@ if ($data == "lock_gif" && $_gif == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل عکس متحرک فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5395,7 +5397,7 @@ if ($data == "lock_gif" && $_gif == "❌") {
 if ($data == "lock_gif" && $_gif == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/gif.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5440,12 +5442,12 @@ if ($data == "lock_gif" && $_gif == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل عکس متحرک غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5456,7 +5458,7 @@ if ($data == "lock_gif" && $_gif == "✅") {
 if ($data == "lock_document" && $_document == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/document.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5501,12 +5503,12 @@ if ($data == "lock_document" && $_document == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل فایل فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5516,7 +5518,7 @@ if ($data == "lock_document" && $_document == "❌") {
 if ($data == "lock_document" && $_document == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/document.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5561,12 +5563,12 @@ if ($data == "lock_document" && $_document == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل فایل غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5577,7 +5579,7 @@ if ($data == "lock_document" && $_document == "✅") {
 if ($data == "lock_location" && $_location == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/location.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5622,12 +5624,12 @@ if ($data == "lock_location" && $_location == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل لوکیشن فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5637,7 +5639,7 @@ if ($data == "lock_location" && $_location == "❌") {
 if ($data == "lock_location" && $_location == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/location.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5682,12 +5684,12 @@ if ($data == "lock_location" && $_location == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل لوکیشن غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5697,7 +5699,7 @@ if ($data == "lock_location" && $_location == "✅") {
 if ($data == "lock_contact" && $_contact == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/contact.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5742,12 +5744,12 @@ if ($data == "lock_contact" && $_contact == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل شماره فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5757,7 +5759,7 @@ if ($data == "lock_contact" && $_contact == "❌") {
 if ($data == "lock_contact" && $_contact == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/contact.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5802,12 +5804,12 @@ if ($data == "lock_contact" && $_contact == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل شماره غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5817,7 +5819,7 @@ if ($data == "lock_contact" && $_contact == "✅") {
 if ($data == "lock_game" && $_game == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/game.txt", "✅");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5862,12 +5864,12 @@ if ($data == "lock_game" && $_game == "❌") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل بازی فعال شد ✅",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5877,7 +5879,7 @@ if ($data == "lock_game" && $_game == "❌") {
 if ($data == "lock_game" && $_game == "✅") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_media == "❌") {
 		save("data/$chat_id2/settings/game.txt", "❌");
-		var_dump(makereq('editMessageText', [
+		var_dump(send_reply('editMessageText', [
 			'chat_id' => $chat_id2,
 			'message_id' => $message_id2,
 			"text" => 'SuperGroup/Group Media Manager⚙️
@@ -5922,12 +5924,12 @@ if ($data == "lock_game" && $_game == "✅") {
 				]
 			])
 		]));
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "قفل بازی غیر فعال شد ❌",
 		]);
 	} else {
-		makereq('answerCallbackQuery', [
+		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
@@ -5937,7 +5939,7 @@ if ($data == "lock_game" && $_game == "✅") {
 if ($textmessage == '/mute contact' || $textmessage == '!mute contact' || $textmessage == '#mute contact') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/contact.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -5951,7 +5953,7 @@ if ($textmessage == '/mute contact' || $textmessage == '!mute contact' || $textm
 if ($textmessage == '/unmute contact' || $textmessage == '!unmute contact' || $textmessage == '#unmute contact') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/contact.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -5965,7 +5967,7 @@ if ($textmessage == '/unmute contact' || $textmessage == '!unmute contact' || $t
 if ($textmessage == '/mute game' || $textmessage == '!mute game' || $textmessage == '#mute game') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/game.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -5979,7 +5981,7 @@ if ($textmessage == '/mute game' || $textmessage == '!mute game' || $textmessage
 if ($textmessage == '/unmute game' || $textmessage == '!unmute game' || $textmessage == '#unmute game') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/game.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -5994,7 +5996,7 @@ if ($textmessage == '/unmute game' || $textmessage == '!unmute game' || $textmes
 if ($textmessage == '/mute sticker' || $textmessage == '!mute sticker' || $textmessage == '#mute sticker') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/sticker.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6009,7 +6011,7 @@ if ($textmessage == '/mute sticker' || $textmessage == '!mute sticker' || $textm
 if ($textmessage == '/unmute sticker' || $textmessage == '!unmute sticker' || $textmessage == '#unmute sticker') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/sticker.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6023,7 +6025,7 @@ if ($textmessage == '/unmute sticker' || $textmessage == '!unmute sticker' || $t
 if ($textmessage == '/mute location' || $textmessage == '!mute location' || $textmessage == '#mute location') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/location.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6037,7 +6039,7 @@ if ($textmessage == '/mute location' || $textmessage == '!mute location' || $tex
 if ($textmessage == '/unmute location' || $textmessage == '!unmute location' || $textmessage == '#unmute location') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/location.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6051,7 +6053,7 @@ if ($textmessage == '/unmute location' || $textmessage == '!unmute location' || 
 if ($textmessage == '/mute photo' || $textmessage == '!mute photo' || $textmessage == '#mute photo') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/photo.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6065,7 +6067,7 @@ if ($textmessage == '/mute photo' || $textmessage == '!mute photo' || $textmessa
 if ($textmessage == '/unmute photo' || $textmessage == '!unmute photo' || $textmessage == '#unmute photo') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/photo.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6079,7 +6081,7 @@ if ($textmessage == '/unmute photo' || $textmessage == '!unmute photo' || $textm
 if ($textmessage == '/mute video' || $textmessage == '!mute video' || $textmessage == '#mute video') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/video.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6093,7 +6095,7 @@ if ($textmessage == '/mute video' || $textmessage == '!mute video' || $textmessa
 if ($textmessage == '/unmute video' || $textmessage == '!unmute video' || $textmessage == '#unmute video') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/video.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6107,7 +6109,7 @@ if ($textmessage == '/unmute video' || $textmessage == '!unmute video' || $textm
 if ($textmessage == '/mute voice' || $textmessage == '!mute voice' || $textmessage == '#mute voice') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/voice.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6121,7 +6123,7 @@ if ($textmessage == '/mute voice' || $textmessage == '!mute voice' || $textmessa
 if ($textmessage == '/unmute voice' || $textmessage == '!unmute voice' || $textmessage == '#unmute voice') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/voice.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6135,7 +6137,7 @@ if ($textmessage == '/unmute voice' || $textmessage == '!unmute voice' || $textm
 if ($textmessage == '/mute music' || $textmessage == '!mute music' || $textmessage == '#mute music') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/music.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6149,7 +6151,7 @@ if ($textmessage == '/mute music' || $textmessage == '!mute music' || $textmessa
 if ($textmessage == '/unmute music' || $textmessage == '!unmute music' || $textmessage == '#unmute music') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/music.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6163,7 +6165,7 @@ if ($textmessage == '/unmute music' || $textmessage == '!unmute music' || $textm
 if ($textmessage == '/mute gif' || $textmessage == '!mute gif' || $textmessage == '#mute gif') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/video.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6177,7 +6179,7 @@ if ($textmessage == '/mute gif' || $textmessage == '!mute gif' || $textmessage =
 if ($textmessage == '/unmute gif' || $textmessage == '!unmute gif' || $textmessage == '#unmute gif') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/gif.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6191,7 +6193,7 @@ if ($textmessage == '/unmute gif' || $textmessage == '!unmute gif' || $textmessa
 if ($textmessage == '/mute document' || $textmessage == '!mute document' || $textmessage == '#mute document') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/document.txt", "✅");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6205,7 +6207,7 @@ if ($textmessage == '/mute document' || $textmessage == '!mute document' || $tex
 if ($textmessage == '/unmute document' || $textmessage == '!unmute document' || $textmessage == '#unmute document') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_media2 == "❌") {
 		save("data/$chat_id/settings/document.txt", "❌");
-		makereq(
+		send_reply(
 			'sendMessage',
 			[
 				'chat_id' => $chat_id,
@@ -6219,7 +6221,7 @@ if ($textmessage == '/unmute document' || $textmessage == '!unmute document' || 
 //-------End Mute and UnMute
 if (stripos($username, "Bot") !== false || stripos($username, "bot") !== false) {
 	if ($_bot2 == "✅") {
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#ربات_اخراج_شد
 										اوردن ربات در گروه ممنوع است. ',
@@ -6227,7 +6229,7 @@ if (stripos($username, "Bot") !== false || stripos($username, "bot") !== false) 
 			'reply_to_message_id' => $update->message->message_id,
 			'disable_web_page_preview' => true
 		]);
-		makereq('kickChatMember', [
+		send_reply('kickChatMember', [
 			'chat_id' => $update->message->chat->id,
 			'user_id' => $update->message->from->id
 		]);
@@ -6235,7 +6237,7 @@ if (stripos($username, "Bot") !== false || stripos($username, "bot") !== false) 
 }
 
 if ($joinmember != null && $wlctext != "") {
-	makereq('sendMessage', [
+	send_reply('sendMessage', [
 		'chat_id' => $update->message->chat->id,
 		'text' => "$wlctext",
 		'parse_mode' => 'HTML',
@@ -6245,7 +6247,7 @@ if ($joinmember != null && $wlctext != "") {
 }
 
 if ($leftmember != null && $byetext != "") {
-	makereq('sendMessage', [
+	send_reply('sendMessage', [
 		'chat_id' => $update->message->chat->id,
 		'text' => "$byetext",
 		'parse_mode' => 'HTML',
@@ -6281,7 +6283,7 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 
 		if (stripos($textmessage, "t.me") !== false || stripos($textmessage, "telegram.me") !== false) {
 			if ($_link2 == "✅") {
-				makereq('deletemessage', [
+				send_reply('deletemessage', [
 					'chat_id' => $update->edited_message->chat->id,
 					'message_id' => $update->edited_message->message_id
 				]);
@@ -6293,7 +6295,7 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 			|| stripos($textmessage, "o") !== false || stripos($textmessage, "p") !== false
 		) {
 			if ($_eng2 == "✅") {
-				makereq('deletemessage', [
+				send_reply('deletemessage', [
 					'chat_id' => $update->edited_message->chat->id,
 					'message_id' => $update->edited_message->message_id
 				]);
@@ -6305,7 +6307,7 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 			|| stripos($textmessage, "ف") !== false || stripos($textmessage, "ع") !== false
 		) {
 			if ($_arab2 == "✅") {
-				makereq('deletemessage', [
+				send_reply('deletemessage', [
 					'chat_id' => $update->edited_message->chat->id,
 					'message_id' => $update->edited_message->message_id
 				]);
@@ -6314,7 +6316,7 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 
 		if (stripos($textmessage, "#") !== false) {
 			if ($_tag2 == "✅") {
-				makereq('deletemessage', [
+				send_reply('deletemessage', [
 					'chat_id' => $update->edited_message->chat->id,
 					'message_id' => $update->edited_message->message_id
 				]);
@@ -6323,7 +6325,7 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 
 		if (stripos($textmessage, "@") !== false) {
 			if ($_username2 == "✅") {
-				makereq('deletemessage', [
+				send_reply('deletemessage', [
 					'chat_id' => $update->edited_message->chat->id,
 					'message_id' => $update->edited_message->message_id
 				]);
@@ -6332,7 +6334,7 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 
 		if (stripos($textmessage, "1") !== false || stripos($textmessage, "2") !== false || stripos($textmessage, "3") !== false || stripos($textmessage, "4") !== false || stripos($textmessage, "5") !== false || stripos($textmessage, "6") !== false || stripos($textmessage, "7") !== false || stripos($textmessage, "8") !== false || stripos($textmessage, "9") !== false || stripos($textmessage, "0") !== false) {
 			if ($_num2 == "✅") {
-				makereq('deletemessage', [
+				send_reply('deletemessage', [
 					'chat_id' => $update->edited_message->chat->id,
 					'message_id' => $update->edited_message->message_id
 				]);
@@ -6341,7 +6343,7 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 
 		if (stripos($textmessage, "https") !== false || stripos($textmessage, "www") !== false) {
 			if ($_web2 == "✅") {
-				makereq('deletemessage', [
+				send_reply('deletemessage', [
 					'chat_id' => $update->edited_message->chat->id,
 					'message_id' => $update->edited_message->message_id
 				]);
@@ -6353,7 +6355,7 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 		$chat_id = $update->edited_message->chat->id;
 		$_edit2 = file_get_contents("data/$chat_id/settings/edit.txt");
 		if ($_edit2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->edited_message->chat->id,
 				'message_id' => $update->edited_message->message_id
 			]);
@@ -6373,7 +6375,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 		$metti_khan2 = file_get_contents("flood/$timing-$from_id.txt");
 		if ($metti_khan2 >= $_floods2) {
-			makereq('kickChatMember', [
+			send_reply('kickChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $update->message->from->id
 			]);
@@ -6383,7 +6385,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	}
 
 	if (stripos($muteuserlist, "$from_id") !== false) {
-		makereq('deletemessage', [
+		send_reply('deletemessage', [
 			'chat_id' => $update->message->chat->id,
 			'message_id' => $update->message->message_id
 		]);
@@ -6391,7 +6393,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if (stripos($textmessage, "t.me") !== false || stripos($textmessage, "telegram.me") !== false) {
 		if ($_link2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6403,7 +6405,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 		|| stripos($textmessage, "o") !== false || stripos($textmessage, "p") !== false
 	) {
 		if ($_eng2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6415,7 +6417,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 		|| stripos($textmessage, "ف") !== false || stripos($textmessage, "ع") !== false
 	) {
 		if ($_arab2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6424,7 +6426,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if (stripos($textmessage, "#") !== false) {
 		if ($_tag2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6433,7 +6435,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if (stripos($textmessage, "@") !== false) {
 		if ($_username2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6442,7 +6444,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($textmessage != null) {
 		if ($_chat2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6451,7 +6453,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if (stripos($textmessage, "1") !== false || stripos($textmessage, "2") !== false || stripos($textmessage, "3") !== false || stripos($textmessage, "4") !== false || stripos($textmessage, "5") !== false || stripos($textmessage, "6") !== false || stripos($textmessage, "7") !== false || stripos($textmessage, "8") !== false || stripos($textmessage, "9") !== false || stripos($textmessage, "0") !== false) {
 		if ($_num2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6460,7 +6462,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if (stripos($textmessage, "https") !== false || stripos($textmessage, "www") !== false) {
 		if ($_web2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6469,7 +6471,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if (strpos($filterlist, $textmessage) !== false) {
 		if ($from_id !== $admin && $from_id !== $owner && $from_id != $modlist && $whitelist != $from_id) {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6479,7 +6481,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($forward != null) {
 		if ($_fwd2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6488,7 +6490,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($game != null) {
 		if ($_game2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6497,7 +6499,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($contact != null) {
 		if ($_contact2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6506,7 +6508,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($photo != null) {
 		if ($_photo2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6515,7 +6517,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($location != null) {
 		if ($_location2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6524,7 +6526,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($sticker != null) {
 		if ($_sticker2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6533,7 +6535,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($video != null) {
 		if ($_video2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6542,7 +6544,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($voice != null) {
 		if ($_voice2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6551,7 +6553,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($music != null) {
 		if ($_music2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6560,7 +6562,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($gif != null) {
 		if ($_gif2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6569,7 +6571,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($document != null) {
 		if ($_document2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6578,7 +6580,7 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if ($reply != null) {
 		if ($_reply2 == "✅") {
-			makereq('deletemessage', [
+			send_reply('deletemessage', [
 				'chat_id' => $update->message->chat->id,
 				'message_id' => $update->message->message_id
 			]);
@@ -6587,14 +6589,14 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 }
 
 if ($textmessage == "/kickme" || $textmessage == "!kickme" || $textmessage == "#kickme") {
-	makereq('kickChatMember', [
+	send_reply('kickChatMember', [
 		'chat_id' => $update->message->chat->id,
 		'user_id' => $update->message->from->id
 	]);
 }
 
 if ($textmessage == "/leave" && $from_id == $admin) {
-	makereq('leaveChat', [
+	send_reply('leaveChat', [
 		'chat_id' => $chat_id
 	]);
 }
@@ -6611,7 +6613,7 @@ if ($_lockcmd2 == "❌" || $admin == $from_id || $owner == $from_id || strpos($m
 			fgets($fp);
 			$ekhtart3++;
 		}
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			"text" => '<b>-----Your Info-----</b>
 
@@ -6641,7 +6643,7 @@ if ($_lockcmd2 == "❌" || $admin == $from_id || $owner == $from_id || strpos($m
 
 	if ($textmessage == '/dashboard' || $textmessage == '/dashboard' . $botusername . '') {
 		if ($type2 == "supergroup" || $type2 == "group") {
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $chat_id,
 				'text' => "تنظیمات گروه در پیوی شما ارسال شد
 					اگر تنظیماتو دریافت نکردید اول در ربات استارت کنید",
@@ -6659,7 +6661,7 @@ if ($_lockcmd2 == "❌" || $admin == $from_id || $owner == $from_id || strpos($m
 				fgets($fp);
 				$ekhtart3++;
 			}
-			var_dump(makereq('sendMessage', [
+			var_dump(send_reply('sendMessage', [
 				'chat_id' => $update->message->from->id,
 				"text" => 'SuperGroup/Group Settings and Media
 
@@ -6768,7 +6770,7 @@ your warn
 
 
 	if ($textmessage == "/me" || $textmessage == "!me" || $textmessage == "#me") {
-		makereq('sendPhoto', [
+		send_reply('sendPhoto', [
 			'chat_id' => $update->message->chat->id,
 			'photo' => $getuserphoto,
 			'caption' => '
@@ -6794,7 +6796,7 @@ your warn
 			fgets($fp);
 			$ekhtart3++;
 		}
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			"text" => '<b>-----Your Warn-----</b>
 ' . $ekhtart3 . '|' . $warnlists . ' ',
@@ -6807,7 +6809,7 @@ your warn
 	if (preg_match('/^\/([Ll]ocation) (.*)/s', $textmessage)) {
 		preg_match('/^\/([Ll]ocation) (.*)/s', $textmessage, $match);
 		$location = json_decode(file_get_contents("http://maps.googleapis.com/maps/api/geocode/json?address=" . $match[2]));
-		makereq('sendLocation', [
+		send_reply('sendLocation', [
 			'chat_id' => $chat_id,
 			'latitude' => $location->results[0]->geometry->location->lat,
 			'longitude' => $location->results[0]->geometry->location->lng
@@ -6818,7 +6820,7 @@ your warn
 		preg_match('/^\/(calc) (.*)/s', $textmessage, $mtch);
 		$txt = urlencode($mtch[2]);
 		$rs = file_get_contents('http://api.mathjs.org/v1/?expr=' . $txt);
-		makereq('sendMessage', array(
+		send_reply('sendMessage', array(
 			'chat_id' => $chat_id,
 			'text' => "<code>" . $rs . "</code>",
 			'parse_mode' => 'HTML'
@@ -6830,7 +6832,7 @@ your warn
 		preg_match('/^\/([t]ranslate) (.*)/s', $textmessage, $mtch);
 		$txt = urlencode($mtch[2]);
 		$rs = json_decode(file_get_contents('https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20160119T111342Z.fd6bf13b3590838f.6ce9d8cca4672f0ed24f649c1b502789c9f4687a&format=plain&lang=fa&text=' . $txt));
-		makereq('sendMessage', array(
+		send_reply('sendMessage', array(
 			'chat_id' => $chat_id,
 			'text' => "" . $rs->text[0],
 			'reply_to_message_id' => $message_id
@@ -6839,7 +6841,7 @@ your warn
 
 	if (strpos($textmessage, '/echo ') !== false) {
 		$text = str_replace("/echo ", "", $textmessage);
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			"text" => "$text",
 			'reply_to_message_id' => $update->message->message_id,
@@ -6849,7 +6851,7 @@ your warn
 
 	if (strpos($textmessage, '/getpro ') !== false) {
 		$text = str_replace("/getpro ", "", $textmessage);
-		makereq('sendPhoto', [
+		send_reply('sendPhoto', [
 			'chat_id' => $update->message->chat->id,
 			'photo' => $getuserprofile->photos[$text - 1][0]->file_id,
 			'caption' => '
@@ -6872,7 +6874,7 @@ if ($textmessage == '/start' && $type2 == "private") {
 			file_put_contents('users.txt', $aaddd);
 		}
 	}
-	var_dump(makereq('sendMessage', [
+	var_dump(send_reply('sendMessage', [
 		'chat_id' => $chat_id,
 		'text' => "سلام $name ✋️
 
@@ -6899,7 +6901,7 @@ if ($textmessage == '/start' && $type2 == "private") {
 }
 
 if ($data == "startpv") {
-	var_dump(makereq('editMessageText', [
+	var_dump(send_reply('editMessageText', [
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		'text' => "سلام $name2 ✋️
@@ -6927,7 +6929,7 @@ if ($data == "startpv") {
 }
 
 if ($data == "helpcm") {
-	var_dump(makereq('editMessageText', [
+	var_dump(send_reply('editMessageText', [
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		"text" => "	I دستورات ربات $botname👾
@@ -7030,7 +7032,7 @@ I اطلاع پیدا کردن از وضعیت ربات
 
 
 if ($data == "nasb") {
-	var_dump(makereq('editMessageText', [
+	var_dump(send_reply('editMessageText', [
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		"text" => 'روی دکمه زیر بزنید و گروه خود را انتخاب کنید',
@@ -7048,7 +7050,7 @@ if ($data == "nasb") {
 }
 
 if ($data == "nasb1") {
-	var_dump(makereq('editMessageText', [
+	var_dump(send_reply('editMessageText', [
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		"text" => 'نوع گوشی خود را انتخاب کنید',
@@ -7066,7 +7068,7 @@ if ($data == "nasb1") {
 }
 
 if ($data == "nasbandroid") {
-	var_dump(makereq('editMessageText', [
+	var_dump(send_reply('editMessageText', [
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		"text" => 'وارد گروه شوید
@@ -7093,7 +7095,7 @@ if ($data == "nasbandroid") {
 }
 
 if ($data == "nasbios") {
-	var_dump(makereq('editMessageText', [
+	var_dump(send_reply('editMessageText', [
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		"text" => 'وارد گروه شوید
@@ -7119,7 +7121,7 @@ if ($data == "nasbios") {
 }
 
 if ($data == "nasb3") {
-	var_dump(makereq('editMessageText', [
+	var_dump(send_reply('editMessageText', [
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		"text" => 'حال در گروه /settings را بفرستید و تنظیمات گروه را تغییر دهید',
@@ -7136,7 +7138,7 @@ if ($data == "nasb3") {
 
 if ($textmessage == 'ping' || $textmessage == '/ping' || $textmessage == '!ping' || $textmessage == '#ping') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false) {
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $chat_id,
 			'text' => "*Online*  😎",
 			'parse_mode' => 'MarkDown',
@@ -7155,7 +7157,7 @@ if ($textmessage == 'ping' || $textmessage == '/ping' || $textmessage == '!ping'
 if ($textmessage == '/help' || $textmessage == '!help' || $textmessage == '#help' || $textmessage == '/help' . $botusername . '') {
 	if ($type2 == "supergroup" || $type2 == "group") {
 		if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false) {
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $chat_id,
 				'text' => '	I دستورات ربات ' . $botname . '👾
 ➖➖➖➖➖➖
@@ -7254,7 +7256,7 @@ I اطلاع پیدا کردن از وضعیت ربات
 
 if ($textmessage == '/gpcreator' || $textmessage == '!gpcreator' || $textmessage == '#gpcreator') {
 	if ($type2 == "supergroup" || $type2 == "group") {
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $chat_id,
 			'text' => 'Group Creator: 
 Name: ' . $creator['first_name'] . ' 
@@ -7441,7 +7443,7 @@ $text
 if ($textmessage == "/delwlc" || $textmessage == "!delwlc" || $textmessage == "#delwlc") {
 	if ($from_id == $admin || $from_id == $owner) {
 		save("data/$chat_id/gpwlc.txt", "");
-		makereq('sendmessage', [
+		send_reply('sendmessage', [
 			'chat_id' => $chat_id,
 			'text' => "با موفقیت پیغام خوش آمد گویی حذف شد",
 			'reply_to_message_id' => $update->message->message_id,
@@ -7482,7 +7484,7 @@ $text
 if ($textmessage == "/delbye" || $textmessage == "!delbye" || $textmessage == "#delbye") {
 	if ($from_id == $admin || $from_id == $owner) {
 		save("data/$chat_id/gpbye.txt", "");
-		makereq('sendmessage', [
+		send_reply('sendmessage', [
 			'chat_id' => $chat_id,
 			'text' => "با موفقیت پیغام خداحافظی حذف شد",
 			'reply_to_message_id' => $update->message->message_id,
@@ -7492,7 +7494,7 @@ if ($textmessage == "/delbye" || $textmessage == "!delbye" || $textmessage == "#
 
 if ($textmessage == "/link" || $textmessage == "!link" || $textmessage == "#link") {
 	$gplink = file_get_contents("data/$chat_id/gplink.txt");
-	makereq('sendmessage', [
+	send_reply('sendmessage', [
 		'chat_id' => $chat_id,
 		'text' => "Group Link
 $gplink",
@@ -7504,12 +7506,12 @@ $gplink",
 if (strpos($textmessage, "/feedback ") !== false) {
 	$text = str_replace("/feedback ", "", $textmessage);
 	SendMessage($chat_id, "نظر شما ارسال شد");
-	makereq('sendmessage', [
+	send_reply('sendmessage', [
 		'chat_id' => $admin,
 		'text' => "FeedBack: $text",
 		'parse_mode' => 'HTML',
 	]);
-	makereq('sendmessage', [
+	send_reply('sendmessage', [
 		'chat_id' => $admin,
 		'text' => "name: $name
 username: @$username
@@ -7523,14 +7525,14 @@ if (strpos($textmessage, '/ban ') !== false) {
 	if ($from_id == $admin || $from_id == $owner || strpos($modlist, "$from_id") !== false  && $_ban2 == "❌") {
 		$text = str_replace("/ban ", "", $textmessage);
 		if ($text != $admin && $text != $owner && $text != $modlist) {
-			makereq('kickChatMember', [
+			send_reply('kickChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $text
 			]);
 			$myfile2 = fopen("data/$chat_id/banlist/list.txt", "a") or die("Unable to open file!");
 			fwrite($myfile2, "$text\n");
 			fclose($myfile2);
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $update->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه بن شد ',
@@ -7545,15 +7547,15 @@ if (strpos($textmessage, '/kick ') !== false) {
 	if ($from_id == $admin || $from_id == $owner || strpos($modlist, "$from_id") !== false  && $_kick2 == "❌") {
 		$text = str_replace("/kick ", "", $textmessage);
 		if ($text != $admin && $text != "@" && $text != $owner && $text != $modlist) {
-			makereq('kickChatMember', [
+			send_reply('kickChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $text
 			]);
-			makereq('unbanChatMember', [
+			send_reply('unbanChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $text
 			]);
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $update->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه اخراج شد ',
@@ -7562,15 +7564,15 @@ if (strpos($textmessage, '/kick ') !== false) {
 			]);
 		}
 		if ($text != $admin && strpos($text, "@") !== false && $text != $owner && $text != $modlist) {
-			makereq('kickChatMember', [
+			send_reply('kickChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $text->id
 			]);
-			makereq('unbanChatMember', [
+			send_reply('unbanChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $text->id
 			]);
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $update->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه اخراج شد ',
@@ -7584,13 +7586,13 @@ if (strpos($textmessage, '/unban ') !== false) {
 	if ($from_id == $admin || $from_id == $owner || strpos($modlist, "$from_id") !== false  && $_unban2 == "❌") {
 		$text = str_replace("/unban ", "", $textmessage);
 		if ($text != $admin && $text != $owner && $text != $modlist) {
-			makereq('unbanChatMember', [
+			send_reply('unbanChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $text
 			]);
 			$newlist = str_replace("$text\n", "", $banlist);
 			save("data/$chat_id/banlist/list.txt", $newlist);
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $update->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت ان بن شد',
@@ -7659,7 +7661,7 @@ if (strpos($textmessage, "#delfilter") !== false) {
 }
 
 if ($textmessage == "/filterlist") {
-	makereq('sendmessage', [
+	send_reply('sendmessage', [
 		'chat_id' => $chat_id,
 		'text' => "FilterList:
 $filterlist",
@@ -7671,25 +7673,25 @@ $filterlist",
 
 if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner) {
 	if ($textmessage == '/del' || $textmessage == '!del' || $textmessage == '#del') {
-		makereq('deletemessage', [
+		send_reply('deletemessage', [
 			'chat_id' => $update->message->chat->id,
 			'message_id' => $update->message->reply_to_message->message_id
 		]);
-		makereq('deletemessage', [
+		send_reply('deletemessage', [
 			'chat_id' => $update->message->chat->id,
 			'message_id' => $update->message->message_id
 		]);
 	}
 	if ($textmessage == '/ban' || $textmessage == '!ban' || $textmessage == '#ban') {
 		if ($reply != $admin && $reply != $owner && $reply != $modlist) {
-			makereq('kickChatMember', [
+			send_reply('kickChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $reply
 			]);
 			$myfile2 = fopen("data/$chat_id/banlist/list.txt", "a") or die("Unable to open file!");
 			fwrite($myfile2, "$reply\n");
 			fclose($myfile2);
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $update->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه بن شد ',
@@ -7700,15 +7702,15 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 	}
 	if ($textmessage == '/kick' || $textmessage == '!kick' || $textmessage == '#kick') {
 		if ($reply != $admin && $reply != $owner && $reply != $modlist) {
-			makereq('kickChatMember', [
+			send_reply('kickChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $reply
 			]);
-			makereq('unbanChatMember', [
+			send_reply('unbanChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $reply
 			]);
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $update->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه اخراج شد ',
@@ -7719,13 +7721,13 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 	}
 	if ($textmessage == '/unban' || $textmessage == '!unban' || $textmessage == '#unban') {
 		if ($reply != $admin && $reply != $owner && $reply != $modlist) {
-			makereq('unbanChatMember', [
+			send_reply('unbanChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $reply
 			]);
 			$newlist = str_replace("$reply\n", "", $banlist);
 			save("data/$chat_id/banlist/list.txt", $newlist);
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $update->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت ان بن شد ',
@@ -7764,14 +7766,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			fwrite($myfile2, "$reply\n");
 			fclose($myfile2);
 			if ($replyusername != "") {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت به حالت سکوت رفت ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت به حالت سکوت رفت ',
@@ -7787,14 +7789,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			$newlist = str_replace("$reply\n", "", $muteuserlist);
 			save("data/$chat_id/muteuserlist.txt", $newlist);
 			if ($replyusername != "") {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت از حالت سکوت خارج شد',
 					'disable_web_page_preview' => true
 				]);
 			} else {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت از حالت سکوت خارج شد',
@@ -7820,14 +7822,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			fwrite($myfile2, "$ekhtart\n");
 			fclose($myfile2);
 			if ($replyusername != "") {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت اخطار گرفت ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت اخطار گرفت ',
@@ -7854,14 +7856,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 				$newlist = str_replace("$ekhtart\n", "", $ekhtarlist);
 				save("data/$chat_id/member/" . $reply . "3.txt", $newlist);
 				if ($replyusername != "") {
-					makereq('sendMessage', [
+					send_reply('sendMessage', [
 						'chat_id' => $update->message->chat->id,
 						'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت اخطار حذف شد ',
 						'disable_web_page_preview' => true
 					]);
 				} else {
-					makereq('sendMessage', [
+					send_reply('sendMessage', [
 						'chat_id' => $update->message->chat->id,
 						'text' => '#انجام_شد
 								' . $reply . ' با موفقیت اخطار حذف شد ',
@@ -7872,14 +7874,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			}
 			if ($ekhtart == 0) {
 				if ($replyusername != "") {
-					makereq('sendMessage', [
+					send_reply('sendMessage', [
 						'chat_id' => $update->message->chat->id,
 						'text' => '#انجام_شد
 								@' . $replyusername . ' هیچ اخطاری ندارد ',
 						'disable_web_page_preview' => true
 					]);
 				} else {
-					makereq('sendMessage', [
+					send_reply('sendMessage', [
 						'chat_id' => $update->message->chat->id,
 						'text' => '#خطا
 								' . $reply . ' هیچ اخطاری ندارد ',
@@ -7902,14 +7904,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			fwrite($myfile2, "$reply\n");
 			fclose($myfile2);
 			if ($replyusername != "") {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#Done
 								@' . $replyusername . ' has been add to whitelist ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#Done
 								' . $reply . ' has been add to whitelist',
@@ -7930,14 +7932,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			$newlist = str_replace("$reply\n", "", $whitelist);
 			save("data/$chat_id/whitelist/list.txt", $newlist);
 			if ($replyusername != "") {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#Done
 								@' . $replyusername . ' has been deleted to whitelist ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#Done
 								' . $reply . ' has been deleted to whitelist',
@@ -7957,7 +7959,7 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			fgets($fp);
 			$ekhtart3++;
 		}
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			"text" => 'Member Info
 
@@ -7979,24 +7981,24 @@ your warn
 
 if ($reply != null && strpos($modlist, "$from_id") !== false) {
 	if ($textmessage == '/del' || $textmessage == '!del' || $textmessage == '#del') {
-		makereq('deletemessage', [
+		send_reply('deletemessage', [
 			'chat_id' => $update->message->chat->id,
 			'message_id' => $update->message->reply_to_message->message_id
 		]);
-		makereq('deletemessage', [
+		send_reply('deletemessage', [
 			'chat_id' => $update->message->chat->id,
 			'message_id' => $update->message->message_id
 		]);
 	}
 	if ($textmessage == '/ban' && $_ban3 == "❌" || $textmessage == '!ban' && $_ban3 == "❌" || $textmessage == '#ban' && $_ban3 == "❌") {
-		makereq('kickChatMember', [
+		send_reply('kickChatMember', [
 			'chat_id' => $update->message->chat->id,
 			'user_id' => $reply
 		]);
 		$myfile2 = fopen("data/$chat_id/banlist/list.txt", "a") or die("Unable to open file!");
 		fwrite($myfile2, "$reply\n");
 		fclose($myfile2);
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			'text' => '#انجام_شد
 								کاربر با موفقیت از گروه بن شد ',
@@ -8006,15 +8008,15 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 	}
 	if ($textmessage == '/kick' && $_kick3 == "❌" || $textmessage == '!kick' && $_kick3 == "❌" || $textmessage == '#kick' && $_kick3 == "❌") {
 		if ($reply != $admin && $reply3 != $owner3 && $reply != $modlist3) {
-			makereq('kickChatMember', [
+			send_reply('kickChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $reply
 			]);
-			makereq('unbanChatMember', [
+			send_reply('unbanChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $reply
 			]);
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $update->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه اخراج شد ',
@@ -8025,13 +8027,13 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 	}
 	if ($textmessage == '/unban' && $_unban3 == "❌" || $textmessage == '!unban' && $_unban3 == "❌" || $textmessage == '#unban' && $_unban3 == "❌") {
 		if ($reply != $admin && $reply != $owner3 && $reply != $modlist3) {
-			makereq('unbanChatMember', [
+			send_reply('unbanChatMember', [
 				'chat_id' => $update->message->chat->id,
 				'user_id' => $reply
 			]);
 			$newlist = str_replace("$reply\n", "", $banlist);
 			save("data/$chat_id/banlist/list.txt", $newlist);
-			makereq('sendMessage', [
+			send_reply('sendMessage', [
 				'chat_id' => $update->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت ان بن شد ',
@@ -8047,14 +8049,14 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			fwrite($myfile2, "$reply\n");
 			fclose($myfile2);
 			if ($replyusername != "") {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت به حالت سکوت رفت ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت به حالت سکوت رفت ',
@@ -8070,14 +8072,14 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			$newlist = str_replace("$reply\n", "", $muteuserlist);
 			save("data/$chat_id/muteuserlist.txt", $newlist);
 			if ($replyusername != "") {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت از حالت سکوت خارج شد',
 					'disable_web_page_preview' => true
 				]);
 			} else {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت از حالت سکوت خارج شد',
@@ -8104,14 +8106,14 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			fwrite($myfile2, "$ekhtart\n");
 			fclose($myfile2);
 			if ($replyusername != "") {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت اخطار گرفت ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
-				makereq('sendMessage', [
+				send_reply('sendMessage', [
 					'chat_id' => $update->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت اخطار گرفت ',
@@ -8138,14 +8140,14 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 				$newlist = str_replace("$ekhtart\n", "", $ekhtarlist);
 				save("data/$chat_id/member/" . $reply . "3.txt", $newlist);
 				if ($replyusername != "") {
-					makereq('sendMessage', [
+					send_reply('sendMessage', [
 						'chat_id' => $update->message->chat->id,
 						'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت اخطار حذف شد ',
 						'disable_web_page_preview' => true
 					]);
 				} else {
-					makereq('sendMessage', [
+					send_reply('sendMessage', [
 						'chat_id' => $update->message->chat->id,
 						'text' => '#انجام_شد
 								' . $reply . ' با موفقیت اخطار حذف شد ',
@@ -8156,14 +8158,14 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			}
 			if ($ekhtart == 0) {
 				if ($replyusername != "") {
-					makereq('sendMessage', [
+					send_reply('sendMessage', [
 						'chat_id' => $update->message->chat->id,
 						'text' => '#انجام_شد
 								@' . $replyusername . ' هیچ اخطاری ندارد ',
 						'disable_web_page_preview' => true
 					]);
 				} else {
-					makereq('sendMessage', [
+					send_reply('sendMessage', [
 						'chat_id' => $update->message->chat->id,
 						'text' => '#خطا
 								' . $reply . ' هیچ اخطاری ندارد ',
@@ -8185,7 +8187,7 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			fgets($fp);
 			$ekhtart3++;
 		}
-		makereq('sendMessage', [
+		send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			"text" => 'Member Info
 
@@ -8288,7 +8290,7 @@ if ($textmessage == "/stats all" && $from_id == $admin || $textmessage == "!stat
 	fclose($fp);
 
 	$all4 = $all + $all2 + $all3;
-	var_dump(makereq('sendmessage', [
+	var_dump(send_reply('sendmessage', [
 		'chat_id' => $chat_id,
 		"text" => 'آمار ربات 👤 \ Statistics robot👤',
 		'reply_markup' => json_encode([
@@ -8327,7 +8329,8 @@ if (isset($update->inline_query)) {
 	$inline_m = $update->inline_query->query;
 	$callback_data = $update->callback_query->data;
 	$callback_id = $update->callback_query->id;
-	makereq('answerInlineQuery', [
+	
+	send_reply('answerInlineQuery', [
 		'inline_query_id' => $inline_id,
 		'results' => json_encode([
 			[
@@ -8380,13 +8383,13 @@ if (isset($update->inline_query)) {
 
 if ($textmessage == '/tools' || $textmessage == '!tools' || $textmessage == '#tools') {
 	if ($type2 != "private") {
-		var_dump(makereq('sendMessage', [
+		var_dump(send_reply('sendMessage', [
 			'chat_id' => $update->message->chat->id,
 			"text" => 'در پی وی شما ارسال شد.',
 			'parse_mode' => "Markdown",
 		]));
 	}
-	var_dump(makereq('sendMessage', [
+	var_dump(send_reply('sendMessage', [
 		'chat_id' => $update->message->from->id,
 		"text" => 'یکی از دکمه های زیر را انتخاب کنید.',
 		'parse_mode' => "Markdown",
@@ -8435,7 +8438,7 @@ if ($textmessage == '/tools' || $textmessage == '!tools' || $textmessage == '#to
 
 
 if ($data == "location") {
-	var_dump(makereq('editMessageText', [
+	var_dump(send_reply('editMessageText', [
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		"text" => 'برای اینکه ربات محلی را برای شما بفرستد
@@ -8489,7 +8492,7 @@ if ($data == "location") {
 }
 
 if ($data == "calc") {
-	var_dump(makereq('editMessageText', [
+	var_dump(send_reply('editMessageText', [
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		"text" => 'برای اینکه ربات محاصبه ای را حل کند
@@ -8549,7 +8552,7 @@ if ($data == "calc") {
 }
 
 if ($data == "echo") {
-	var_dump(makereq('editMessageText', [
+	var_dump(send_reply('editMessageText', [
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		"text" => 'برای اینکه ربات پیامی که میخواید رو تکرار کنه به صورت
