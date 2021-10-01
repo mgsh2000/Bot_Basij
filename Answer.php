@@ -80,8 +80,7 @@ class Answer
     {
         $name_pdf="pdf/".$this->chat_id.".pdf";
         $img=$this->db->get_url_photo($this->chat_id);
-        $this->send_message($name_pdf);
-        new image($img,$this->chat_id);
+        new image($img,$name_pdf);
         $url = bot_url . "/sendDocument";
         $post_params = [
             'chat_id' => $GLOBALS['chat_id'],
@@ -94,7 +93,6 @@ class Answer
 
 
     }
-
 function   save_photo($update_array1){
     $update_array =$update_array1;
 

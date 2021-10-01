@@ -11,8 +11,6 @@ if( isset($update_array["message"]["text"])) {
     $text = $update_array["message"]["text"];
     $answer=new Answer(bot_url,$text,$chat_id);
     $answer->select_answer($text);
-    //   $image=new image();
-
 }
 
 else if( isset($update_array["callback_query"]) ) {
@@ -22,13 +20,11 @@ else if( isset($update_array["callback_query"]) ) {
     $chat_id           = $update_array["callback_query"]["message"]["chat"]["id"];
 
     $answer=new Answer(bot_url,$data,$chat_id);
-    $answer->get_point();
 }
 
 else if( isset($update_array["message"]["document"]) ){
     $chat_id= $file_id   = $update_array["message"]["chat"]["id"];
     $answer=new Answer(bot_url,"ss",$chat_id);
-    $answer->save_pdf($update_array);
 
 }
 
@@ -42,7 +38,6 @@ else if( isset($update_array["message"]["photo"]) ) {
 if( isset($update_array["message"]["reply_to_message"]) ) {
 
     $text_replied = $update_array["message"]["reply_to_message"]["text"];
-    $answer->get_info_Handout($text);
 
 }
 
