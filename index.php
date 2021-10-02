@@ -1,7 +1,7 @@
 <?php
 require_once ("Answer.php");
-define('bot_url',"https://api.telegram.org/bot2033681076:AAFpCOwyce14ooc2c2MRAoimPPxkXzvpi0w") ;
-define('bot_dl_url',"https://api.telegram.org/file/bot2033681076:AAFpCOwyce14ooc2c2MRAoimPPxkXzvpi0w") ;
+define('bot_url',"") ;
+define('bot_dl_url',"") ;
 $update = file_get_contents("php://input");
 $update_array = json_decode($update, true);
 $answer=null;
