@@ -8,7 +8,7 @@ class Answer
     var $bot_url;
     var $db;
    var $url_pdf="";
-     var  $bot_dl_url="https://api.telegram.org/file/bot2033681076:AAFpCOwyce14ooc2c2MRAoimPPxkXzvpi0w" ;
+     var  $bot_dl_url="https://api.telegram.org/file/bot" ;
 
     /**
      * Answer constructor.
