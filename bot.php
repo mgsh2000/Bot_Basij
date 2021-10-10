@@ -8397,19 +8397,19 @@ if ($textmessage == '/tools' || $textmessage == '!tools' || $textmessage == '#to
 		'reply_markup' => json_encode([
 			'inline_keyboard' => [
 				[
-					['text' => 'Bold〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'Italic〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'],
+					['text' => 'Bold〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'Italic〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'],
 				],
 				[
-					['text' => 'Code〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'HyperLink〰', 'callback_data' => 'hyperlink'],
+					['text' => 'Code〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'HyperLink〰', 'callback_data' => 'hyperlink'],
 				],
 				[
-					['text' => 'TextFind✉️', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'],
+					['text' => 'TextFind✉️', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'],
 				],
 				[
 					['text' => 'Location📌', 'callback_data' => 'location'], ['text' => 'calculator📟', 'callback_data' => 'calc'],
 				],
 				[
-					['text' => 'Meℹ️', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'Echo💬', 'callback_data' => 'echo'],
+					['text' => 'Meℹ️', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'Echo💬', 'callback_data' => 'echo'],
 				],
 				[
 					['text' => 'StickerToPhoto🎑', 'callback_data' => 'stickertophoto'],
@@ -8452,19 +8452,19 @@ if ($data == "location") {
 		'reply_markup' => json_encode([
 			'inline_keyboard' => [
 				[
-					['text' => 'Bold〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'Italic〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'],
+					['text' => 'Bold〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'Italic〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'],
 				],
 				[
-					['text' => 'Code〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'HyperLink〰', 'callback_data' => 'hyperlink'],
+					['text' => 'Code〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'HyperLink〰', 'callback_data' => 'hyperlink'],
 				],
 				[
-					['text' => 'Time/date🕐', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'TextFind✉️', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'],
+					['text' => 'Time/date🕐', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'TextFind✉️', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'],
 				],
 				[
 					['text' => 'Location📌', 'callback_data' => 'location'], ['text' => 'calculator📟', 'callback_data' => 'calc'],
 				],
 				[
-					['text' => 'Meℹ️', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'Echo💬', 'callback_data' => 'echo'],
+					['text' => 'Meℹ️', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'Echo💬', 'callback_data' => 'echo'],
 				],
 				[
 					['text' => 'StickerToPhoto🎑', 'callback_data' => 'stickertophoto'],
@@ -8512,19 +8512,19 @@ if ($data == "calc") {
 		'reply_markup' => json_encode([
 			'inline_keyboard' => [
 				[
-					['text' => 'Bold〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'Italic〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'],
+					['text' => 'Bold〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'Italic〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'],
 				],
 				[
-					['text' => 'Code〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'HyperLink〰', 'callback_data' => 'hyperlink'],
+					['text' => 'Code〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'HyperLink〰', 'callback_data' => 'hyperlink'],
 				],
 				[
-					['text' => 'Time/date🕐', 'callback_data' => 'timdate'], ['text' => 'TextFind✉️', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'],
+					['text' => 'Time/date🕐', 'callback_data' => 'timdate'], ['text' => 'TextFind✉️', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'],
 				],
 				[
 					['text' => 'Location📌', 'callback_data' => 'location'], ['text' => 'calculator📟', 'callback_data' => 'calc'],
 				],
 				[
-					['text' => 'Meℹ️', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'Echo💬', 'callback_data' => 'echo'],
+					['text' => 'Meℹ️', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'Echo💬', 'callback_data' => 'echo'],
 				],
 				[
 					['text' => 'StickerToPhoto🎑', 'callback_data' => 'stickertophoto'],
@@ -8565,19 +8565,19 @@ if ($data == "echo") {
 		'reply_markup' => json_encode([
 			'inline_keyboard' => [
 				[
-					['text' => 'Bold〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'Italic〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'],
+					['text' => 'Bold〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'Italic〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'],
 				],
 				[
-					['text' => 'Code〰', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'HyperLink〰', 'callback_data' => 'hyperlink'],
+					['text' => 'Code〰', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'HyperLink〰', 'callback_data' => 'hyperlink'],
 				],
 				[
-					['text' => 'Time/date🕐', 'callback_data' => 'timdate'], ['text' => 'TextFind✉️', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'],
+					['text' => 'Time/date🕐', 'callback_data' => 'timdate'], ['text' => 'TextFind✉️', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'],
 				],
 				[
 					['text' => 'Location📌', 'callback_data' => 'location'], ['text' => 'calculator📟', 'callback_data' => 'calc'],
 				],
 				[
-					['text' => 'Meℹ️', 'url' => 'https://telegram.me/share/text?text=@akhlaghiQoutes+Text'], ['text' => 'Echo💬', 'callback_data' => 'echo'],
+					['text' => 'Meℹ️', 'url' => 'https://telegram.me/share/text?text=@' . $channel . '+Text'], ['text' => 'Echo💬', 'callback_data' => 'echo'],
 				],
 				[
 					['text' => 'StickerToPhoto🎑', 'callback_data' => 'stickertophoto'],
