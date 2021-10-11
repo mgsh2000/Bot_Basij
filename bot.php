@@ -3,7 +3,7 @@ include('config.php');
 // ?? means that I should take a look at the line, later ...
 // define('API_KEY', '1497141769:AAGIWCHGlLAzxFqNdY9Ch-WF0YBcBgRZBGY');
 //----######------
-//---------
+//--------- 
 $update = json_decode(file_get_contents('php://input'));
 var_dump($update);
 //=========
