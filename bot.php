@@ -1,6 +1,7 @@
 <?php
+include('config.php');
 // ?? means that I should take a look at the line, later ...
-define('API_KEY', '1497141769:AAGIWCHGlLAzxFqNdY9Ch-WF0YBcBgRZBGY');
+// define('API_KEY', '1497141769:AAGIWCHGlLAzxFqNdY9Ch-WF0YBcBgRZBGY');
 //----######------
 //---------
 $update = json_decode(file_get_contents('php://input'));
@@ -25,12 +26,12 @@ $reply2 = $update->message->reply_to_message->chat->id;
 $replyname = $update->message->reply_to_message->from->first_name;
 $replyusername = $update->message->reply_to_message->from->username;
 $stickerid = $update->message->reply_to_message->sticker->file_id;
-$admin = 198532866; //ایدی سودو
-$idbot = 1497141769; //ایدی ربات
-$botname = "AziatKonBot";
-$botusername = "@g451managerbot";
-$botusername2 = "g451managerbot";
-$channel = "akhlaghiQoutes";
+// $admin = 198532866; //ایدی سودو
+// $idbot = 1497141769; //ایدی ربات
+// $botname = "AziatKonBot";
+// $botusername = "@g451managerbot";
+// $botusername2 = "g451managerbot";
+// $channel = "akhlaghiQoutes";
 $versionbot = "4.7.2";
 $forward = $update->message->forward_from;
 $photo = $update->message->photo;
