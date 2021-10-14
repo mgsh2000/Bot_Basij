@@ -47,3 +47,31 @@ if( isset($update_array["message"]["reply_to_message"]) ) {
 
 
 ?>
+<?php
+// Load composer
+require __DIR__ . '/vendor/autoload.php';
+
+$config =  json_decode(file_get_contents("config.json"));
+
+$bot_api_key  = $config->token;
+$bot_username = $config->name;
+
+$commands_paths = [
+    __DIR__ . '/Commands',
+];
+
+try {
+    // Create Telegram API object
+    $telegram = new Longman\TelegramBot\Telegram($bot_api_key, $bot_username);
+    $telegram->addCommandsPaths($commands_paths);
+
+    // Handle telegram webhook request
+    $telegram->handle();
+
+} catch (Longman\TelegramBot\Exception\TelegramException $e) {
+    // Silence is golden!
+    // log telegram errors
+    // echo $e->getMessage();
+    //Save string to log, use FILE_APPEND to append.
+    file_put_contents('./log_'.date("j.n.Y").'.log', date("H:i:s",time())."\t".$e->getMessage(), FILE_APPEND);
+}

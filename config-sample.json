@@ -1,0 +1,17 @@
+{
+    "token" : "",
+    "name" : "",
+    "hook" : "",
+
+    "db" : {
+        "host" : "localhost", 
+        "port" : "3306",
+        "name" : "",
+        "password" : "",
+        "database" : ""
+    },
+
+    "cat" : {
+	category name : it's channel id
+    }
+}
