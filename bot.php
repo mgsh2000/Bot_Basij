@@ -1,19 +1,20 @@
 <?php
-include('config.php');
+include 'config.php';
+// require_once 'recieve_gif.php';
+// send_reply
+// exec_curl_request
 // ?? means that I should take a look at the line, later ...
-// define('API_KEY', '1497141769:AAGIWCHGlLAzxFqNdY9Ch-WF0YBcBgRZBGY');
-//----######------
-//--------- 
+//----######------ 
 $update = json_decode(file_get_contents('php://input'));
 var_dump($update);
 //=========
 mkdir("data/$chat_id2/settings");
 mkdir("data/$chat_id2");
-// $test_var = $update->
 
 $chat_id = $update->message->chat->id;
 $message_id = $update->message->message_id;
 $from_id = $update->message->from->id;
+$user_id = $form_id;
 $name = $update->message->from->first_name;
 $type2 = $update->message->chat->type;
 $username = $update->message->from->username;
@@ -26,12 +27,6 @@ $reply2 = $update->message->reply_to_message->chat->id;
 $replyname = $update->message->reply_to_message->from->first_name;
 $replyusername = $update->message->reply_to_message->from->username;
 $stickerid = $update->message->reply_to_message->sticker->file_id;
-// $admin = 198532866; //ایدی سودو
-// $idbot = 1497141769; //ایدی ربات
-// $botname = "AziatKonBot";
-// $botusername = "@g451managerbot";
-// $botusername2 = "g451managerbot";
-// $channel = "akhlaghiQoutes";
 $versionbot = "4.7.2";
 $forward = $update->message->forward_from;
 $photo = $update->message->photo;
@@ -183,7 +178,7 @@ $_warnmedia2 = file_get_contents("data/$chat_id/settings/warnmedia.txt");
 $gpis = json_decode(file_get_contents("gplist.js"));
 $linkjsa = $gpis->test->gplink;
 
-//------- after 'getcreator' function :
+//-------  
 $getChatMember = json_decode(file_get_contents("https://api.telegram.org/bot$token/getChatMember?chat_id=$chat_id&user_id=$idbot"));
 $resultChat = $getChatMember->result;
 $mstatus = $getChatMember->result->status;
@@ -217,7 +212,8 @@ function apiRequest($method, $parameters)
 	curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 5);
 	curl_setopt($handle, CURLOPT_TIMEOUT, 60);
-	return curl_exec($handle);
+	// return curl_exec($handle);
+	return exec_curl_request($handle);
 }
 
 function send_reply($method, $datas = [])
@@ -303,7 +299,7 @@ function Forward($KojaShe, $AzKoja, $KodomMSG)
 	]);
 }
 
-function save($filename, $TXTdata)
+function save($filename, $TXTdata = "")
 {
 	$myfile = fopen($filename, "w") or die("Unable to open file!");
 	fwrite($myfile, "$TXTdata");
@@ -7787,7 +7783,7 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 	}
 	if ($textmessage == '/unmuteuser' || $textmessage == '!unmuteuser' || $textmessage == '#unmuteuser') {
 		if ($reply != $admin && $reply != $owner && $reply != $modlist) {
-			// ?? $muteuserlist == str_replace("data/$chat_id/muteuserlist.txt");
+			$muteuserlist == str_replace("data/$chat_id/muteuserlist.txt");
 			$newlist = str_replace("$reply\n", "", $muteuserlist);
 			save("data/$chat_id/muteuserlist.txt", $newlist);
 			if ($replyusername != "") {
@@ -7854,7 +7850,7 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			}
 			fclose($fp);
 			if ($ekhtart >= 1) {
-				// ?? $ekhtarlist == str_replace("data/$chat_id/member/" . $reply . "3.txt");
+				$ekhtarlist == str_replace("data/$chat_id/member/" . $reply . "3.txt");
 				$newlist = str_replace("$ekhtart\n", "", $ekhtarlist);
 				save("data/$chat_id/member/" . $reply . "3.txt", $newlist);
 				if ($replyusername != "") {
@@ -7900,7 +7896,7 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 				mkdir("data/$chat_id/whitelist");
 			}
 			if (!file_exists("data/$chat_id/whitelist/list.txt")) {
-				// ?? save("data/$chat_id/whitelist/list.txt");
+				save("data/$chat_id/whitelist/list.txt");
 			}
 			$myfile2 = fopen("data/$chat_id/whitelist/list.txt", "a") or die("Unable to open file!");
 			fwrite($myfile2, "$reply\n");
@@ -7929,7 +7925,7 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 				mkdir("data/$chat_id/whitelist");
 			}
 			if (!file_exists("data/$chat_id/whitelist/list.txt")) {
-				// ?? save("data/$chat_id/whitelist/list.txt");
+				save("data/$chat_id/whitelist/list.txt");
 			}
 			$newlist = str_replace("$reply\n", "", $whitelist);
 			save("data/$chat_id/whitelist/list.txt", $newlist);
@@ -8070,7 +8066,7 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 	}
 	if ($textmessage == '/unmuteuser' && $_muteuser3 == "❌" || $textmessage == '!unmuteuser' && $_muteuser3 == "❌" || $textmessage == '#unmuteuser' && $_muteuser3 == "❌") {
 		if ($reply != $admin && $reply != $owner && $reply != $modlist) {
-			// ?? $muteuserlist == str_replace("data/$chat_id/muteuserlist.txt");
+			 $muteuserlist == str_replace("data/$chat_id/muteuserlist.txt");
 			$newlist = str_replace("$reply\n", "", $muteuserlist);
 			save("data/$chat_id/muteuserlist.txt", $newlist);
 			if ($replyusername != "") {
@@ -8138,7 +8134,7 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			}
 			fclose($fp);
 			if ($ekhtart >= 1) {
-				// ?? $ekhtarlist == str_replace("data/$chat_id/member/" . $reply . "3.txt");
+				 $ekhtarlist == str_replace("data/$chat_id/member/" . $reply . "3.txt");
 				$newlist = str_replace("$ekhtart\n", "", $ekhtarlist);
 				save("data/$chat_id/member/" . $reply . "3.txt", $newlist);
 				if ($replyusername != "") {
@@ -8319,16 +8315,12 @@ if ($textmessage == "/stats all" && $from_id == $admin || $textmessage == "!stat
 
 
 if (isset($update->inline_query)) {
-	$time = file_get_contents("http://irapi.ir/time");
-	// ?? $fatime = $time->result->FAtime;
-	// ?? $fadate = $time->FAdate;
-	// ?? $fadate = $time->ENdate;
 	$from_id = $update->inline_query->from->id;
 	$lname = $update->inline_query->from->last_name;
 	$fname = $update->inline_query->from->first_name;
 	$username = $update->inline_query->from->username;
 	$inline_id = $update->inline_query->id;
-	$inline_m = $update->inline_query->query;
+	$inline_qu = $update->inline_query->query;
 	$callback_data = $update->callback_query->data;
 	$callback_id = $update->callback_query->id;
 
@@ -8337,48 +8329,10 @@ if (isset($update->inline_query)) {
 	// search
 	// recieve in an arrsy
 
-	$result = json_encode([
-		[
-			'type' => 'article',
-			'id' => base64_encode(4),
-			'title' => 'Meℹ️',
-			'input_message_content' => [
-				'message_text' => '<b>-----Your Info-----</b><br><br>'.
-					'👤<b>Name</b> : ' . $fname . ' ' . $lname . '<br><br>'.
-					'🆔<b>UserName</b> : <a href="t.me/' . $username . '">@' . $username . '</a><br><br>'.
-					'🆔<b>ID</b> : ' . $from_id . '<br>',
-				'parse_mode' => 'HTML'
-			]
-		], [
-			'type' => 'article',
-			'id' => base64_encode(1),
-			'title' => 'Bold ' . ($inline_m),
-			'input_message_content' => [
-				'message_text' => '<b>' . ($inline_m) . '</b>',
-				'parse_mode' => 'HTML'
-			]
-		],
-		[
-			'type' => 'article',
-			'id' => base64_encode(2),
-			'title' => 'Italic ' . ($inline_m),
-			'input_message_content' => [
-				'message_text' => '<i>' . ($inline_m) . '</i>',
-				'parse_mode' => 'HTML'
-			]
-		],
-		[
-			'type' => 'article',
-			'id' => base64_encode(3),
-			'title' => 'Code ' . ($inline_m),
-			'input_message_content' => [
-				'message_text' => '<code>' . ($inline_m) . '</code>',
-				'parse_mode' => 'HTML'
-			]
-		]
-			]);
+	$post_params = request_gif( $inline_id , $inline_qu , $chat_id);
+	send_reply('answerInlineQuery', $post_params);
 
-	send_reply('answerInlineQuery', [ 'inline_query_id' => $inline_id, 'results' => $result ]);
+	// send_reply('answerInlineQuery', [ 'inline_query_id' => $inline_id, 'results' => $result ]);
 }
 //end inline
 

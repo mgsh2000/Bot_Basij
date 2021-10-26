@@ -7,5 +7,4 @@ $botname = "AziatKonBot";
 $botusername = "@g451managerbot";
 $botusername2 = "g451managerbot";
 $channel = "akhlaghiQoutes";
-
 ?>
