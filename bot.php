@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-// require_once 'recieve_gif.php';
+require_once 'recieve_gif.php';
 // send_reply
 // exec_curl_request
 // ?? means that I should take a look at the line, later ...
