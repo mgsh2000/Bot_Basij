@@ -1,59 +1,58 @@
 <?php
-include 'config.php';
-require_once 'recieve_gif.php';
+include_once 'config.php';
 // send_reply
 // exec_curl_request
 // ?? means that I should take a look at the line, later ...
 //----######------ 
-$update = json_decode(file_get_contents('php://input'));
-var_dump($update);
+$update_obj = json_decode(file_get_contents('php://input'));
+var_dump($update_obj);
 //=========
 mkdir("data/$chat_id2/settings");
 mkdir("data/$chat_id2");
 
-$chat_id = $update->message->chat->id;
-$message_id = $update->message->message_id;
-$from_id = $update->message->from->id;
+$chat_id = $update_obj->message->chat->id;
+$message_id = $update_obj->message->message_id;
+$from_id = $update_obj->message->from->id;
 $user_id = $form_id;
-$name = $update->message->from->first_name;
-$type2 = $update->message->chat->type;
-$username = $update->message->from->username;
-$gpname = $update->message->chat->title;
-$textmessage = isset($update->message->text) ? $update->message->text : '';
-$txtmsg = $update->message->text;
-$replytext = $update->message->reply_to_message->text;
-$reply = $update->message->reply_to_message->from->id;
-$reply2 = $update->message->reply_to_message->chat->id;
-$replyname = $update->message->reply_to_message->from->first_name;
-$replyusername = $update->message->reply_to_message->from->username;
-$stickerid = $update->message->reply_to_message->sticker->file_id;
+$name = $update_obj->message->from->first_name;
+$type2 = $update_obj->message->chat->type;
+$username = $update_obj->message->from->username;
+$gpname = $update_obj->message->chat->title;
+$textmessage = isset($update_obj->message->text) ? $update_obj->message->text : '';
+$txtmsg = $update_obj->message->text;
+$replytext = $update_obj->message->reply_to_message->text;
+$reply = $update_obj->message->reply_to_message->from->id;
+$reply2 = $update_obj->message->reply_to_message->chat->id;
+$replyname = $update_obj->message->reply_to_message->from->first_name;
+$replyusername = $update_obj->message->reply_to_message->from->username;
+$stickerid = $update_obj->message->reply_to_message->sticker->file_id;
 $versionbot = "4.7.2";
-$forward = $update->message->forward_from;
-$photo = $update->message->photo;
-$video = $update->message->video;
-$location = $update->message->location;
-$joinusername = $update->message->new_chat_member->from->username;
-$joinmember = $update->message->new_chat_member;
-$leftmember = $update->message->left_chat_member;
-$sticker = $update->message->sticker;
-$document = $update->message->document;
-$contact = $update->message->contact;
-$game = $update->message->game;
-$music = $update->message->audio;
-$gif = $update->message->gif;
-$voice = $update->message->voice;
-$edit = $update->edited_message;
+$forward = $update_obj->message->forward_from;
+$photo = $update_obj->message->photo;
+$video = $update_obj->message->video;
+$location = $update_obj->message->location;
+$joinusername = $update_obj->message->new_chat_member->from->username;
+$joinmember = $update_obj->message->new_chat_member;
+$leftmember = $update_obj->message->left_chat_member;
+$sticker = $update_obj->message->sticker;
+$document = $update_obj->message->document;
+$contact = $update_obj->message->contact;
+$game = $update_obj->message->game;
+$music = $update_obj->message->audio;
+$gif = $update_obj->message->gif;
+$voice = $update_obj->message->voice;
+$edit = $update_obj->edited_message;
 $chatsuper = str_replace("-", "", $chat_id);
 $step = file_get_contents("step.txt");
-$type = $update->callback_query->message->chat->type;
-$from_id2 = $update->callback_query->from->id;
-$cblock = $update->callback_query->message->getmember->user;
+$type = $update_obj->callback_query->message->chat->type;
+$from_id2 = $update_obj->callback_query->from->id;
+$cblock = $update_obj->callback_query->message->getmember->user;
 $token = "" . API_KEY . "";
-$gpname2 = $update->callback_query->message->chat->title;
-$chat_id2 = $update->callback_query->message->chat->id;
-$message_id2 = $update->callback_query->message->message_id;
-$name2 = $update->callback_query->from->first_name;
-$data = $update->callback_query->data;
+$gpname2 = $update_obj->callback_query->message->chat->title;
+$chat_id2 = $update_obj->callback_query->message->chat->id;
+$message_id2 = $update_obj->callback_query->message->message_id;
+$name2 = $update_obj->callback_query->from->first_name;
+$data = $update_obj->callback_query->data;
 $cmember = getChatMembersCount($chat_id2, $token);
 $owner = file_get_contents("data/$chat_id/owner.txt");
 $modlist = file_get_contents("data/$chat_id/modlist.txt");
@@ -173,6 +172,9 @@ $_muteuser2 = file_get_contents("data/$chat_id/settings/muteuser.txt");
 $_warn2 = file_get_contents("data/$chat_id/settings/warn.txt");
 $_warnsettings2 = file_get_contents("data/$chat_id/settings/warnsettings.txt");
 $_warnmedia2 = file_get_contents("data/$chat_id/settings/warnmedia.txt");
+
+require_once 'recieve_gif.php';
+
 //-------
 #$gpsettings = {"$chat_id":{"owner":"".$creator['id']."","modlist":"","filterword":"","whitelist":"","muteuserlist":"","banlist":"","gpwlc":"","gpbye":"","gplink":"","rules":"","botandwarn":{"floods":"5","warnlists":"4","cmd":"❌"},"adminlock":{"warnmedia":"❌","warnsettings":"❌","warn":"❌","unban":"❌","ban":"❌","kick":"❌"},"settings":"❌","media":"❌","gpsettings":{"flood":"✅","link":"✅","join":"❌","username":"❌","tag":"❌","chat":"❌","eng":"❌","fwd":"❌","arab":"❌","web":"❌","num":"❌","reply":"❌","edit":"❌","kickme":"❌","bot":"❌"},"gpmedia":{"gif":"❌","video":"❌","music":"❌","voice":"❌","photo":"❌","sticker":"❌","game":"❌","contact":"❌","document":"❌","location":"❌"}}};
 $gpis = json_decode(file_get_contents("gplist.js"));
@@ -216,20 +218,20 @@ function apiRequest($method, $parameters)
 	return exec_curl_request($handle);
 }
 
-function send_reply($method, $datas = [])
-{
-	$url = "https://api.telegram.org/bot" . API_KEY . "/" . $method;
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($datas));
-	$res = curl_exec($ch);
-	if (curl_error($ch)) {
-		var_dump(curl_error($ch));
-	} else {
-		return json_decode($res);
-	}
-}
+// function send_reply($method, $datas = [])
+// {
+// 	$url = "https://api.telegram.org/bot" . API_KEY . "/" . $method;
+// 	$ch = curl_init();
+// 	curl_setopt($ch, CURLOPT_URL, $url);
+// 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// 	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($datas));
+// 	$res = curl_exec($ch);
+// 	if (curl_error($ch)) {
+// 		var_dump(curl_error($ch));
+// 	} else {
+// 		return json_decode($res);
+// 	}
+// }
 
 function getcreator($chat_id, $token)
 {
@@ -615,7 +617,7 @@ if ($data == "group_media") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -638,7 +640,7 @@ Yes i am sure",
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -647,7 +649,7 @@ Yes i am sure",
 if ($textmessage == '/settings' || $textmessage == '!settings' || $textmessage == '#settings') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false) {
 		var_dump(send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			"text" => 'یکی از دکمه های زیر را انتخاب کنید.',
 			'parse_mode' => "Markdown",
 			'reply_markup' => json_encode([
@@ -742,7 +744,7 @@ if ($data == "settings") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -786,7 +788,7 @@ if ($data == "adminlock") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "فقط اونر گروه میتواند به این بخش دست رسی داشته باشد! 🏷",
 		]);
 	}
@@ -823,7 +825,7 @@ if ($data == "floodandwarn") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -846,7 +848,7 @@ if ($data == "filterlist") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -869,7 +871,7 @@ if ($data == "whitelist") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -893,7 +895,7 @@ if ($data == "muteuserlist") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -916,7 +918,7 @@ if ($data == "banlist") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -980,7 +982,7 @@ if ($data == "gpinfo") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -1044,7 +1046,7 @@ if ($data == "gpinfo2") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -1115,7 +1117,7 @@ if ($data == "group_settings") {
 		]));
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -1125,7 +1127,7 @@ if ($data == "minflood") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		if ($_floods == 3) {
 			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update->callback_query->id,
+				'callback_query_id' => $update_obj->callback_query->id,
 				'text' => "تعداد سیل باید بین 3 تا 15 باشد ! 🏷",
 			]);
 		}
@@ -1161,7 +1163,7 @@ if ($data == "minflood") {
 			]));
 		} else {
 			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update->callback_query->id,
+				'callback_query_id' => $update_obj->callback_query->id,
 				'text' => "شما ادمین نیستید! 🏷",
 			]);
 		}
@@ -1172,7 +1174,7 @@ if ($data == "maxflood") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		if ($_floods == 15) {
 			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update->callback_query->id,
+				'callback_query_id' => $update_obj->callback_query->id,
 				'text' => "تعداد سیل باید بین 3 تا 15 باشد ! 🏷",
 			]);
 		}
@@ -1208,7 +1210,7 @@ if ($data == "maxflood") {
 			]));
 		} else {
 			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update->callback_query->id,
+				'callback_query_id' => $update_obj->callback_query->id,
 				'text' => "شما ادمین نیستید! 🏷",
 			]);
 		}
@@ -1220,7 +1222,7 @@ if ($data == "minwarn") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		if ($warnlists2 == 1) {
 			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update->callback_query->id,
+				'callback_query_id' => $update_obj->callback_query->id,
 				'text' => "تعداد اخطار باید بین 1 تا 9 باشد ! 🏷",
 			]);
 		}
@@ -1256,7 +1258,7 @@ if ($data == "minwarn") {
 			]));
 		} else {
 			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update->callback_query->id,
+				'callback_query_id' => $update_obj->callback_query->id,
 				'text' => "شما ادمین نیستید! 🏷",
 			]);
 		}
@@ -1267,7 +1269,7 @@ if ($data == "maxwarn") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		if ($warnlists2 == 9) {
 			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update->callback_query->id,
+				'callback_query_id' => $update_obj->callback_query->id,
 				'text' => "تعداد اخطار باید بین 1 تا 9 باشد ! 🏷",
 			]);
 		}
@@ -1303,7 +1305,7 @@ if ($data == "maxwarn") {
 			]));
 		} else {
 			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update->callback_query->id,
+				'callback_query_id' => $update_obj->callback_query->id,
 				'text' => "شما ادمین نیستید! 🏷",
 			]);
 		}
@@ -1341,12 +1343,12 @@ if ($data == "lock_cmd" && $_lockcmd == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "دستورات برای کاربران غیر فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1383,12 +1385,12 @@ if ($data == "lock_cmd" && $_lockcmd == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "دستورات برای کاربران فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1435,12 +1437,12 @@ if ($data == "lock_kick" && $_kick == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "اخراج برای ادمین قفل شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1486,12 +1488,12 @@ if ($data == "lock_kick" && $_kick == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "اخراج برای ادمین فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1538,12 +1540,12 @@ if ($data == "lock_ban" && $_ban == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "بن برای ادمین قفل شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1589,12 +1591,12 @@ if ($data == "lock_ban" && $_ban == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "بن برای ادمین فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1640,12 +1642,12 @@ if ($data == "lock_unban" && $_unban == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "ان بن برای ادمین قفل شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1691,12 +1693,12 @@ if ($data == "lock_unban" && $_unban == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "ان بن برای ادمین فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1742,12 +1744,12 @@ if ($data == "lock_muteuser" && $_muteuser == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "میوت کردن برای ادمین قفل شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1793,12 +1795,12 @@ if ($data == "lock_muteuser" && $_muteuser == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "میوت کردن برای ادمین فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1844,12 +1846,12 @@ if ($data == "lock_settings" && $_settings == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "تنظیمات برای ادمین قفل شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1895,12 +1897,12 @@ if ($data == "lock_settings" && $_settings == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "ستینگ برای ادمین فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1946,12 +1948,12 @@ if ($data == "lock_media" && $_media == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "مدیا برای ادمین قفل شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -1997,12 +1999,12 @@ if ($data == "lock_media" && $_media == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "مدیا برای ادمین فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -2048,12 +2050,12 @@ if ($data == "lock_warn" && $_warn == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "اخطار برای ادمین قفل شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -2099,12 +2101,12 @@ if ($data == "lock_warn" && $_warn == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "اخطار برای ادمین فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما اونر نیستید! 🏷",
 		]);
 	}
@@ -2174,12 +2176,12 @@ if ($data == "lock_flood" && $_flood == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل سیل فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -2249,12 +2251,12 @@ if ($data == "lock_flood" && $_flood == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل سیل غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -2324,12 +2326,12 @@ if ($data == "lock_links" && $_link == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل لینک فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -2399,12 +2401,12 @@ if ($data == "lock_links" && $_link == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل لینک غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -2474,12 +2476,12 @@ if ($data == "lock_tag" && $_tag == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل هشتگ فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -2549,12 +2551,12 @@ if ($data == "lock_tag" && $_tag == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل هشتگ غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -2625,12 +2627,12 @@ if ($data == "lock_username" && $_username == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل یوزرنیم فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -2700,12 +2702,12 @@ if ($data == "lock_username" && $_username == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل یوزرنیم غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -2775,12 +2777,12 @@ if ($data == "lock_number" && $_num == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل عدد فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -2850,12 +2852,12 @@ if ($data == "lock_number" && $_num == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل عدد غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -2925,12 +2927,12 @@ if ($data == "lock_web" && $_web == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل وبسایت فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3000,12 +3002,12 @@ if ($data == "lock_web" && $_web == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل وبسایت غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3075,12 +3077,12 @@ if ($data == "lock_chat" && $_chat == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل چت فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3150,12 +3152,12 @@ if ($data == "lock_chat" && $_chat == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل چت غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3225,12 +3227,12 @@ if ($data == "lock_fwd" && $_fwd == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل فوروارد فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3300,12 +3302,12 @@ if ($data == "lock_fwd" && $_fwd == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل فوروارد غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3375,12 +3377,12 @@ if ($data == "lock_reply" && $_reply == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل ریپلی فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3450,12 +3452,12 @@ if ($data == "lock_reply" && $_reply == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل ریپلی غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3526,12 +3528,12 @@ if ($data == "lock_edit" && $_edit == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل ادیت فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3601,12 +3603,12 @@ if ($data == "lock_edit" && $_edit == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل ادیت غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3677,12 +3679,12 @@ if ($data == "lock_eng" && $_eng == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل انگلیسی فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3752,12 +3754,12 @@ if ($data == "lock_eng" && $_eng == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل انگلیسی غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3827,12 +3829,12 @@ if ($data == "lock_arab" && $_arab == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل عربی/فارسی فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3902,12 +3904,12 @@ if ($data == "lock_arab" && $_arab == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل عربی/فارسی غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -3975,12 +3977,12 @@ if ($data == "lock_join" && $_join == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل عضویت فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -4047,12 +4049,12 @@ if ($data == "lock_join" && $_join == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل عضویت غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -4123,12 +4125,12 @@ if ($data == "lock_kickme" && $_kickme == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل اخراج فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -4198,12 +4200,12 @@ if ($data == "lock_kickme" && $_kickme == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل اخراج غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -4273,12 +4275,12 @@ if ($data == "lock_bots" && $_bot == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل وروود ربات فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -4348,12 +4350,12 @@ if ($data == "lock_bots" && $_bot == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل وروود ربات غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -4365,7 +4367,7 @@ if ($textmessage == '/lock links' || $textmessage == '!lock links' || $textmessa
 		send_reply(
 			'sendMessage',
 			[
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#Done
 *Link has been locked*',
 				'parse_mode' => "MarkDown"
@@ -4394,7 +4396,7 @@ if ($textmessage == '/lock join' || $textmessage == '!lock join' || $textmessage
 		send_reply(
 			'sendMessage',
 			[
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#Done
 *Join has been locked*',
 				'parse_mode' => "MarkDown"
@@ -4421,7 +4423,7 @@ if ($textmessage == '/lock chat' || $textmessage == '!lock chat' || $textmessage
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/chat.txt", "✅");
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#Done
 *Chat  has been locked*',
 			'parse_mode' => "MarkDown"
@@ -4448,7 +4450,7 @@ if ($textmessage == '/lock web' || $textmessage == '!lock web' || $textmessage =
 		send_reply(
 			'sendMessage',
 			[
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#Done
 *Web has been locked*',
 				'parse_mode' => "MarkDown"
@@ -4475,7 +4477,7 @@ if ($textmessage == '/lock number' || $textmessage == '!lock number' || $textmes
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/num.txt", "✅");
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#Done
 *Number has been locked*',
 			'parse_mode' => "MarkDown"
@@ -4500,7 +4502,7 @@ if ($textmessage == '/lock tag' || $textmessage == '!lock tag' || $textmessage =
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/tag.txt", "✅");
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#Done
 *Tag has been locked*',
 			'parse_mode' => "MarkDown"
@@ -4525,7 +4527,7 @@ if ($textmessage == '/lock username' || $textmessage == '!lock username' || $tex
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/username.txt", "✅");
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#Done
 *Username has been locked*',
 			'parse_mode' => "MarkDown"
@@ -4579,7 +4581,7 @@ if ($textmessage == '/lock forward' || $textmessage == '!lock forward' || $textm
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/fwd.txt", "✅");
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#Done
 *Forward has been locked*',
 			'parse_mode' => "MarkDown"
@@ -4604,7 +4606,7 @@ if ($textmessage == '/lock reply' || $textmessage == '!lock reply' || $textmessa
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/reply.txt", "✅");
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#Done
 *Reply has been locked*',
 			'parse_mode' => "MarkDown"
@@ -4629,7 +4631,7 @@ if ($textmessage == '/lock edit' || $textmessage == '!lock edit' || $textmessage
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/edit.txt", "✅");
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#Done
 *eEdit has been locked*',
 			'parse_mode' => "MarkDown"
@@ -4654,7 +4656,7 @@ if ($textmessage == '/lock english' || $textmessage == '!lock english'  || $text
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/eng.txt", "✅");
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#Done
 *English has been locked*',
 			'parse_mode' => "MarkDown"
@@ -4679,7 +4681,7 @@ if ($textmessage == '/lock kickme' || $textmessage == '!lock kickme' || $textmes
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/kickme.txt", "✅");
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#Done
 *Kickme has been locked*',
 			'parse_mode' => "MarkDown"
@@ -4779,12 +4781,12 @@ if ($data == "lock_sticker" && $_sticker == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل استیکر فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -4839,12 +4841,12 @@ if ($data == "lock_sticker" && $_sticker == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل استیکر غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -4900,12 +4902,12 @@ if ($data == "lock_photo" && $_photo == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل عکس فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -4960,12 +4962,12 @@ if ($data == "lock_photo" && $_photo == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل عکس غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5020,12 +5022,12 @@ if ($data == "lock_video" && $_video == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل فیلم فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5080,12 +5082,12 @@ if ($data == "lock_video" && $_video == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل فیلم غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5140,12 +5142,12 @@ if ($data == "lock_voice" && $_voice == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل وییس فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5200,12 +5202,12 @@ if ($data == "lock_voice" && $_voice == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل وییس غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5260,12 +5262,12 @@ if ($data == "lock_music" && $_music == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل اهنگ فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5320,12 +5322,12 @@ if ($data == "lock_music" && $_music == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل اهنگ غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5381,12 +5383,12 @@ if ($data == "lock_gif" && $_gif == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل عکس متحرک فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5441,12 +5443,12 @@ if ($data == "lock_gif" && $_gif == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل عکس متحرک غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5502,12 +5504,12 @@ if ($data == "lock_document" && $_document == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل فایل فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5562,12 +5564,12 @@ if ($data == "lock_document" && $_document == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل فایل غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5623,12 +5625,12 @@ if ($data == "lock_location" && $_location == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل لوکیشن فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5683,12 +5685,12 @@ if ($data == "lock_location" && $_location == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل لوکیشن غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5743,12 +5745,12 @@ if ($data == "lock_contact" && $_contact == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل شماره فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5803,12 +5805,12 @@ if ($data == "lock_contact" && $_contact == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل شماره غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5863,12 +5865,12 @@ if ($data == "lock_game" && $_game == "❌") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل بازی فعال شد ✅",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -5923,12 +5925,12 @@ if ($data == "lock_game" && $_game == "✅") {
 			])
 		]));
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل بازی غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update->callback_query->id,
+			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "شما ادمین نیستید! 🏷",
 		]);
 	}
@@ -6220,42 +6222,42 @@ if ($textmessage == '/unmute document' || $textmessage == '!unmute document' || 
 if (stripos($username, "Bot") !== false || stripos($username, "bot") !== false) {
 	if ($_bot2 == "✅") {
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#ربات_اخراج_شد
 										اوردن ربات در گروه ممنوع است. ',
 			'parse_mode' => 'HTML',
-			'reply_to_message_id' => $update->message->message_id,
+			'reply_to_message_id' => $update_obj->message->message_id,
 			'disable_web_page_preview' => true
 		]);
 		send_reply('kickChatMember', [
-			'chat_id' => $update->message->chat->id,
-			'user_id' => $update->message->from->id
+			'chat_id' => $update_obj->message->chat->id,
+			'user_id' => $update_obj->message->from->id
 		]);
 	}
 }
 
 if ($joinmember != null && $wlctext != "") {
 	send_reply('sendMessage', [
-		'chat_id' => $update->message->chat->id,
+		'chat_id' => $update_obj->message->chat->id,
 		'text' => "$wlctext",
 		'parse_mode' => 'HTML',
-		'reply_to_message_id' => $update->message->message_id,
+		'reply_to_message_id' => $update_obj->message->message_id,
 		'disable_web_page_preview' => true
 	]);
 }
 
 if ($leftmember != null && $byetext != "") {
 	send_reply('sendMessage', [
-		'chat_id' => $update->message->chat->id,
+		'chat_id' => $update_obj->message->chat->id,
 		'text' => "$byetext",
 		'parse_mode' => 'HTML',
-		'reply_to_message_id' => $update->message->message_id,
+		'reply_to_message_id' => $update_obj->message->message_id,
 		'disable_web_page_preview' => true
 	]);
 }
 
-$efrom_id = $update->edited_message->from->id;
-$echat_id = $update->edited_message->chat->id;
+$efrom_id = $update_obj->edited_message->from->id;
+$echat_id = $update_obj->edited_message->chat->id;
 $eowner = file_get_contents("data/$echat_id/owner.txt");
 $emodlist = file_get_contents("data/$echat_id/modlist.txt");
 $ewhitelist = file_get_contents("data/$echat_id/whitelist/list.txt");
@@ -6263,10 +6265,10 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 
 
 	if ($edit != null) {
-		$from_id = $update->edited_message->from->id;
-		$chat_id = $update->edited_message->chat->id;
+		$from_id = $update_obj->edited_message->from->id;
+		$chat_id = $update_obj->edited_message->chat->id;
 
-		$textmessage = isset($update->edited_message->text) ? $update->edited_message->text : '';
+		$textmessage = isset($update_obj->edited_message->text) ? $update_obj->edited_message->text : '';
 		$_link2 = file_get_contents("data/$chat_id/settings/link.txt");
 		$_flood2 = file_get_contents("data/$chat_id/settings/flood.txt");
 		$_chat2 = file_get_contents("data/$chat_id/settings/chat.txt");
@@ -6282,8 +6284,8 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 		if (stripos($textmessage, "t.me") !== false || stripos($textmessage, "telegram.me") !== false) {
 			if ($_link2 == "✅") {
 				send_reply('deletemessage', [
-					'chat_id' => $update->edited_message->chat->id,
-					'message_id' => $update->edited_message->message_id
+					'chat_id' => $update_obj->edited_message->chat->id,
+					'message_id' => $update_obj->edited_message->message_id
 				]);
 			}
 		}
@@ -6294,8 +6296,8 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 		) {
 			if ($_eng2 == "✅") {
 				send_reply('deletemessage', [
-					'chat_id' => $update->edited_message->chat->id,
-					'message_id' => $update->edited_message->message_id
+					'chat_id' => $update_obj->edited_message->chat->id,
+					'message_id' => $update_obj->edited_message->message_id
 				]);
 			}
 		}
@@ -6306,8 +6308,8 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 		) {
 			if ($_arab2 == "✅") {
 				send_reply('deletemessage', [
-					'chat_id' => $update->edited_message->chat->id,
-					'message_id' => $update->edited_message->message_id
+					'chat_id' => $update_obj->edited_message->chat->id,
+					'message_id' => $update_obj->edited_message->message_id
 				]);
 			}
 		}
@@ -6315,8 +6317,8 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 		if (stripos($textmessage, "#") !== false) {
 			if ($_tag2 == "✅") {
 				send_reply('deletemessage', [
-					'chat_id' => $update->edited_message->chat->id,
-					'message_id' => $update->edited_message->message_id
+					'chat_id' => $update_obj->edited_message->chat->id,
+					'message_id' => $update_obj->edited_message->message_id
 				]);
 			}
 		}
@@ -6324,8 +6326,8 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 		if (stripos($textmessage, "@") !== false) {
 			if ($_username2 == "✅") {
 				send_reply('deletemessage', [
-					'chat_id' => $update->edited_message->chat->id,
-					'message_id' => $update->edited_message->message_id
+					'chat_id' => $update_obj->edited_message->chat->id,
+					'message_id' => $update_obj->edited_message->message_id
 				]);
 			}
 		}
@@ -6333,8 +6335,8 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 		if (stripos($textmessage, "1") !== false || stripos($textmessage, "2") !== false || stripos($textmessage, "3") !== false || stripos($textmessage, "4") !== false || stripos($textmessage, "5") !== false || stripos($textmessage, "6") !== false || stripos($textmessage, "7") !== false || stripos($textmessage, "8") !== false || stripos($textmessage, "9") !== false || stripos($textmessage, "0") !== false) {
 			if ($_num2 == "✅") {
 				send_reply('deletemessage', [
-					'chat_id' => $update->edited_message->chat->id,
-					'message_id' => $update->edited_message->message_id
+					'chat_id' => $update_obj->edited_message->chat->id,
+					'message_id' => $update_obj->edited_message->message_id
 				]);
 			}
 		}
@@ -6342,20 +6344,20 @@ if ($efrom_id !== $admin && $efrom_id != $eowner && $efrom_id != $emodlist && $e
 		if (stripos($textmessage, "https") !== false || stripos($textmessage, "www") !== false) {
 			if ($_web2 == "✅") {
 				send_reply('deletemessage', [
-					'chat_id' => $update->edited_message->chat->id,
-					'message_id' => $update->edited_message->message_id
+					'chat_id' => $update_obj->edited_message->chat->id,
+					'message_id' => $update_obj->edited_message->message_id
 				]);
 			}
 		}
 	}
 
 	if ($edit != null) {
-		$chat_id = $update->edited_message->chat->id;
+		$chat_id = $update_obj->edited_message->chat->id;
 		$_edit2 = file_get_contents("data/$chat_id/settings/edit.txt");
 		if ($_edit2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->edited_message->chat->id,
-				'message_id' => $update->edited_message->message_id
+				'chat_id' => $update_obj->edited_message->chat->id,
+				'message_id' => $update_obj->edited_message->message_id
 			]);
 		}
 	}
@@ -6374,8 +6376,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 		$metti_khan2 = file_get_contents("flood/$timing-$from_id.txt");
 		if ($metti_khan2 >= $_floods2) {
 			send_reply('kickChatMember', [
-				'chat_id' => $update->message->chat->id,
-				'user_id' => $update->message->from->id
+				'chat_id' => $update_obj->message->chat->id,
+				'user_id' => $update_obj->message->from->id
 			]);
 			unlink("flood/$timing-$from_id.txt");
 			return false;
@@ -6384,16 +6386,16 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 	if (stripos($muteuserlist, "$from_id") !== false) {
 		send_reply('deletemessage', [
-			'chat_id' => $update->message->chat->id,
-			'message_id' => $update->message->message_id
+			'chat_id' => $update_obj->message->chat->id,
+			'message_id' => $update_obj->message->message_id
 		]);
 	}
 
 	if (stripos($textmessage, "t.me") !== false || stripos($textmessage, "telegram.me") !== false) {
 		if ($_link2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6404,8 +6406,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	) {
 		if ($_eng2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6416,8 +6418,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	) {
 		if ($_arab2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6425,8 +6427,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if (stripos($textmessage, "#") !== false) {
 		if ($_tag2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6434,8 +6436,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if (stripos($textmessage, "@") !== false) {
 		if ($_username2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6443,8 +6445,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($textmessage != null) {
 		if ($_chat2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6452,8 +6454,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if (stripos($textmessage, "1") !== false || stripos($textmessage, "2") !== false || stripos($textmessage, "3") !== false || stripos($textmessage, "4") !== false || stripos($textmessage, "5") !== false || stripos($textmessage, "6") !== false || stripos($textmessage, "7") !== false || stripos($textmessage, "8") !== false || stripos($textmessage, "9") !== false || stripos($textmessage, "0") !== false) {
 		if ($_num2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6461,8 +6463,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if (stripos($textmessage, "https") !== false || stripos($textmessage, "www") !== false) {
 		if ($_web2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6470,8 +6472,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if (strpos($filterlist, $textmessage) !== false) {
 		if ($from_id !== $admin && $from_id !== $owner && $from_id != $modlist && $whitelist != $from_id) {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6480,8 +6482,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($forward != null) {
 		if ($_fwd2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6489,8 +6491,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($game != null) {
 		if ($_game2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6498,8 +6500,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($contact != null) {
 		if ($_contact2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6507,8 +6509,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($photo != null) {
 		if ($_photo2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6516,8 +6518,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($location != null) {
 		if ($_location2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6525,8 +6527,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($sticker != null) {
 		if ($_sticker2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6534,8 +6536,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($video != null) {
 		if ($_video2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6543,8 +6545,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($voice != null) {
 		if ($_voice2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6552,8 +6554,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($music != null) {
 		if ($_music2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6561,8 +6563,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($gif != null) {
 		if ($_gif2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6570,8 +6572,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($document != null) {
 		if ($_document2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6579,8 +6581,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 	if ($reply != null) {
 		if ($_reply2 == "✅") {
 			send_reply('deletemessage', [
-				'chat_id' => $update->message->chat->id,
-				'message_id' => $update->message->message_id
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
 			]);
 		}
 	}
@@ -6588,8 +6590,8 @@ if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitel
 
 if ($textmessage == "/kickme" || $textmessage == "!kickme" || $textmessage == "#kickme") {
 	send_reply('kickChatMember', [
-		'chat_id' => $update->message->chat->id,
-		'user_id' => $update->message->from->id
+		'chat_id' => $update_obj->message->chat->id,
+		'user_id' => $update_obj->message->from->id
 	]);
 }
 
@@ -6612,7 +6614,7 @@ if ($_lockcmd2 == "❌" || $admin == $from_id || $owner == $from_id || strpos($m
 			$ekhtart3++;
 		}
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			"text" => '<b>-----Your Info-----</b>
 
 👤<b>Name</b> : ' . $name . '
@@ -6634,7 +6636,7 @@ if ($_lockcmd2 == "❌" || $admin == $from_id || $owner == $from_id || strpos($m
 👮Warn From Admin 
 ' . $ekhtart3 . '|' . $warnlists . ' ',
 			'parse_mode' => 'HTML',
-			'reply_to_message_id' => $update->message->message_id,
+			'reply_to_message_id' => $update_obj->message->message_id,
 			'disable_web_page_preview' => true
 		]);
 	}
@@ -6646,7 +6648,7 @@ if ($_lockcmd2 == "❌" || $admin == $from_id || $owner == $from_id || strpos($m
 				'text' => "تنظیمات گروه در پیوی شما ارسال شد
 					اگر تنظیماتو دریافت نکردید اول در ربات استارت کنید",
 				'parse_mode' => 'HTML',
-				'reply_to_message_id' => $update->message->message_id,
+				'reply_to_message_id' => $update_obj->message->message_id,
 				'disable_web_page_preview' => true
 
 			]);
@@ -6660,7 +6662,7 @@ if ($_lockcmd2 == "❌" || $admin == $from_id || $owner == $from_id || strpos($m
 				$ekhtart3++;
 			}
 			var_dump(send_reply('sendMessage', [
-				'chat_id' => $update->message->from->id,
+				'chat_id' => $update_obj->message->from->id,
 				"text" => 'SuperGroup/Group Settings and Media
 
 ❌ = unlock
@@ -6769,7 +6771,7 @@ your warn
 
 	if ($textmessage == "/me" || $textmessage == "!me" || $textmessage == "#me") {
 		send_reply('sendPhoto', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'photo' => $getuserphoto,
 			'caption' => '
 👤Name : ' . $name . '
@@ -6779,7 +6781,7 @@ your warn
 🆔ID : ' . $from_id . '
 
 🆔Count Your Photo : ' . $cuphoto . ' ',
-			'reply_to_message_id' => $update->message->message_id,
+			'reply_to_message_id' => $update_obj->message->message_id,
 		]);
 	}
 
@@ -6795,11 +6797,11 @@ your warn
 			$ekhtart3++;
 		}
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			"text" => '<b>-----Your Warn-----</b>
 ' . $ekhtart3 . '|' . $warnlists . ' ',
 			'parse_mode' => 'HTML',
-			'reply_to_message_id' => $update->message->message_id,
+			'reply_to_message_id' => $update_obj->message->message_id,
 			'disable_web_page_preview' => true
 		]);
 	}
@@ -6840,9 +6842,9 @@ your warn
 	if (strpos($textmessage, '/echo ') !== false) {
 		$text = str_replace("/echo ", "", $textmessage);
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			"text" => "$text",
-			'reply_to_message_id' => $update->message->message_id,
+			'reply_to_message_id' => $update_obj->message->message_id,
 			'disable_web_page_preview' => true
 		]);
 	}
@@ -6850,13 +6852,13 @@ your warn
 	if (strpos($textmessage, '/getpro ') !== false) {
 		$text = str_replace("/getpro ", "", $textmessage);
 		send_reply('sendPhoto', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'photo' => $getuserprofile->photos[$text - 1][0]->file_id,
 			'caption' => '
 👤Your Number Photo: ' . $text . '
 
 🆔Count Your Photo : ' . $cuphoto . ' ',
-			'reply_to_message_id' => $update->message->message_id,
+			'reply_to_message_id' => $update_obj->message->message_id,
 		]);
 	}
 }
@@ -7140,7 +7142,7 @@ if ($textmessage == 'ping' || $textmessage == '/ping' || $textmessage == '!ping'
 			'chat_id' => $chat_id,
 			'text' => "*Online*  😎",
 			'parse_mode' => 'MarkDown',
-			'reply_to_message_id' => $update->message->message_id,
+			'reply_to_message_id' => $update_obj->message->message_id,
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
@@ -7444,7 +7446,7 @@ if ($textmessage == "/delwlc" || $textmessage == "!delwlc" || $textmessage == "#
 		send_reply('sendmessage', [
 			'chat_id' => $chat_id,
 			'text' => "با موفقیت پیغام خوش آمد گویی حذف شد",
-			'reply_to_message_id' => $update->message->message_id,
+			'reply_to_message_id' => $update_obj->message->message_id,
 		]);
 	}
 }
@@ -7485,7 +7487,7 @@ if ($textmessage == "/delbye" || $textmessage == "!delbye" || $textmessage == "#
 		send_reply('sendmessage', [
 			'chat_id' => $chat_id,
 			'text' => "با موفقیت پیغام خداحافظی حذف شد",
-			'reply_to_message_id' => $update->message->message_id,
+			'reply_to_message_id' => $update_obj->message->message_id,
 		]);
 	}
 }
@@ -7497,7 +7499,7 @@ if ($textmessage == "/link" || $textmessage == "!link" || $textmessage == "#link
 		'text' => "Group Link
 $gplink",
 		'parse_mode' => 'HTML',
-		'reply_to_message_id' => $update->message->message_id,
+		'reply_to_message_id' => $update_obj->message->message_id,
 		'disable_web_page_preview' => true
 	]);
 }
@@ -7524,14 +7526,14 @@ if (strpos($textmessage, '/ban ') !== false) {
 		$text = str_replace("/ban ", "", $textmessage);
 		if ($text != $admin && $text != $owner && $text != $modlist) {
 			send_reply('kickChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $text
 			]);
 			$myfile2 = fopen("data/$chat_id/banlist/list.txt", "a") or die("Unable to open file!");
 			fwrite($myfile2, "$text\n");
 			fclose($myfile2);
 			send_reply('sendMessage', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه بن شد ',
 				'parse_mode' => 'HTML',
@@ -7546,15 +7548,15 @@ if (strpos($textmessage, '/kick ') !== false) {
 		$text = str_replace("/kick ", "", $textmessage);
 		if ($text != $admin && $text != "@" && $text != $owner && $text != $modlist) {
 			send_reply('kickChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $text
 			]);
 			send_reply('unbanChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $text
 			]);
 			send_reply('sendMessage', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه اخراج شد ',
 				'parse_mode' => 'HTML',
@@ -7563,15 +7565,15 @@ if (strpos($textmessage, '/kick ') !== false) {
 		}
 		if ($text != $admin && strpos($text, "@") !== false && $text != $owner && $text != $modlist) {
 			send_reply('kickChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $text->id
 			]);
 			send_reply('unbanChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $text->id
 			]);
 			send_reply('sendMessage', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه اخراج شد ',
 				'parse_mode' => 'HTML',
@@ -7585,13 +7587,13 @@ if (strpos($textmessage, '/unban ') !== false) {
 		$text = str_replace("/unban ", "", $textmessage);
 		if ($text != $admin && $text != $owner && $text != $modlist) {
 			send_reply('unbanChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $text
 			]);
 			$newlist = str_replace("$text\n", "", $banlist);
 			save("data/$chat_id/banlist/list.txt", $newlist);
 			send_reply('sendMessage', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت ان بن شد',
 				'parse_mode' => 'HTML',
@@ -7664,7 +7666,7 @@ if ($textmessage == "/filterlist") {
 		'text' => "FilterList:
 $filterlist",
 		'parse_mode' => 'HTML',
-		'reply_to_message_id' => $update->message->message_id,
+		'reply_to_message_id' => $update_obj->message->message_id,
 		'disable_web_page_preview' => true
 	]);
 }
@@ -7672,25 +7674,25 @@ $filterlist",
 if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner) {
 	if ($textmessage == '/del' || $textmessage == '!del' || $textmessage == '#del') {
 		send_reply('deletemessage', [
-			'chat_id' => $update->message->chat->id,
-			'message_id' => $update->message->reply_to_message->message_id
+			'chat_id' => $update_obj->message->chat->id,
+			'message_id' => $update_obj->message->reply_to_message->message_id
 		]);
 		send_reply('deletemessage', [
-			'chat_id' => $update->message->chat->id,
-			'message_id' => $update->message->message_id
+			'chat_id' => $update_obj->message->chat->id,
+			'message_id' => $update_obj->message->message_id
 		]);
 	}
 	if ($textmessage == '/ban' || $textmessage == '!ban' || $textmessage == '#ban') {
 		if ($reply != $admin && $reply != $owner && $reply != $modlist) {
 			send_reply('kickChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $reply
 			]);
 			$myfile2 = fopen("data/$chat_id/banlist/list.txt", "a") or die("Unable to open file!");
 			fwrite($myfile2, "$reply\n");
 			fclose($myfile2);
 			send_reply('sendMessage', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه بن شد ',
 				'parse_mode' => 'HTML',
@@ -7701,15 +7703,15 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 	if ($textmessage == '/kick' || $textmessage == '!kick' || $textmessage == '#kick') {
 		if ($reply != $admin && $reply != $owner && $reply != $modlist) {
 			send_reply('kickChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $reply
 			]);
 			send_reply('unbanChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $reply
 			]);
 			send_reply('sendMessage', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه اخراج شد ',
 				'parse_mode' => 'HTML',
@@ -7720,13 +7722,13 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 	if ($textmessage == '/unban' || $textmessage == '!unban' || $textmessage == '#unban') {
 		if ($reply != $admin && $reply != $owner && $reply != $modlist) {
 			send_reply('unbanChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $reply
 			]);
 			$newlist = str_replace("$reply\n", "", $banlist);
 			save("data/$chat_id/banlist/list.txt", $newlist);
 			send_reply('sendMessage', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت ان بن شد ',
 				'parse_mode' => 'HTML',
@@ -7765,14 +7767,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			fclose($myfile2);
 			if ($replyusername != "") {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت به حالت سکوت رفت ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت به حالت سکوت رفت ',
 					'parse_mode' => 'HTML',
@@ -7788,14 +7790,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			save("data/$chat_id/muteuserlist.txt", $newlist);
 			if ($replyusername != "") {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت از حالت سکوت خارج شد',
 					'disable_web_page_preview' => true
 				]);
 			} else {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت از حالت سکوت خارج شد',
 					'parse_mode' => 'HTML',
@@ -7821,14 +7823,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			fclose($myfile2);
 			if ($replyusername != "") {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت اخطار گرفت ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت اخطار گرفت ',
 					'parse_mode' => 'HTML',
@@ -7855,14 +7857,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 				save("data/$chat_id/member/" . $reply . "3.txt", $newlist);
 				if ($replyusername != "") {
 					send_reply('sendMessage', [
-						'chat_id' => $update->message->chat->id,
+						'chat_id' => $update_obj->message->chat->id,
 						'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت اخطار حذف شد ',
 						'disable_web_page_preview' => true
 					]);
 				} else {
 					send_reply('sendMessage', [
-						'chat_id' => $update->message->chat->id,
+						'chat_id' => $update_obj->message->chat->id,
 						'text' => '#انجام_شد
 								' . $reply . ' با موفقیت اخطار حذف شد ',
 						'parse_mode' => 'HTML',
@@ -7873,14 +7875,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			if ($ekhtart == 0) {
 				if ($replyusername != "") {
 					send_reply('sendMessage', [
-						'chat_id' => $update->message->chat->id,
+						'chat_id' => $update_obj->message->chat->id,
 						'text' => '#انجام_شد
 								@' . $replyusername . ' هیچ اخطاری ندارد ',
 						'disable_web_page_preview' => true
 					]);
 				} else {
 					send_reply('sendMessage', [
-						'chat_id' => $update->message->chat->id,
+						'chat_id' => $update_obj->message->chat->id,
 						'text' => '#خطا
 								' . $reply . ' هیچ اخطاری ندارد ',
 						'parse_mode' => 'HTML',
@@ -7903,14 +7905,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			fclose($myfile2);
 			if ($replyusername != "") {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#Done
 								@' . $replyusername . ' has been add to whitelist ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#Done
 								' . $reply . ' has been add to whitelist',
 					'parse_mode' => 'HTML',
@@ -7931,14 +7933,14 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			save("data/$chat_id/whitelist/list.txt", $newlist);
 			if ($replyusername != "") {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#Done
 								@' . $replyusername . ' has been deleted to whitelist ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#Done
 								' . $reply . ' has been deleted to whitelist',
 					'parse_mode' => 'HTML',
@@ -7958,7 +7960,7 @@ if ($reply != null && $from_id == $admin || $reply != null && $from_id == $owner
 			$ekhtart3++;
 		}
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			"text" => 'Member Info
 
 Name: ' . $replyname . '
@@ -7980,24 +7982,24 @@ your warn
 if ($reply != null && strpos($modlist, "$from_id") !== false) {
 	if ($textmessage == '/del' || $textmessage == '!del' || $textmessage == '#del') {
 		send_reply('deletemessage', [
-			'chat_id' => $update->message->chat->id,
-			'message_id' => $update->message->reply_to_message->message_id
+			'chat_id' => $update_obj->message->chat->id,
+			'message_id' => $update_obj->message->reply_to_message->message_id
 		]);
 		send_reply('deletemessage', [
-			'chat_id' => $update->message->chat->id,
-			'message_id' => $update->message->message_id
+			'chat_id' => $update_obj->message->chat->id,
+			'message_id' => $update_obj->message->message_id
 		]);
 	}
 	if ($textmessage == '/ban' && $_ban3 == "❌" || $textmessage == '!ban' && $_ban3 == "❌" || $textmessage == '#ban' && $_ban3 == "❌") {
 		send_reply('kickChatMember', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'user_id' => $reply
 		]);
 		$myfile2 = fopen("data/$chat_id/banlist/list.txt", "a") or die("Unable to open file!");
 		fwrite($myfile2, "$reply\n");
 		fclose($myfile2);
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			'text' => '#انجام_شد
 								کاربر با موفقیت از گروه بن شد ',
 			'parse_mode' => 'HTML',
@@ -8007,15 +8009,15 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 	if ($textmessage == '/kick' && $_kick3 == "❌" || $textmessage == '!kick' && $_kick3 == "❌" || $textmessage == '#kick' && $_kick3 == "❌") {
 		if ($reply != $admin && $reply3 != $owner3 && $reply != $modlist3) {
 			send_reply('kickChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $reply
 			]);
 			send_reply('unbanChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $reply
 			]);
 			send_reply('sendMessage', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت از گروه اخراج شد ',
 				'parse_mode' => 'HTML',
@@ -8026,13 +8028,13 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 	if ($textmessage == '/unban' && $_unban3 == "❌" || $textmessage == '!unban' && $_unban3 == "❌" || $textmessage == '#unban' && $_unban3 == "❌") {
 		if ($reply != $admin && $reply != $owner3 && $reply != $modlist3) {
 			send_reply('unbanChatMember', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'user_id' => $reply
 			]);
 			$newlist = str_replace("$reply\n", "", $banlist);
 			save("data/$chat_id/banlist/list.txt", $newlist);
 			send_reply('sendMessage', [
-				'chat_id' => $update->message->chat->id,
+				'chat_id' => $update_obj->message->chat->id,
 				'text' => '#انجام_شد
 								کاربر با موفقیت ان بن شد ',
 				'parse_mode' => 'HTML',
@@ -8048,14 +8050,14 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			fclose($myfile2);
 			if ($replyusername != "") {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت به حالت سکوت رفت ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت به حالت سکوت رفت ',
 					'parse_mode' => 'HTML',
@@ -8071,14 +8073,14 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			save("data/$chat_id/muteuserlist.txt", $newlist);
 			if ($replyusername != "") {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت از حالت سکوت خارج شد',
 					'disable_web_page_preview' => true
 				]);
 			} else {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت از حالت سکوت خارج شد',
 					'parse_mode' => 'HTML',
@@ -8105,14 +8107,14 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			fclose($myfile2);
 			if ($replyusername != "") {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت اخطار گرفت ',
 					'disable_web_page_preview' => true
 				]);
 			} else {
 				send_reply('sendMessage', [
-					'chat_id' => $update->message->chat->id,
+					'chat_id' => $update_obj->message->chat->id,
 					'text' => '#انجام_شد
 								' . $reply . ' با موفقیت اخطار گرفت ',
 					'parse_mode' => 'HTML',
@@ -8139,14 +8141,14 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 				save("data/$chat_id/member/" . $reply . "3.txt", $newlist);
 				if ($replyusername != "") {
 					send_reply('sendMessage', [
-						'chat_id' => $update->message->chat->id,
+						'chat_id' => $update_obj->message->chat->id,
 						'text' => '#انجام_شد
 								@' . $replyusername . ' با موفقیت اخطار حذف شد ',
 						'disable_web_page_preview' => true
 					]);
 				} else {
 					send_reply('sendMessage', [
-						'chat_id' => $update->message->chat->id,
+						'chat_id' => $update_obj->message->chat->id,
 						'text' => '#انجام_شد
 								' . $reply . ' با موفقیت اخطار حذف شد ',
 						'parse_mode' => 'HTML',
@@ -8157,14 +8159,14 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			if ($ekhtart == 0) {
 				if ($replyusername != "") {
 					send_reply('sendMessage', [
-						'chat_id' => $update->message->chat->id,
+						'chat_id' => $update_obj->message->chat->id,
 						'text' => '#انجام_شد
 								@' . $replyusername . ' هیچ اخطاری ندارد ',
 						'disable_web_page_preview' => true
 					]);
 				} else {
 					send_reply('sendMessage', [
-						'chat_id' => $update->message->chat->id,
+						'chat_id' => $update_obj->message->chat->id,
 						'text' => '#خطا
 								' . $reply . ' هیچ اخطاری ندارد ',
 						'parse_mode' => 'HTML',
@@ -8186,7 +8188,7 @@ if ($reply != null && strpos($modlist, "$from_id") !== false) {
 			$ekhtart3++;
 		}
 		send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			"text" => 'Member Info
 
 Name: ' . $replyname . '
@@ -8314,15 +8316,15 @@ if ($textmessage == "/stats all" && $from_id == $admin || $textmessage == "!stat
 }
 
 
-if (isset($update->inline_query)) {
-	$from_id = $update->inline_query->from->id;
-	$lname = $update->inline_query->from->last_name;
-	$fname = $update->inline_query->from->first_name;
-	$username = $update->inline_query->from->username;
-	$inline_id = $update->inline_query->id;
-	$inline_qu = $update->inline_query->query;
-	$callback_data = $update->callback_query->data;
-	$callback_id = $update->callback_query->id;
+if (isset($update_obj->inline_query)) {
+	$from_id = $update_obj->inline_query->from->id;
+	$lname = $update_obj->inline_query->from->last_name;
+	$fname = $update_obj->inline_query->from->first_name;
+	$username = $update_obj->inline_query->from->username;
+	$inline_id = $update_obj->inline_query->id;
+	$inline_qu = $update_obj->inline_query->query;
+	$callback_data = $update_obj->callback_query->data;
+	$callback_id = $update_obj->callback_query->id;
 
 	// search a query in the database 
 	// connection
@@ -8331,8 +8333,7 @@ if (isset($update->inline_query)) {
 
 	$post_params = request_gif( $inline_id , $inline_qu , $chat_id);
 	send_reply('answerInlineQuery', $post_params);
-
-	// send_reply('answerInlineQuery', [ 'inline_query_id' => $inline_id, 'results' => $result ]);
+    
 }
 //end inline
 
@@ -8340,13 +8341,13 @@ if (isset($update->inline_query)) {
 if ($textmessage == '/tools' || $textmessage == '!tools' || $textmessage == '#tools') {
 	if ($type2 != "private") {
 		var_dump(send_reply('sendMessage', [
-			'chat_id' => $update->message->chat->id,
+			'chat_id' => $update_obj->message->chat->id,
 			"text" => 'در پی وی شما ارسال شد.',
 			'parse_mode' => "Markdown",
 		]));
 	}
 	var_dump(send_reply('sendMessage', [
-		'chat_id' => $update->message->from->id,
+		'chat_id' => $update_obj->message->from->id,
 		"text" => 'یکی از دکمه های زیر را انتخاب کنید.',
 		'parse_mode' => "Markdown",
 		'reply_markup' => json_encode([

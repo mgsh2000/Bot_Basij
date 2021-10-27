@@ -1,35 +1,29 @@
 <?php
 // force reply forces all to reply !!!!
+// desable force_reply
 // how to reply a message ?
 // save in Telegram URLs
 // using MPEG4-gif insteed of mp4
 // دلیل کار نکردن زبان فارسی در قسمت جستجو
 // ارسال اینلاین مود به صورت ویرایش متن پیام
+// delete incompleted DataBase rows
+// sending inline gif in gif format
+// controling gif name format
 
-define('API_KEY', '1497141769:AAGIWCHGlLAzxFqNdY9Ch-WF0YBcBgRZBGY');
-$bot_url =      "https://api.telegram.org/bot" . API_KEY;
-$bot_dl_url =   "https://api.telegram.org/file/bot" . API_KEY;
-$gif_saving_path = "https://botbasige.cptele.ir/mohamad_sharifi/former-php/gif";
-# DB variables :
-$DB_driver = "mysql";
-$DB_name = "botbasig_sharifi";
-$DB_username = "botbasig_mhmed";
-$DB_password = "sc0Z&FVLB}8e";
-$DNS = "$DB_driver:host=localhost;dbname=$DB_name;charset=utf8mb4";
+include_once 'config.php';
 
-
-$update = file_get_contents("php://input");
-$update_array = json_decode($update);
+// $update = file_get_contents("php://input");
+// $update_obj = json_decode($update);
     
-$please_send_us_gifname = "لطفا نام پیشنهادی برای گیف را برای ما بفرستید:";
-$please_send_us_the_gif = "لطفا فایل gif مد نظر رو برای ما بفرستید :";
+$please_send_us_gifname = "لطفا نام پیشنهادی برای گیف را به صورت پاسخ به همین پیام برای ما بفرستید";
+$please_send_us_the_gif = "لطفا فایل gif مد نظر رو به صورت پاسخی به همین پیام برای ما بفرستید :";
 $mg_file_recieved = "فایل gif مد نظر شما با موفقیت بارگذاری شد";
 
-if( isset($update_array->message) ) {
-    $user_id = $update_array->message->from->id;
-    $chat_id = $update_array->message->chat->id;
-    $type2 = $update_array->message->chat->type; // != update
-    $textmessage = isset($update_array->message->text) ? $update_array->message->text : "";
+if( isset($update_obj->message) ) {
+    $user_id = $update_obj->message->from->id;
+    $chat_id = $update_obj->message->chat->id;
+    $type2 = $update_obj->message->chat->type; // != update
+    $textmessage = isset($update_obj->message->text) ? $update_obj->message->text : "";
     // issue the step
     $connection = connect_to_db();
     try {
@@ -45,25 +39,22 @@ if( isset($update_array->message) ) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";                 
     }
 
-    $text_replied = isset($update_array->message->reply_to_message) ? 
-                    $update_array->message->reply_to_message->text : "";
-    if (isset ($update_array->message->animation)) {
-        $file_id        = $update_array->message->animation->file_id;
-        $mime_type	      = $update_array->message->animation->mime_type;
+    $text_replied = isset($update_obj->message->reply_to_message) ? 
+                    $update_obj->message->reply_to_message->text : "";
+    if (isset ($update_obj->message->animation)) {
+        $file_id        = $update_obj->message->animation->file_id;
+        $mime_type	      = $update_obj->message->animation->mime_type;
     }
     
 	// reply_to_message 
 	if ($textmessage == "/start") {
-		
-		$post_params    = [ 'chat_id' =>  $chat_id , 'text' => 'سلام! چه کاری از دستم بر میاد؟ :)'];
-		send_reply("sendMessage" , $post_params);
 		initial_user();
 	}
 	
-	if ($textmessage == '/newGIF' && $status < 30 && ($type2 == "supergroup" || $type2 == "group") ) { 
+	if ($textmessage == '/newGIF' /*&& $status < 70*/ && ($type2 == "supergroup" || $type2 == "group") ) { 
 		// starter of the function 
 		get_gifs_details($status);
-	} else if ($textmessage == '/newGIF') {
+	} else if ($textmessage == '/newGIF' && $type2 == "private") {
 	    $post_params    = [ 'chat_id' =>  $chat_id , 'text' => 'قابلیت ذخیره گیف فقط در داخل گروه ها امکان پذیره'];
 	    send_reply("sendMessage" , $post_params);
 	}
@@ -71,15 +62,7 @@ if( isset($update_array->message) ) {
 		// continuer
 		step_manager($status);
 	}
-} else if (isset($update_array->inline_query)) {
-    
-    $user_id          = $update_array->inline_query->from->id;
-    $inline_query     = $update_array->inline_query->query;
-    $inline_query_id  = $update_array->inline_query->id;
-    
-	$post_params = request_gif( $inline_query_id , $inline_query , $user_id);
-	send_reply('answerInlineQuery', $post_params);
-}
+} 
 
 // continue
 // we impliment this function just for get_gifs_details() but
@@ -92,8 +75,8 @@ function step_manager ($step) {
 }
 
 function initial_user() {
-	// zero step
-    // save chat id for everyuser
+    
+// save chat id for everyuser
 	$connection = connect_to_db();
 	$user_id = $GLOBALS['user_id']; 
 	try {
@@ -103,9 +86,27 @@ function initial_user() {
 	} catch (Exception $e) { 
 		echo 'Caught exception: ',  $e->getMessage(), "\n";               
 	}
+	
+// zero step
 	$result = $connection -> prepare("UPDATE users SET step = 0 WHERE userID = :user_id"); 
 	$result -> bindParam(":user_id" , $user_id);
 	$result -> execute();
+	
+// delete each incomplete Database row
+	$result = $connection -> prepare("SELECT * FROM gif_table"); 
+    $result -> execute();
+    $row = $result -> fetch();
+    if (isset($row['id'])) {
+        do {
+            if ($row['url'] == "" || $row['gif_name'] == "") {
+                // delte
+            	$result = $connection -> prepare("DELETE FROM gif_table WHERE id = :id");
+	    		$result -> bindParam(':id', $row['id']);
+                $result -> execute();
+                // $result = $connection -> query ("DELETE FROM gif_table WHERE id = $row['id']); 
+            }
+        } while ( $row = $result -> fetch() ) ;
+    }
 }
 
 
@@ -125,7 +126,7 @@ function get_gifs_details($step) {
 	}
 
 	$connection = connect_to_db();
-	$force_reply = ['force_reply' => true];
+// 	$force_reply = ['force_reply' => true];
 
 	switch ($step) {
 		case 60 :
@@ -133,19 +134,23 @@ function get_gifs_details($step) {
 			$step = 61; 
 			break;
 		case 61 :  // $recieve_the_gif_name  
-			$result = $connection -> prepare("INSERT INTO gif_table (gif_name , chat_id) VALUES (:text , :chat_id)");
-			$result -> bindParam(':text', $text);
-			$result -> bindParam(':chat_id', $chat_id);
-			$result -> execute();
-			
-			$reply = $connection ->lastInsertId()  . "\n" . $GLOBALS['please_send_us_the_gif'];
-			$step = 62;
+		    if(isset($GLOBALS['update_obj']->message->text) && substr($text , 0 , 1) != "/") { // ** if it's a proper text
+    			$result = $connection -> prepare("INSERT INTO gif_table (gif_name , chat_id) VALUES (:text , :chat_id)");
+    			$result -> bindParam(':text', $text);
+    			$result -> bindParam(':chat_id', $chat_id);
+    			$result -> execute();
+    			
+    			$reply = $connection ->lastInsertId()  . "\n" . $GLOBALS['please_send_us_the_gif'];
+    			$step = 62;
+		     } else {
+		         $reply = "لطفا یک نام استاندارد برای گیف خود بگذارید\n" . $GLOBALS['please_send_us_gifname'];
+		     }
 			break;
 		case 62 :  // $recive_the_file
 			if ($GLOBALS['mime_type'] == "video/mp4") { 
 				save_gif($GLOBALS['file_id'] , $DB_id , $connection);
 				$reply = $GLOBALS['mg_file_recieved'];
-				$force_reply = ['force_reply' => false];
+				// $force_reply = ['force_reply' => false];
 				$step = 0;
 			}
 			else {
@@ -156,8 +161,8 @@ function get_gifs_details($step) {
 			}
 			break;			
 	}
-    $json_fr        = json_encode($force_reply); 
-    $post_params    = [ 'chat_id' =>  $chat_id , 'text' => $reply, 'reply_markup' => $json_fr];
+    // $json_fr        = json_encode($force_reply); 
+    $post_params    = [ 'chat_id' =>  $chat_id , 'text' => $reply/*, 'reply_markup' => $json_fr*/];
     
     send_reply("sendMessage", $post_params);
 
@@ -170,6 +175,11 @@ function get_gifs_details($step) {
 		$result -> execute();
 	} catch (Exception $e) { // SQLException 
 		echo 'Caught exception: ',  $e->getMessage(), "\n";                 
+	}
+	
+	if ($step == 0) {
+	    // delete incompletes
+	    initial_user();
 	}
 }
 
@@ -185,6 +195,8 @@ function save_gif($file_id , $DB_id , $connection) {
 	$file_data = file_get_contents($url);
 	
 	$gif_path = "gif/$DB_id.mp4";
+// 	$gif_path = $GLOBALS['gif_saving_path'] . "/$DB_id.mp4";
+
 	$new_file = fopen($gif_path , 'w');
 	fwrite($new_file , $file_data);
 	fclose($new_file);
@@ -246,7 +258,7 @@ function build_result_array ( $result ) {
 }
 
 
-function send_reply($method, $post_params) {
+function send_reply($method, $post_params = []) {
     $url = $GLOBALS['bot_url'] . "/" . $method;
 
     $cu = curl_init();
