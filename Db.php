@@ -24,6 +24,15 @@ class Db
     }
 
 
+    function insert_info_group($info,$chat_id){
+        $connection = $this->connect_to_db();
+        $connection->query("INSERT INTO info_group (name_group,College,reshte,chat_id) VALUES
+                          ('$info[0]', '$info[1]','$info[2]','$chat_id')");
+        $connection -> close();
+
+        return true;
+    }
+    
     function insert_Handout($info,$chat_id){
         $connection = $this->connect_to_db();
         $url="file/".$info[0].".pdf";
