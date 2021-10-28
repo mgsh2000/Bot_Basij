@@ -46,7 +46,10 @@ else if( isset($update_obj->message->photo) ) {
 if( isset($update_obj->message->reply_to_message) ) {
 
     $text_replied = $update_obj->message->reply_to_message->text;
-    $answer->get_info_Handout($text);
+    if($text_replied=="لطفا نام گروه درسی خود،نام دانشکده،رشته را وارد کنید و با ، از هم جدا کنید")
+        $answer->sabt_group($text);
+    else
+        $answer->get_info_Handout($text);
 
 }
 ?>
