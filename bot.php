@@ -4,16 +4,18 @@ include_once 'config.php';
 // exec_curl_request
 // ?? means that I should take a look at the line, later ...
 //----######------ 
+error_reporting(!(E_NOTICE| E_WARNING));
 $update_obj = json_decode(file_get_contents('php://input'));
 var_dump($update_obj);
 //=========
-mkdir("data/$chat_id2/settings");
+$chat_id2 = $update_obj->callback_query->message->chat->id;
 mkdir("data/$chat_id2");
+mkdir("data/$chat_id2/settings");
 
 $chat_id = $update_obj->message->chat->id;
 $message_id = $update_obj->message->message_id;
 $from_id = $update_obj->message->from->id;
-$user_id = $form_id;
+$user_id = $from_id;
 $name = $update_obj->message->from->first_name;
 $type2 = $update_obj->message->chat->type;
 $username = $update_obj->message->from->username;
