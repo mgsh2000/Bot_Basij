@@ -9,8 +9,8 @@ class Answer
     var $chat_id;
     // var $bot_url;
     var $db;
-   var $url_pdf="";
-     var  $bot_dl_url="https://api.telegram.org/file/bot1497141769:AAGIWCHGlLAzxFqNdY9Ch-WF0YBcBgRZBGY" ;
+    var $url_pdf="";
+    var  $bot_dl_url="https://api.telegram.org/file/bot1497141769:AAGIWCHGlLAzxFqNdY9Ch-WF0YBcBgRZBGY" ;
     /**
      * Answer constructor.
      */
@@ -20,7 +20,6 @@ class Answer
         require_once("image.php");
         $this->text = $text;
         $this->chat_id = $chat_id;
-        // $this->bot_url = $bot_url;
         $this->db = new Db($this->chat_id);
     }
 
@@ -33,11 +32,14 @@ class Answer
         $key3 = 'نظرسنجی';
         $key4 = 'comscaner';
         $key5 = 'درباره ما';
+        $key5 = 'درباره ما';
         $key6 = 'ارسال جزوه';
+        $key7 = 'ثبت گروه';
         $reply_keyboard = [
             [$key5, $key2],
             [$key6, $key1],
             [$key4, $key3],
+            [$key7],
 
         ];
         $reply_kb_options = [
@@ -80,11 +82,23 @@ class Answer
                 $this->comscaner();
                 break;
 
+            case"ثبت گروه":
+                $force_reply_options = ['force_reply' => true];
+                $json_fr = json_encode($force_reply_options);
+                $reply="لطفا نام گروه درسی خود،نام دانشکده،رشته را وارد کنید و با ، از هم جدا کنید";
+                $this->send_message_reply($reply, $json_fr);
+            break;
 
 
         }
     }
+    function sabt_group($txt){
+        $info=explode(",",$txt);
+      $result=  $this->db->insert_info_group($info,$this->chat_id);
+        if($result)
+        $this->send_message("اطلاعات گروه شما با موفقیت ثبت شد ");
 
+    }
     function Poll()
     {
         $this->send_message($this->url_pdf);
