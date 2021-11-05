@@ -1,11 +1,15 @@
 <?php
-define('API_KEY', '1497141769:AAGIWCHGlLAzxFqNdY9Ch-WF0YBcBgRZBGY');
+// https://api.telegram.org/bot1876663810:AAGahX6GYh17Nb5CIAntKGQ-7hv6U7b3JrM/setwebhook?url=https://botbasige.cptele.ir/mohamad_sharifi/git/AntiSpam/m-ghafour/index.php
+/* 
+ * create directories called gif, flood, data directories before using the bot
+ */
+define('API_KEY', '1876663810:AAGahX6GYh17Nb5CIAntKGQ-7hv6U7b3JrM');
 # index.php main file variables :
 $admin = 198532866; //ایدی سودو
-$idbot = 1497141769; //ایدی ربات
-$botname = "AziatKonBot";
-$botusername = "@g451managerbot";
-$botusername2 = "g451managerbot";
+$idbot = 1876663810; //ایدی ربات
+$botname = "ادمین ربات جزوه";
+$botusername = "@jozve_admin_bot";
+$botusername2 = "jozve_admin_bot";
 $channel = "akhlaghiQoutes";
 
 # recieve_gif.php varables :
