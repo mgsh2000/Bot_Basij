@@ -4,11 +4,11 @@
 // how to reply a message ?
 // save in Telegram URLs
 // using MPEG4-gif insteed of mp4
-// دلیل کار نکردن زبان فارسی در قسمت جستجو
+
 // ارسال اینلاین مود به صورت ویرایش متن پیام
-// delete incompleted DataBase rows
 // sending inline gif in gif format
 // controling gif name format
+// commentating the the whole thing
 
 include_once 'config.php';
 
@@ -115,66 +115,83 @@ function get_gifs_details($step) {
     $chat_id   = $GLOBALS['chat_id'];
 	if ( isset($GLOBALS['textmessage'])) 
 	    $text      = $GLOBALS['textmessage'];
-	if ($step != 0 && $GLOBALS['text_replied'] != null ) { 
+	$replied_id = 0;
+	if ($step != 0 && $GLOBALS['text_replied'] != "" ) { 
 		$text_replied   = $GLOBALS['text_replied'];
 		$DB_id      = strtok ($text_replied , "\n");
+        $replied_id = $GLOBALS['reply'];
 	}
-
     // if we're at the first step, we'll specify the $step for our own agenda
 	if ($step == 0) {
 		$step = 60;
 	}
 
 	$connection = connect_to_db();
-// 	$force_reply = ['force_reply' => true];
-
+	$result = $connection -> prepare("SELECT * FROM users WHERE userID = :user_id");
+	$result -> bindParam(':user_id', $user_id);
+	$result -> execute();
+	$row    = $result -> fetch(); 
+	$gif_id = $row['gif_id'];
+    			
+	$force_reply = ['force_reply' => true , 'selective' => true];
+    $reply = "";
 	switch ($step) {
 		case 60 :
 			$reply = $GLOBALS['please_send_us_gifname'];
 			$step = 61; 
 			break;
 		case 61 :  // $recieve_the_gif_name  
-		    if(isset($GLOBALS['update_obj']->message->text) && substr($text , 0 , 1) != "/") { // ** if it's a proper text
+		    if(isset($GLOBALS['update_obj']->message->text) && substr($text , 0 , 1) != "/" 
+		        && $replied_id == $GLOBALS['idbot'] ) { // ** if it's a proper text
+		        
     			$result = $connection -> prepare("INSERT INTO gif_table (gif_name , chat_id) VALUES (:text , :chat_id)");
     			$result -> bindParam(':text', $text);
     			$result -> bindParam(':chat_id', $chat_id);
     			$result -> execute();
     			
-    			$reply = $connection ->lastInsertId()  . "\n" . $GLOBALS['please_send_us_the_gif'];
+    			$gif_id = $connection ->lastInsertId();
+    			$reply = $gif_id  . "\n" . $GLOBALS['please_send_us_the_gif'];
     			$step = 62;
-		     } else {
-		         $reply = "لطفا یک نام استاندارد برای گیف خود بگذارید\n" . $GLOBALS['please_send_us_gifname'];
+		     } else if ($replied_id == $GLOBALS['idbot'] ) { // any stronger condition to ensure if user has replied to the right msg?
+		        $reply = "لطفا یک نام استاندارد برای گیف خود بگذارید\n" . $GLOBALS['please_send_us_gifname'];
 		     }
 			break;
 		case 62 :  // $recive_the_file
-			if ($GLOBALS['mime_type'] == "video/mp4") { 
-				save_gif($GLOBALS['file_id'] , $DB_id , $connection);
+			if ($GLOBALS['mime_type'] == "video/mp4" && $replied_id == $GLOBALS['idbot'] && $gif_id == $DB_id) { 
+				// save_gif($GLOBALS['file_id'] , $DB_id , $connection);
+				save_gif($GLOBALS['file_id'] , $gif_id , $connection);
 				$reply = $GLOBALS['mg_file_recieved'];
-				// $force_reply = ['force_reply' => false];
+				$force_reply = ['force_reply' => false];
 				$step = 0;
+				$gif_id = 0;
 			}
-			else {
-				$warning = "لطفا یک فایل gif بفرستید 😤";
+			else if ($replied_id == $GLOBALS['idbot'] && $gif_id == $DB_id) {
+				$warning = "لطفا به پیام ربات مربوطه، یک فایل gif بفرستید 😤";
 				$post_params = [ 'chat_id' =>  $chat_id , 'text' => $warning];
 				send_reply("sendMessage", $post_params);
-				$reply = $DB_id . "\n" . $GLOBALS['please_send_us_the_gif'];
+				$reply = $gif_id . "\n" . $GLOBALS['please_send_us_the_gif'];
+			} else {
+			    $reply = "else";
 			}
 			break;			
 	}
-    // $json_fr        = json_encode($force_reply); 
-    $post_params    = [ 'chat_id' =>  $chat_id , 'text' => $reply/*, 'reply_markup' => $json_fr*/];
-    
-    send_reply("sendMessage", $post_params);
-
-
-	// update step in DB
-	try {
-		$result = $connection -> prepare("UPDATE users SET step = :step WHERE userID = :user_id");
-		$result -> bindParam(':step', $step);
-		$result -> bindParam(':user_id', $user_id);
-		$result -> execute();
-	} catch (Exception $e) { // SQLException 
-		echo 'Caught exception: ',  $e->getMessage(), "\n";                 
+	if ($reply != "") {
+        $json_fr        = json_encode($force_reply); 
+        $post_params    = [ 'chat_id' =>  $chat_id , 'text' => $reply, 
+                            'reply_markup' => $json_fr , 'reply_to_message_id' => $GLOBALS['message_id'] ];
+        send_reply("sendMessage", $post_params);	 
+        
+        
+    	// update step & gif_id in DB
+    	try {
+    		$result = $connection -> prepare("UPDATE users SET step = :step , gif_id = :gif_id WHERE userID = :user_id");
+    		$result -> bindParam(':step', $step);
+    		$result -> bindParam(':gif_id' , $gif_id);
+    		$result -> bindParam(':user_id', $user_id);
+    		$result -> execute();
+    	} catch (Exception $e) { // SQLException 
+    		echo 'Caught exception: ',  $e->getMessage(), "\n";                 
+    	}
 	}
 	
 	if ($step == 0) {
@@ -191,23 +208,23 @@ function save_gif($file_id , $DB_id , $connection) {
 	$gif_path = $file_instance_array["result"]["file_path"];
 	
 	$url = $GLOBALS['bot_dl_url'] . "/$gif_path";
-	
 	$file_data = file_get_contents($url);
-	
+    
 	$gif_path = "gif/$DB_id.mp4";
-// 	$gif_path = $GLOBALS['gif_saving_path'] . "/$DB_id.mp4";
-
 	$new_file = fopen($gif_path , 'w');
 	fwrite($new_file , $file_data);
 	fclose($new_file);
 	
-	$gif_url = $GLOBALS['gif_saving_path'] . "/$DB_id.mp4";
-	
+	$gif_path = $GLOBALS['gif_saving_path'] . "/$DB_id.mp4";
+
 	$result = $connection -> prepare("UPDATE gif_table SET url = :gif_path WHERE id = :DB_id"); 
-	$result -> bindParam(":gif_path" , $gif_url);
+	$result -> bindParam(":gif_path" , $gif_path);
+// 	$result -> bindParam(":chat_id" , $chat_id);
 	$result -> bindParam(":DB_id" , $DB_id);
 	$result -> execute();
 }
+
+
 
 
 function request_gif($inline_query_id , $inline_query , $user_id) {
@@ -258,18 +275,18 @@ function build_result_array ( $result ) {
 }
 
 
-function send_reply($method, $post_params = []) {
-    $url = $GLOBALS['bot_url'] . "/" . $method;
+// function send_reply($method, $post_params = []) {
+//     $url = $GLOBALS['bot_url'] . "/" . $method;
 
-    $cu = curl_init();
-    curl_setopt($cu, CURLOPT_URL, $url);
-    curl_setopt($cu, CURLOPT_POSTFIELDS, $post_params);
-    curl_setopt($cu, CURLOPT_RETURNTRANSFER, true);  // gets the result
-    $result = curl_exec($cu);
+//     $cu = curl_init();
+//     curl_setopt($cu, CURLOPT_URL, $url);
+//     curl_setopt($cu, CURLOPT_POSTFIELDS, $post_params);
+//     curl_setopt($cu, CURLOPT_RETURNTRANSFER, true);  // gets the result
+//     $result = curl_exec($cu);
 
-    curl_close($cu);
-    return $result;
-}
+//     curl_close($cu);
+//     return $result;
+// }
 
 function connect_to_db() {
     $DB_username    = $GLOBALS['DB_username'];
