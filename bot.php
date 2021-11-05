@@ -1,10 +1,8 @@
 <?php
 include_once 'config.php';
-// send_reply
-// exec_curl_request
-// ?? means that I should take a look at the line, later ...
 //----######------ 
-error_reporting(!(E_NOTICE| E_WARNING));
+// in order to not return Notices and Warnings :
+// error_reporting(!(E_NOTICE| E_WARNING));
 $update_obj = json_decode(file_get_contents('php://input'));
 var_dump($update_obj);
 //=========
@@ -22,7 +20,7 @@ $username = $update_obj->message->from->username;
 $gpname = $update_obj->message->chat->title;
 $textmessage = isset($update_obj->message->text) ? $update_obj->message->text : '';
 $txtmsg = $update_obj->message->text;
-$replytext = $update_obj->message->reply_to_message->text;
+$text_replied = $update_obj->message->reply_to_message->text;
 $reply = $update_obj->message->reply_to_message->from->id;
 $reply2 = $update_obj->message->reply_to_message->chat->id;
 $replyname = $update_obj->message->reply_to_message->from->first_name;
@@ -51,7 +49,6 @@ $from_id2 = $update_obj->callback_query->from->id;
 $cblock = $update_obj->callback_query->message->getmember->user;
 $token = "" . API_KEY . "";
 $gpname2 = $update_obj->callback_query->message->chat->title;
-$chat_id2 = $update_obj->callback_query->message->chat->id;
 $message_id2 = $update_obj->callback_query->message->message_id;
 $name2 = $update_obj->callback_query->from->first_name;
 $data = $update_obj->callback_query->data;
@@ -220,20 +217,18 @@ function apiRequest($method, $parameters)
 	return exec_curl_request($handle);
 }
 
-// function send_reply($method, $datas = [])
-// {
-// 	$url = "https://api.telegram.org/bot" . API_KEY . "/" . $method;
-// 	$ch = curl_init();
-// 	curl_setopt($ch, CURLOPT_URL, $url);
-// 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-// 	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($datas));
-// 	$res = curl_exec($ch);
-// 	if (curl_error($ch)) {
-// 		var_dump(curl_error($ch));
-// 	} else {
-// 		return json_decode($res);
-// 	}
-// }
+function send_reply($method, $post_params = []) {
+    $url = $GLOBALS['bot_url'] . "/" . $method;
+
+    $cu = curl_init();
+    curl_setopt($cu, CURLOPT_URL, $url);
+    curl_setopt($cu, CURLOPT_POSTFIELDS, $post_params);
+    curl_setopt($cu, CURLOPT_RETURNTRANSFER, true);  // gets the result
+    $result = curl_exec($cu);
+
+    curl_close($cu);
+    return $result;
+}
 
 function getcreator($chat_id, $token)
 {
