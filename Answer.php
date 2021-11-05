@@ -1,26 +1,27 @@
 <?php
 
-define('API_KEY', '1497141769:AAGIWCHGlLAzxFqNdY9Ch-WF0YBcBgRZBGY');
-
 
 class Answer
 {
     var $text;
     var $chat_id;
-    // var $bot_url;
     var $db;
     var $url_pdf="";
-    var  $bot_dl_url="https://api.telegram.org/file/bot1497141769:AAGIWCHGlLAzxFqNdY9Ch-WF0YBcBgRZBGY" ;
+    var $bot_dl_url= ""; 
+    var $bot_url = "";
     /**
      * Answer constructor.
      */
     public function __construct(/* $bot_url, */ $text, $chat_id)
     {
+        include_once 'config.php';
         require_once("Db.php");
         require_once("image.php");
         $this->text = $text;
         $this->chat_id = $chat_id;
         $this->db = new Db($this->chat_id);
+        $this->bot_url = $GLOBALS['bot_url'];
+        $this->bot_dl_url = $GLOBALS['bot_dl_url'];
     }
 
 
@@ -94,7 +95,7 @@ class Answer
     }
     function sabt_group($txt){
         $info=explode(",",$txt);
-      $result=  $this->db->insert_info_group($info,$this->chat_id);
+        $result=  $this->db->insert_info_group($info,$this->chat_id);
         if($result)
         $this->send_message("اطلاعات گروه شما با موفقیت ثبت شد ");
 
@@ -121,39 +122,40 @@ class Answer
 
     }
 
-function   save_photo($update_obj1){
-    $update_obj =$update_obj1;
-
-    $diff_size_count = sizeof($update_obj->message->photo);
-
-    for($i = $diff_size_count - 1 ; $i >= 0 ; $i--) {
-
-        // $file_size = $update_obj->message->photo->i->file_size;
-        $file_size = $update_obj->message->photo->$i->file_size;
-
-        if($file_size < 1000000) {  // 1 MB
-
-            $file_id = $update_obj->message->photo->$i->file_id;
-            break;
+    function   save_photo($update_obj1){
+        $update_obj =json_encode($update_obj1);
+        $update_obj = json_decode($update_obj , true);
+        
+        $diff_size_count = sizeof($update_obj['message']['photo']);
+    
+        for($i = $diff_size_count - 1 ; $i >= 0 ; $i--) {
+            // $file_size = $update_obj->message->photo->$i->file_size;
+            $file_size = $update_obj['message']['photo'][$i]['file_size'];
+    
+            if($file_size < 1000000) {  // 1 MB
+    
+                // $file_id = $update_obj->message->photo->$i->file_id;
+                $file_id = $update_obj['message']['photo'][$i]['file_id'];
+                break;
+            }
         }
+    
+        $post_params = [ 'file_id' => $file_id ];
+        $result = $this->send_reply("getFile", $post_params);
+    
+    
+        $result_array = json_decode($result);
+        $file_path    = $result_array->result->file_path;
+    
+        $url = $this->bot_dl_url . "/$file_path";
+        $file_data = file_get_contents($url);
+        $url_img=$this->db->url_photo($this->chat_id,$this->chat_id);
+        $img_path =$url_img;
+        $my_file  = fopen($img_path, 'w');
+        fwrite($my_file, $file_data);
+        fclose($my_file);
+        $this->send_message("تصویر با موفقیت آپلود شد");
     }
-
-    $post_params = [ 'file_id' => $file_id ];
-    $result = $this->send_reply("getFile", $post_params);
-
-
-    $result_array = json_decode($result, true);
-    $file_path    = $result_array->result->file_path;
-
-    $url = $this->bot_dl_url . "/$file_path";
-    $file_data = file_get_contents($url);
-    $url_img=$this->db->url_photo($this->chat_id,$this->chat_id);
-    $img_path =$url_img;
-    $my_file  = fopen($img_path, 'w');
-    fwrite($my_file, $file_data);
-    fclose($my_file);
-$this->send_message("تصویر با موفقیت آپلود شد");
-}
 
 
 
@@ -193,8 +195,8 @@ $this->send_message("تصویر با موفقیت آپلود شد");
         if($file_type == "application/pdf") {
 
             $post_params = [ 'file_id' => $file_id ];
-            $result = $this->send_reply("sendMessage", $post_params);
-            $result_array = json_decode($result, true);
+            $result = $this->send_reply("getFile", $post_params);
+            $result_array = json_decode($result);
 
             $file_path    = $result_array->result->file_path;
 
@@ -321,33 +323,18 @@ $this->send_message("تصویر با موفقیت آپلود شد");
         $this->send_message("$about");
     }
 
-    // function send_reply($uyrl, $post_params)
-    // {
-    //     $url = "https://api.telegram.org/bot" . API_KEY . "/" . $uyrl;
-    //     $cu = curl_init();
-    //     curl_setopt($cu, CURLOPT_URL, $url);
-    //     curl_setopt($cu, CURLOPT_POSTFIELDS, $post_params);
-    //     curl_setopt($cu, CURLOPT_RETURNTRANSFER, true); // get result
-    //     $result = curl_exec($cu);
-    //     curl_close($cu);
-    //     return $result;
-    // }
-    function send_reply($method, $datas = [])
-    {
-        $url = "https://api.telegram.org/bot" . API_KEY . "/" . $method;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($datas));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $datas);
-        $result = curl_exec($ch);
-        curl_close($ch);
-        if (curl_error($ch)) {
-            var_dump(curl_error($ch));
-        } else {
-            // return json_decode($result);
-            return $result;
-        }
+
+    function send_reply ($method, $post_params = []) {
+        // $url = $this->bot_url . "/" . $method; // after initializing the proper variable in the constructor
+        $url = $GLOBALS['bot_url'] . "/" . $method;
+        // $url = "https://api.telegram.org/bot" . "token" . "/" . $method;      
+        $cu = curl_init();
+        curl_setopt($cu, CURLOPT_URL, $url);
+        curl_setopt($cu, CURLOPT_POSTFIELDS, $post_params);
+        curl_setopt($cu, CURLOPT_RETURNTRANSFER, true); // gets the result
+        $result = curl_exec($cu);
+        curl_close($cu);
+        return $result;
     }
 
 }
