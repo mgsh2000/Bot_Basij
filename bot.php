@@ -230,6 +230,25 @@ function send_reply($method, $post_params = []) {
     return $result;
 }
 
+
+    // function send_reply($method, $datas = [])
+    // {
+    //     $url = "https://api.telegram.org/bot" . API_KEY . "/" . $method;
+    //     $ch = curl_init();
+    //     curl_setopt($ch, CURLOPT_URL, $url);
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //     // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($datas));
+    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $datas);
+    //     $result = curl_exec($ch);
+    //     curl_close($ch);
+    //     if (curl_error($ch)) {
+    //         var_dump(curl_error($ch));
+    //     } else {
+    //         // return json_decode($result);
+    //         return $result;
+    //     }
+    // }
+
 function getcreator($chat_id, $token)
 {
 	$up = json_decode(file_get_contents('https://api.telegram.org/bot' . $token . '/getChatAdministrators?chat_id=' . $chat_id), true);
