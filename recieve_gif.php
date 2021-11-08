@@ -1,13 +1,5 @@
 <?php
-// force reply forces all to reply !!!!
-// desable force_reply
-// how to reply a message ?
 // save in Telegram URLs
-// using MPEG4-gif insteed of mp4
-
-// ارسال اینلاین مود به صورت ویرایش متن پیام
-// sending inline gif in gif format
-// controling gif name format
 // commentating the the whole thing
 
 include_once 'config.php';
@@ -114,7 +106,7 @@ function get_gifs_details($step) {
 	$user_id   = $GLOBALS['user_id'];
     $chat_id   = $GLOBALS['chat_id'];
 	if ( isset($GLOBALS['textmessage'])) 
-	    $text      = $GLOBALS['textmessage'];
+	    $text      = trim($GLOBALS['textmessage']);
 	$replied_id = 0;
 	if ($step != 0 && $GLOBALS['text_replied'] != "" ) { 
 		$text_replied   = $GLOBALS['text_replied'];
@@ -144,17 +136,23 @@ function get_gifs_details($step) {
 		    if(isset($GLOBALS['update_obj']->message->text) && substr($text , 0 , 1) != "/" 
 		        && $replied_id == $GLOBALS['idbot'] ) { // ** if it's a proper text
 		        
-    			$result = $connection -> prepare("INSERT INTO gif_table (gif_name , chat_id) VALUES (:text , :chat_id)");
-    			$result -> bindParam(':text', $text);
-    			$result -> bindParam(':chat_id', $chat_id);
-    			$result -> execute();
-    			
-    			$gif_id = $connection ->lastInsertId();
-    			$reply = $gif_id  . "\n" . $GLOBALS['please_send_us_the_gif'];
-    			$step = 62;
-		     } else if ($replied_id == $GLOBALS['idbot'] ) { // any stronger condition to ensure if user has replied to the right msg?
+		        send_reply ('sendMessage' , ['chat_id' => $chat_id , 'text' => "61"]);
+		        if (is_unique_name($text , $connection)) {
+					$result = $connection -> prepare("INSERT INTO gif_table (gif_name , chat_id) VALUES (:text , :chat_id)");
+					$result -> bindParam(':text', $text);
+					$result -> bindParam(':chat_id', $chat_id);
+					$result -> execute();
+					
+					$gif_id = $connection ->lastInsertId();
+					$reply = $gif_id  . "\n" . $GLOBALS['please_send_us_the_gif'];
+					$step = 62;
+				} else {
+					$reply = "نمیتوانید نام تکراری انتخاب کنید\n" . $GLOBALS['please_send_us_gifname'];
+				}
+
+		    } else if ($replied_id == $GLOBALS['idbot'] ) { // any stronger condition to ensure if user has replied to the right msg?
 		        $reply = "لطفا یک نام استاندارد برای گیف خود بگذارید\n" . $GLOBALS['please_send_us_gifname'];
-		     }
+		    }
 			break;
 		case 62 :  // $recive_the_file
 			if ($GLOBALS['mime_type'] == "video/mp4" && $replied_id == $GLOBALS['idbot'] && $gif_id == $DB_id) { 
@@ -178,7 +176,7 @@ function get_gifs_details($step) {
 	if ($reply != "") {
         $json_fr        = json_encode($force_reply); 
         $post_params    = [ 'chat_id' =>  $chat_id , 'text' => $reply, 
-                            'reply_markup' => $json_fr , 'reply_to_message_id' => $GLOBALS['message_id'] ];
+                            'reply_to_message_id' => $GLOBALS['message_id'] , 'reply_markup' => $json_fr ];
         send_reply("sendMessage", $post_params);	 
         
         
@@ -200,6 +198,17 @@ function get_gifs_details($step) {
 	}
 }
 
+function is_unique_name ($gif_name , $connection) {
+	$result = $connection -> prepare("SELECT * FROM gif_table WHERE gif_name = :gif_name"); 
+	$result -> bindParam(":gif_name" , $gif_name);
+	$result -> execute();
+	$counter = $result -> rowCount();
+	if ($counter != 0) { // is not unique
+		return false; 
+	} else  // there is no gif_name like $gif_name so it is unique
+		return true; 
+}
+
 function save_gif($file_id , $DB_id , $connection) {
 	$post_params = ['file_id' => $file_id];
 	$file_instance = send_reply('getFile' , $post_params);
@@ -214,65 +223,68 @@ function save_gif($file_id , $DB_id , $connection) {
 	$new_file = fopen($gif_path , 'w');
 	fwrite($new_file , $file_data);
 	fclose($new_file);
-	
-	$gif_path = $GLOBALS['gif_saving_path'] . "/$DB_id.mp4";
+
+// we needed this kinda addressing only for inline searching for the gifs
+// 	$gif_path = $GLOBALS['gif_saving_path'] . "/$DB_id.mp4";
 
 	$result = $connection -> prepare("UPDATE gif_table SET url = :gif_path WHERE id = :DB_id"); 
 	$result -> bindParam(":gif_path" , $gif_path);
-// 	$result -> bindParam(":chat_id" , $chat_id);
 	$result -> bindParam(":DB_id" , $DB_id);
 	$result -> execute();
 }
 
 
 
-
-function request_gif($inline_query_id , $inline_query , $user_id) {
-    // chetori user ha ro ba ham ghati nemikone?
-    // va /start robat haye mokhtalef ro?
-    $gif_name = $inline_query;
-	
-    $result = search_gif ($user_id , $gif_name);
-    $result_json = json_encode($result);
-    
-    $post_params = ["inline_query_id" => $inline_query_id , 'results' => $result_json ];
-    return $post_params;
-}
-
-function search_gif ($user_id , $gif_name) {
+function search_gif ( $gif_name , $chat_id ) {
     $connection = connect_to_db();
     
-	$result = $connection -> prepare ("SELECT * FROM gif_table WHERE  gif_name = :gif_name"); 
-//different between chatId and fromId -> chat_id = :chat_id AND
-// if we send a msg and then change it, it'll use user_id then.
-// 	$result -> bindParam(":user_id" , $user_id);
+	$result = $connection -> prepare ("SELECT * FROM gif_table WHERE gif_name = :gif_name AND chat_id = :chat_id"); 
+	$result -> bindParam(":chat_id" , $chat_id);
 	$result -> bindParam(":gif_name" , $gif_name);
 	$result -> execute();
     
-    $result_array = build_result_array ( $result);
-    return $result_array;
+	$url = "0";
+	$row = $result -> fetch();
+    if (isset($row['id'])) { // we are sure we have just one result on the database
+		$url = $row['url'];
+	}
+	return $url;
+    // $result_array = build_result_array ( $result);
+    // return $result_array;
 }
 
-function build_result_array ( $result ) { 
-    $result_array = array();   
-    $row = $result -> fetch();
-    if (isset($row['id'])) {
-        do {
-            $result_array[] = 
-                [
-                    'type'        => "video" ,
-                    'id'          => $row['id']  ,        
-                    'video_url'   => $row['url'] ,
-                    'mime_type'   => "video/mp4" ,
-                    'thumb_url'   => $GLOBALS['gif_saving_path'] . "/image2.jpg" ,
-                    'title'       => $row['gif_name']  ,
-                    'description' => "" ,
-                ];
-        } while ($row = $result -> fetch());
-    }
+// function request_gif($inline_query_id , $inline_query , $user_id) {
+//     // chetori user ha ro ba ham ghati nemikone?
+//     // va /start robat haye mokhtalef ro?
+//     $gif_name = $inline_query;
+	
+//     $result = search_gif ($user_id , $gif_name);
+//     $result_json = json_encode($result);
     
-    return $result_array;
-}
+//     $post_params = ["inline_query_id" => $inline_query_id , 'results' => $result_json ];
+//     return $post_params;
+// }
+
+// function build_result_array ( $result ) { 
+//     $result_array = array();   
+//     $row = $result -> fetch();
+//     if (isset($row['id'])) {
+//         do {
+//             $result_array[] = 
+//                 [
+//                     'type'        => "video" ,
+//                     'id'          => $row['id']  ,        
+//                     'video_url'   => $row['url'] ,
+//                     'mime_type'   => "video/mp4" ,
+//                     'thumb_url'   => $GLOBALS['gif_saving_path'] . "/image2.jpg" ,
+//                     'title'       => $row['gif_name']  ,
+//                     'description' => "" ,
+//                 ];
+//         } while ($row = $result -> fetch());
+//     }
+    
+//     return $result_array;
+// }
 
 
 // function send_reply($method, $post_params = []) {
