@@ -10,6 +10,29 @@ include_once 'config.php';
 $please_send_us_gifname = "لطفا نام پیشنهادی برای گیف را به صورت پاسخ به همین پیام برای ما بفرستید";
 $please_send_us_the_gif = "لطفا فایل gif مد نظر رو به صورت پاسخی به همین پیام برای ما بفرستید :";
 $mg_file_recieved = "فایل gif مد نظر شما با موفقیت بارگذاری شد";
+$create_sharifi_tables = 
+// "CREATE DATABASE IF NOT EXISTS botbasig_sharif
+// CHARACTER SET utf8
+// COLLATE utf8_general_ci;
+
+// USE botbasig_sharif;
+
+"CREATE TABLE IF NOT EXISTS users(
+`userID`        INT(15)     NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`name`          VARCHAR(50) NOT NULL,
+`step`          INT(11)     NOT NULL DEFAULT '0',
+`gif_id`        INT(11)     NOT NULL DEFAULT '0',
+`isRegistered`  TINYINT(1)  NOT NULL DEFAULT '0',
+`isAdmin`       TINYINT(1)  NOT NULL DEFAULT '0'
+);
+
+
+CREATE TABLE IF NOT EXISTS gif_table(
+`id`        INT(11)         NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`chat_id`   VARCHAR(20)     NOT NULL,
+`url` 	    VARCHAR(150)    NOT NULL,
+`gif_name`  VARCHAR(50)     NOT NULL
+);";
 
 if( isset($update_obj->message) ) {
     $user_id = $update_obj->message->from->id;
@@ -37,24 +60,46 @@ if( isset($update_obj->message) ) {
         $file_id        = $update_obj->message->animation->file_id;
         $mime_type	      = $update_obj->message->animation->mime_type;
     }
-    
-	// reply_to_message 
-	if ($textmessage == "/start") {
-		initial_user();
-	}
-	
-	if ($textmessage == '/newGIF' /*&& $status < 70*/ && ($type2 == "supergroup" || $type2 == "group") ) { 
-		// starter of the function 
-		get_gifs_details($status);
-	} else if ($textmessage == '/newGIF' && $type2 == "private") {
-	    $post_params    = [ 'chat_id' =>  $chat_id , 'text' => 'قابلیت ذخیره گیف فقط در داخل گروه ها امکان پذیره'];
-	    send_reply("sendMessage" , $post_params);
-	}
-	else if ($textmessage != "/start") {
+
+	if(substr($textmessage , 0 , 1) == "/")
+		command_manager ($status , $textmessage , $type2 , $chat_id);
+	else /*if ($textmessage != "/start" . $GLOBALS['botusername'])*/ {
 		// continuer
 		step_manager($status);
 	}
+	
 } 
+
+
+// starters of clients' commands
+function command_manager ($step , $textmessage , $type2 , $chat_id) {
+	if (substr($textmessage , 0 , 6) == "/start" && substr($textmessage , 6) == $GLOBALS['botusername'] && 
+		($type2 == "supergroup" || $type2 == "group")) {
+
+		initial_user();
+	}
+
+	if (substr($textmessage , 0 , 7) == '/newgif' && substr($textmessage , 7) == $GLOBALS['botusername']  /*&& $status < 70*/ && 
+		($type2 == "supergroup" || $type2 == "group") ) { 
+		    
+		// starter of the function 
+		get_gifs_details($step);
+		
+
+
+		// $connection = connect_to_db();
+		// $result = $connection -> prepare ("SHOW TABLES LIKE 'users'"); 
+		// $result -> execute();
+		// $rr = $result -> rowCount();
+		// if ($rr == "1") 
+		// $post_params = ['chat_id' => $chat_id , 'text' => $rr];
+		// send_reply ('sendMessage' , $post_params);
+	// 		$result -> bindParam(":gif_name" , $gif_name);
+	} else if ($textmessage == '/newgif' && $type2 == "private") {
+		$post_params    = [ 'chat_id' =>  $chat_id , 'text' => 'قابلیت ذخیره گیف فقط در داخل گروه ها امکان پذیره'];
+		send_reply("sendMessage" , $post_params);
+	}
+}
 
 // continue
 // we impliment this function just for get_gifs_details() but
@@ -70,6 +115,12 @@ function initial_user() {
     
 // save chat id for everyuser
 	$connection = connect_to_db();
+	try {
+		$result = $connection -> prepare($GLOBALS['create_sharifi_tables']);  
+		$result -> execute();
+	} catch (Exception $e) { 
+		echo 'Caught exception: ',  $e->getMessage(), "\n";               
+	}
 	$user_id = $GLOBALS['user_id']; 
 	try {
 		$result = $connection -> prepare("INSERT INTO users (userID) VALUES (:user_id)");  
@@ -107,11 +158,12 @@ function get_gifs_details($step) {
     $chat_id   = $GLOBALS['chat_id'];
 	if ( isset($GLOBALS['textmessage'])) 
 	    $text      = trim($GLOBALS['textmessage']);
-	$replied_id = 0;
+	$replied_mg_id = 0;
 	if ($step != 0 && $GLOBALS['text_replied'] != "" ) { 
 		$text_replied   = $GLOBALS['text_replied'];
 		$DB_id      = strtok ($text_replied , "\n");
-        $replied_id = $GLOBALS['reply'];
+        $replied_mg_id = isset($GLOBALS['update_obj']->message->reply_to_message->from->id)? 
+            $GLOBALS['update_obj']->message->reply_to_message->from->id : "";
 	}
     // if we're at the first step, we'll specify the $step for our own agenda
 	if ($step == 0) {
@@ -134,9 +186,9 @@ function get_gifs_details($step) {
 			break;
 		case 61 :  // $recieve_the_gif_name  
 		    if(isset($GLOBALS['update_obj']->message->text) && substr($text , 0 , 1) != "/" 
-		        && $replied_id == $GLOBALS['idbot'] ) { // ** if it's a proper text
+		        && $replied_mg_id == $GLOBALS['idbot'] ) { // ** if it's a proper text
 		        
-		        send_reply ('sendMessage' , ['chat_id' => $chat_id , 'text' => "61"]);
+				//  send_reply ('sendMessage' , ['chat_id' => $chat_id , 'text' => "61"]);
 		        if (is_unique_name($text , $connection)) {
 					$result = $connection -> prepare("INSERT INTO gif_table (gif_name , chat_id) VALUES (:text , :chat_id)");
 					$result -> bindParam(':text', $text);
@@ -150,12 +202,12 @@ function get_gifs_details($step) {
 					$reply = "نمیتوانید نام تکراری انتخاب کنید\n" . $GLOBALS['please_send_us_gifname'];
 				}
 
-		    } else if ($replied_id == $GLOBALS['idbot'] ) { // any stronger condition to ensure if user has replied to the right msg?
+		    } else if ($replied_mg_id == $GLOBALS['idbot'] ) { // any stronger condition to ensure if user has replied to the right msg?
 		        $reply = "لطفا یک نام استاندارد برای گیف خود بگذارید\n" . $GLOBALS['please_send_us_gifname'];
 		    }
 			break;
 		case 62 :  // $recive_the_file
-			if ($GLOBALS['mime_type'] == "video/mp4" && $replied_id == $GLOBALS['idbot'] && $gif_id == $DB_id) { 
+			if ($GLOBALS['mime_type'] == "video/mp4" && $replied_mg_id == $GLOBALS['idbot'] && $gif_id == $DB_id) { 
 				// save_gif($GLOBALS['file_id'] , $DB_id , $connection);
 				save_gif($GLOBALS['file_id'] , $gif_id , $connection);
 				$reply = $GLOBALS['mg_file_recieved'];
@@ -163,7 +215,7 @@ function get_gifs_details($step) {
 				$step = 0;
 				$gif_id = 0;
 			}
-			else if ($replied_id == $GLOBALS['idbot'] && $gif_id == $DB_id) {
+			else if ($replied_mg_id == $GLOBALS['idbot'] && $gif_id == $DB_id) {
 				$warning = "لطفا به پیام ربات مربوطه، یک فایل gif بفرستید 😤";
 				$post_params = [ 'chat_id' =>  $chat_id , 'text' => $warning];
 				send_reply("sendMessage", $post_params);
@@ -315,6 +367,4 @@ function connect_to_db() {
 	$connection -> query("SET NAMES utf8mb4"); // and not utf8mb4
 	return $connection;
 }
-
-
 ?>
