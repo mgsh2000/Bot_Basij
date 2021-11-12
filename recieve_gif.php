@@ -63,11 +63,21 @@ if( isset($update_obj->message) ) {
 
 	if(substr($textmessage , 0 , 1) == "/")
 		command_manager ($status , $textmessage , $type2 , $chat_id);
+
 	else /*if ($textmessage != "/start" . $GLOBALS['botusername'])*/ {
 		// continuer
 		step_manager($status);
 	}
 	
+	// making fun of one of my friends
+	if ($user_id == "486272895" && trim($textmessage) == "...") {
+		send_reply('sendMessage' , ['chat_id' => $chat_id , 'text' => "تا سه ثانیه دیگه این پیام آقای اخلاقی پاک میشه..." 
+		            , 'reply_to_message_id'=> $update_obj->message->message_id]);
+		sleep(3);
+		send_reply('deletemessage', ['chat_id' => $chat_id , 'message_id' => $update_obj->message->message_id]);
+		$akhlaghi_txt = "پیام بی مزه سه نقطه اخلاقی پاک شد😂😂\n" . "با تشکر ربات مدیر گروه 451";
+		send_reply('sendMessage' , ['chat_id' => $chat_id , 'text' => $akhlaghi_txt]);
+	}
 } 
 
 
