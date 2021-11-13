@@ -1,4 +1,6 @@
 <?php
+// Define new namespace to prevent class name conflicts.
+namespace AskBot;
 class Db{
     
     public static function get_config(){
