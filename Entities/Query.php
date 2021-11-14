@@ -11,7 +11,7 @@ class Query{
 
         $cat = "'" . implode("', '", array_keys(Query::get_config())) . "'";
 
-        $conn =  Db::get_conn();
+        $conn =  AskBot/Db::get_conn();
 
         $conn->exec("CREATE TABLE IF NOT EXISTS Query (
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
