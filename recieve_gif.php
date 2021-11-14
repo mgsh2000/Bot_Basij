@@ -54,8 +54,39 @@ if( isset($update_obj->message) ) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";                 
     }
 
-    $text_replied = isset($update_obj->message->reply_to_message) ? 
+    $text_replied = isset($update_obj->message->reply_to_message->text) ? 
                     $update_obj->message->reply_to_message->text : "";
+    if (isset($update_obj->message->reply_to_message)) {
+        $message_id = $update_obj->message->message_id;
+        $firstname = $update_obj->message->from->first_name;
+        $lastname = $update_obj->message->from->last_name;
+        $username = $update_obj->message->from->username;
+        $replied_message_id = $update_obj->message->reply_to_message->message_id;
+        
+        if ( strpos($textmessage, $botusername) ) {
+            $gif_name = str_replace ($botusername , "" , $textmessage);
+            $gif_name = trim($gif_name);
+            $url = search_gif ( $gif_name , $chat_id) ; 
+            if ($url != "0") {
+                $post_params = [
+                                    'chat_id' => $chat_id , 
+                                    'animation' => new CURLFILE(realpath("$url")) , 
+                                    'reply_to_message_id' => $replied_message_id ,
+                                    'caption' => "$firstname $lastname (@$username), requested the GIF : '$gif_name'" , 
+                                ];
+                send_reply('sendAnimation', $post_params);
+                
+                // delete original msg
+                $post_params = ['chat_id'=> $chat_id , 'message_id' => $message_id];
+                send_reply ('deleteMessage' , $post_params);
+                } else {
+                $post_params = ['chat_id' => $chat_id , 'text' => "🤷‍♂️", 'reply_to_message_id' => $message_id];
+            }
+            send_reply('sendMessage' , $post_params);
+        }
+    }
+    
+
     if (isset ($update_obj->message->animation)) {
         $file_id        = $update_obj->message->animation->file_id;
         $mime_type	      = $update_obj->message->animation->mime_type;
@@ -186,7 +217,7 @@ function get_gifs_details($step) {
 	$result -> execute();
 	$row    = $result -> fetch(); 
 	$gif_id = $row['gif_id'];
-    			
+
 	$force_reply = ['force_reply' => true , 'selective' => true];
     $reply = "";
 	switch ($step) {
@@ -199,7 +230,7 @@ function get_gifs_details($step) {
 		        && $replied_mg_id == $GLOBALS['idbot'] ) { // ** if it's a proper text
 		        
 				//  send_reply ('sendMessage' , ['chat_id' => $chat_id , 'text' => "61"]);
-		        if (is_unique_name($text , $connection)) {
+		        if (is_unique_name($text , $chat_id , $connection)) {
 					$result = $connection -> prepare("INSERT INTO gif_table (gif_name , chat_id) VALUES (:text , :chat_id)");
 					$result -> bindParam(':text', $text);
 					$result -> bindParam(':chat_id', $chat_id);
@@ -260,9 +291,10 @@ function get_gifs_details($step) {
 	}
 }
 
-function is_unique_name ($gif_name , $connection) {
-	$result = $connection -> prepare("SELECT * FROM gif_table WHERE gif_name = :gif_name"); 
+function is_unique_name ($gif_name , $chat_id , $connection) {
+	$result = $connection -> prepare("SELECT * FROM gif_table WHERE gif_name = :gif_name && chat_id = :chat_id"); 
 	$result -> bindParam(":gif_name" , $gif_name);
+	$result -> bindParam(":chat_id" , $chat_id);
 	$result -> execute();
 	$counter = $result -> rowCount();
 	if ($counter != 0) { // is not unique
