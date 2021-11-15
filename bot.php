@@ -5,6 +5,11 @@ include_once 'config.php';
 // i kept all "if statements" after issec($update->callbackquery) out of *if (issec($update->message))* on porpuse. 
 // cuz one of their variables will change as of one of them and other if statements are executed in the sequence
 // so i guessed maybe the former programmer have it done on porpuse. but if an error prompted later, I'll check those at the time
+/*  
+    I'm still suspecious whether if statements beneath 
+    if (isset ($update_obj->message->reply_to_message)) 
+    are placed at their right place or not
+*/
 //----######------ 
 // uncomment following line if you made sure that all of them are not neccessary ones
 // error_reporting(!(E_NOTICE| E_WARNING));
@@ -5287,6 +5292,11 @@ if ($data == "helpcm") {
 		'chat_id' => $chat_id2,
 		'message_id' => $message_id2,
 		"text" => "	I دستورات ربات $botname👾
+
+/start : 
+کنسل کردن فرستادن گیف و برگشتن به حالت عادی 
+/newgif : 
+فرستادن گیف های انحصاری مخصوص گروه خودتان
 ➖➖➖➖➖➖
 💠(/!#)kick (reply|id)
 I اخراج کردن
@@ -5706,8 +5716,8 @@ if (isset ($update_obj->message)) {
 	$cuphoto = $getuserprofile->total_count;
 	$getuserphoto = $getuserprofile->photos[0][0]->file_id;
 
-    $ekhtar = file_get_contents("data/$chat_id/member/$from_id.txt");
-    $gplist = file_get_contents("data/$chat_id");
+    // $ekhtar = file_get_contents("data/$chat_id/member/$from_id.txt");
+    // $gplist = file_get_contents("data/$chat_id");
 // i'm not sure where these variable are for so i listed them here, hopefully if we encounter an err, we'll still have them to uncomment them.
 // #$gpsettings = {"$chat_id":{"owner":"".$creator['id']."","modlist":"","filterword":"","whitelist":"","muteuserlist":"","banlist":"","gpwlc":"","gpbye":"","gplink":"","rules":"","botandwarn":{"floods":"5","warnlists":"4","cmd":"❌"},"adminlock":{"warnmedia":"❌","warnsettings":"❌","warn":"❌","unban":"❌","ban":"❌","kick":"❌"},"settings":"❌","media":"❌","gpsettings":{"flood":"✅","link":"✅","join":"❌","username":"❌","tag":"❌","chat":"❌","eng":"❌","fwd":"❌","arab":"❌","web":"❌","num":"❌","reply":"❌","edit":"❌","kickme":"❌","bot":"❌"},"gpmedia":{"gif":"❌","video":"❌","music":"❌","voice":"❌","photo":"❌","sticker":"❌","game":"❌","contact":"❌","document":"❌","location":"❌"}}};
 // $gpis = json_decode(file_get_contents("gplist.js"));
@@ -5763,6 +5773,9 @@ if (isset ($update_obj->message)) {
     $_warnmedia2 = file_get_contents("data/$chat_id/settings/warnmedia.txt");
     
 
+	$getChatMember = json_decode(file_get_contents("https://api.telegram.org/bot$token/getChatMember?chat_id=$chat_id&user_id=$idbot"));
+	$resultChat = $getChatMember->result;
+	$mstatus = $getChatMember->result->status;
 	if (strpos($textmessage, "/") !== false  && $mstatus != "administrator" || strpos($textmessage, "!") !== false  && $mstatus != "administrator" || strpos($textmessage, "#") !== false && $mstatus != "administrator") {
 		if ($owner == $from_id || $admin == $from_id || strpos($modlist, "$from_id") !== false) {
 			if ($type2 == "supergroup" || $type2 == "group") {
@@ -5924,7 +5937,9 @@ if (isset ($update_obj->message)) {
         $lastname = $update_obj->message->from->last_name;
         $username = $update_obj->message->from->username;
         
-        $replytext = $update_obj->message->reply_to_message->text;
+        $text_replied = isset($update_obj->message->reply_to_message->text) ? 
+                $update_obj->message->reply_to_message->text : "";
+        $replytext = $text_replied;
         $replied_id = $update_obj->message->reply_to_message->from->id;
         $reply2 = $update_obj->message->reply_to_message->chat->id;
         $replyname = $update_obj->message->reply_to_message->from->first_name;
@@ -5942,27 +5957,33 @@ if (isset ($update_obj->message)) {
         $_warn3 = file_get_contents("data/$reply2/settings/warn.txt");
         $_muteuser3 = file_get_contents("data/$reply2/settings/muteuser.txt");
         
-        if ( strpos($textmessage, $botusername) ) {
-            $gif_name = str_replace ($botusername , "" , $textmessage);
-            $gif_name = trim($gif_name);
-            $url = search_gif ( $gif_name , $chat_id) ; 
-            if ($url != "0") {
-                $post_params = [
-                                    'chat_id' => $chat_id , 
-                                    'animation' => new CURLFILE(realpath("$url")) , 
-                                    'reply_to_message_id' => $replied_message_id ,
-                                    'caption' => "$firstname $lastname (@$username), requested the GIF" , 
-                                ];
-                send_reply('sendAnimation', $post_params);
+        // // $textmessage | $message_id
+        // // $firstname = $update_obj->message->from->first_name;
+        // // $lastname = $update_obj->message->from->last_name;
+        // // $username = $update_obj->message->from->username;
+        // // $replied_message_id = $update_obj->message->reply_to_message->message_id;
+        
+        // if ( strpos($textmessage, $botusername) ) {
+        //     $gif_name = str_replace ($botusername , "" , $textmessage);
+        //     $gif_name = trim($gif_name);
+        //     $url = search_gif ( $gif_name , $chat_id) ; 
+        //     if ($url != "0") {
+        //         $post_params = [
+        //                             'chat_id' => $chat_id , 
+        //                             'animation' => new CURLFILE(realpath("$url")) , 
+        //                             'reply_to_message_id' => $replied_message_id ,
+        //                             'caption' => "$firstname $lastname (@$username), requested the GIF" , 
+        //                         ];
+        //         send_reply('sendAnimation', $post_params);
                 
-                // delete original msg
-                $post_params = ['chat_id'=> $chat_id , 'message_id' => $message_id];
-                send_reply ('deleteMessage' , $post_params);
-                } else {
-                $post_params = ['chat_id' => $chat_id , 'text' => "🤷‍♂️", 'reply_to_message_id' => $message_id];
-            }
-            send_reply('sendMessage' , $post_params);
-        }
+        //         // delete original msg
+        //         $post_params = ['chat_id'=> $chat_id , 'message_id' => $message_id];
+        //         send_reply ('deleteMessage' , $post_params);
+        //         } else {
+        //         $post_params = ['chat_id' => $chat_id , 'text' => "🤷‍♂️", 'reply_to_message_id' => $message_id];
+        //     }
+        //     send_reply('sendMessage' , $post_params);
+        // }
 
 		if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitelist != $from_id) {
 
@@ -6809,13 +6830,6 @@ if ($textmessage == "Yes i am sure" && $admin == $from_id || $textmessage == "Ye
 }
 
 
-	$getChatMember = json_decode(file_get_contents("https://api.telegram.org/bot$token/getChatMember?chat_id=$chat_id&user_id=$idbot"));
-	$resultChat = $getChatMember->result;
-	$mstatus = $getChatMember->result->status;
-
-
-
-
 
 if ($textmessage == '/settings' || $textmessage == '!settings' || $textmessage == '#settings') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false) {
@@ -7572,10 +7586,10 @@ if ($textmessage == '/help' || $textmessage == '!help' || $textmessage == '#help
 				'chat_id' => $chat_id,
 				'text' => '	I دستورات ربات ' . $botname . '👾
 ➖➖➖➖➖➖
-/start
-خروج/انصراف از هر فرآیندی که درحال انجام آنید
-/newGIF 
-فرستادن گیف جدید
+/start : 
+کنسل کردن فرستادن گیف و برگشتن به حالت عادی 
+/newgif : 
+فرستادن گیف های انحصاری مخصوص گروه خودتان
 ➖➖➖➖➖➖
 💠(/!#)kick (reply|id)
 I اخراج کردن
@@ -8546,7 +8560,7 @@ your warn
 // $chat_id
 
 
-require_once 'cam-jozve.php';
+// require_once 'cam-jozve.php';
 //-------  
 
 
@@ -8707,4 +8721,4 @@ try {
     // log telegram errors in a seprate file.
     //Save string to log, using FILE_APPEND to append.
     file_put_contents('./log_'.date("j.n.Y").'.log', date("H:i:s",time())."\t".$e->getMessage(), FILE_APPEND);
-}
+};
