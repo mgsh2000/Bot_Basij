@@ -23,7 +23,7 @@ class AskCommand extends UserCommand
 
         $quest = $message->getReplyToMessage();
         
-        if(!$quest->getProperty('text')){
+        if(!$quest || !$quest->getProperty('text')){
             return $this->replyToChat("You should reply this command to another message.");
         }
 
