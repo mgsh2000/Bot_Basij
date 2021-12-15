@@ -1,26 +1,26 @@
 <?php
-// https://api.telegram.org/bot1876663810:AAGahX6GYh17Nb5CIAntKGQ-7hv6U7b3JrM/setwebhook?url=https://botbasige.cptele.ir/mohamad_sharifi/git/AntiSpam/m-ghafour/index.php
+
 /* 
  * create directories called gif, flood, data directories before using the bot
  */
-define('API_KEY', '1876663810:AAGahX6GYh17Nb5CIAntKGQ-7hv6U7b3JrM');
+define('API_KEY', ''); // token
 # index.php main file variables :
-$admin = 198532866; //ایدی سودو
-$idbot = 1876663810; //ایدی ربات
-$botname = "ادمین ربات جزوه";
-$botusername = "@jozve_admin_bot";
-$botusername2 = "jozve_admin_bot";
-$channel = "akhlaghiQoutes";
+$admin = ; //ایدی ادمین
+$idbot = ; //ایدی ربات
+$botname = "دانشگاه فردوسی"; // bot's name
+$botusername = "@" . ""; // bot's username
+$botusername2 = substr($botusername , 1);
+$channel = ""; // related channel
 
 # recieve_gif.php varables :
 $bot_url =      "https://api.telegram.org/bot" . API_KEY;
 $bot_dl_url =   "https://api.telegram.org/file/bot" . API_KEY;
-$gif_saving_path = "https://botbasige.cptele.ir/mohamad_sharifi/git/AntiSpam/gif";
+$gif_saving_path = "" ."/gif"; // main directory of the bot
 # DB variables :
 $DB_driver = "mysql";
-$DB_name = "botbasig_sharifi";
-$DB_username = "botbasig_mhmed";
-$DB_password = "sc0Z&FVLB}8e";
+$DB_name = ""; // DB name
+$DB_username = ""; // DB's username
+$DB_password = ""; // DB's password
 $DNS = "$DB_driver:host=localhost;dbname=$DB_name;charset=utf8mb4";
 
-?>
+?> 
