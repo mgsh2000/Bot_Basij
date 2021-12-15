@@ -40,6 +40,7 @@ if( isset($update_obj->message) ) {
     $type2 = $update_obj->message->chat->type; // != update
     $textmessage = isset($update_obj->message->text) ? $update_obj->message->text : "";
     // issue the step
+	$status = 0;
     $connection = connect_to_db();
     try {
         $result     = $connection -> prepare("SELECT * FROM users WHERE userID = :user_id");
