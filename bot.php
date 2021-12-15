@@ -41,55 +41,13 @@ if (isset ($update_obj->edited_message)) {
     
     		$textmessage = isset($update_obj->edited_message->text) ? $update_obj->edited_message->text : '';
     		$_link2 = file_get_contents("data/$chat_id/settings/link.txt");
-    		$_flood2 = file_get_contents("data/$chat_id/settings/flood.txt");
-    		$_chat2 = file_get_contents("data/$chat_id/settings/chat.txt");
-    		$_tag2 = file_get_contents("data/$chat_id/settings/tag.txt");
     		$_username2 = file_get_contents("data/$chat_id/settings/username.txt");
     		$_fwd2 = file_get_contents("data/$chat_id/settings/fwd.txt");
     		$_reply2 = file_get_contents("data/$chat_id/settings/reply.txt");
-    		$_eng2 = file_get_contents("data/$chat_id/settings/eng.txt");
-    		$_arab2 = file_get_contents("data/$chat_id/settings/arab.txt");
     		$_web2 = file_get_contents("data/$chat_id/settings/web.txt");
-    		$_num2 = file_get_contents("data/$chat_id/settings/num.txt");
-    
+
     		if (stripos($textmessage, "t.me") !== false || stripos($textmessage, "telegram.me") !== false) {
     			if ($_link2 == "✅") {
-    			    sleep(2.5);
-    				send_reply('deletemessage', [
-    					'chat_id' => $update_obj->edited_message->chat->id,
-    					'message_id' => $update_obj->edited_message->message_id
-    				]);
-    			}
-    		}
-    
-    		if (
-    			stripos($textmessage, "a") !== false || stripos($textmessage, "s") !== false || stripos($textmessage, "d") !== false || stripos($textmessage, "f") !== false || stripos($textmessage, "g") !== false || stripos($textmessage, "h") !== false || stripos($textmessage, "j") !== false || stripos($textmessage, "k") !== false || stripos($textmessage, "l") !== false || stripos($textmessage, "z") !== false || stripos($textmessage, "x") !== false || stripos($textmessage, "c") !== false || stripos($textmessage, "v") !== false || stripos($textmessage, "b") !== false || stripos($textmessage, "n") !== false || stripos($textmessage, "m") !== false || stripos($textmessage, "q") !== false || stripos($textmessage, "w") !== false || stripos($textmessage, "e") !== false || stripos($textmessage, "r") !== false || stripos($textmessage, "t") !== false || stripos($textmessage, "y") !== false || stripos($textmessage, "u") !== false || stripos($textmessage, "i") !== false
-    			|| stripos($textmessage, "o") !== false || stripos($textmessage, "p") !== false
-    		) {
-    			if ($_eng2 == "✅") {
-    			    sleep(2.5);
-    				send_reply('deletemessage', [
-    					'chat_id' => $update_obj->edited_message->chat->id,
-    					'message_id' => $update_obj->edited_message->message_id
-    				]);
-    			}
-    		}
-    
-    		if (
-    			stripos($textmessage, "ش") !== false || stripos($textmessage, "س") !== false || stripos($textmessage, "ی") !== false || stripos($textmessage, "ب") !== false || stripos($textmessage, "ل") !== false || stripos($textmessage, "ا") !== false || stripos($textmessage, "ت") !== false || stripos($textmessage, "ن") !== false || stripos($textmessage, "م") !== false || stripos($textmessage, "پ") !== false || stripos($textmessage, "ط") !== false || stripos($textmessage, "ظ") !== false || stripos($textmessage, "ز") !== false || stripos($textmessage, "ژ") !== false || stripos($textmessage, "د") !== false || stripos($textmessage, "ر") !== false || stripos($textmessage, "ک") !== false || stripos($textmessage, "و") !== false || stripos($textmessage, "ج") !== false || stripos($textmessage, "گ") !== false || stripos($textmessage, "چ") !== false || stripos($textmessage, "ح") !== false || stripos($textmessage, "ه") !== false || stripos($textmessage, "خ") !== false
-    			|| stripos($textmessage, "ف") !== false || stripos($textmessage, "ع") !== false
-    		) {
-    			if ($_arab2 == "✅") {
-    			    sleep(2.5);
-    				send_reply('deletemessage', [
-    					'chat_id' => $update_obj->edited_message->chat->id,
-    					'message_id' => $update_obj->edited_message->message_id
-    				]);
-    			}
-    		}
-    
-    		if (stripos($textmessage, "#") !== false) {
-    			if ($_tag2 == "✅") {
     			    sleep(2.5);
     				send_reply('deletemessage', [
     					'chat_id' => $update_obj->edited_message->chat->id,
@@ -108,17 +66,7 @@ if (isset ($update_obj->edited_message)) {
     			}
     		}
     
-    		if (stripos($textmessage, "1") !== false || stripos($textmessage, "2") !== false || stripos($textmessage, "3") !== false || stripos($textmessage, "4") !== false || stripos($textmessage, "5") !== false || stripos($textmessage, "6") !== false || stripos($textmessage, "7") !== false || stripos($textmessage, "8") !== false || stripos($textmessage, "9") !== false || stripos($textmessage, "0") !== false) {
-    			if ($_num2 == "✅") {
-    			    sleep(2.5);
-    				send_reply('deletemessage', [
-    					'chat_id' => $update_obj->edited_message->chat->id,
-    					'message_id' => $update_obj->edited_message->message_id
-    				]);
-    			}
-    		}
-    
-    		if (stripos($textmessage, "https") !== false || stripos($textmessage, "www") !== false) {
+    		if (stripos($textmessage, "http") !== false || stripos($textmessage, "www") !== false) {
     			if ($_web2 == "✅") {
     			    sleep(2.5);
     				send_reply('deletemessage', [
@@ -173,6 +121,7 @@ if (isset ($update_obj->callback_query)) {
     $chat_id2 = $update_obj->callback_query->message->chat->id;
     
     if ( !file_exists("data/$chat_id2") ) {
+        mkdir("data");
         mkdir("data/$chat_id2");
         mkdir("data/$chat_id2/settings");
     }
@@ -186,25 +135,15 @@ if (isset ($update_obj->callback_query)) {
     $filterlist2 = file_get_contents("data/$chat_id2/settings/filterword.txt");
     
     $byetext2 = file_get_contents("data/$chat_id2/gpbye.txt");
-    $_bot = file_get_contents("data/$chat_id2/settings/bot.txt");
     $_link = file_get_contents("data/$chat_id2/settings/link.txt");
-    $_flood = file_get_contents("data/$chat_id2/settings/flood.txt");
     $_edit = file_get_contents("data/$chat_id2/settings/edit.txt");
     $_web = file_get_contents("data/$chat_id2/settings/web.txt");
-    $_num = file_get_contents("data/$chat_id2/settings/num.txt");
-    $_chat = file_get_contents("data/$chat_id2/settings/chat.txt");
-    $_tag = file_get_contents("data/$chat_id2/settings/tag.txt");
     $_username = file_get_contents("data/$chat_id2/settings/username.txt");
     $_reply = file_get_contents("data/$chat_id2/settings/reply.txt");
     $_lockcmd = file_get_contents("data/$chat_id2/settings/cmd.txt");
     $_fwd = file_get_contents("data/$chat_id2/settings/fwd.txt");
-    $_eng = file_get_contents("data/$chat_id2/settings/eng.txt");
-    $_arab = file_get_contents("data/$chat_id2/settings/arab.txt");
-    $_kickme = file_get_contents("data/$chat_id2/settings/kickme.txt");
     $warnlist2 = file_get_contents("data/$chat_id2/settings/warnlist2.txt");
-    $_join = file_get_contents("data/$chat_id2/settings/join.txt");
-    $_floods = file_get_contents("data/$chat_id2/settings/floods.txt");
-    
+
     $muteuserlist2 = file_get_contents("data/$chat_id2/muteuserlist.txt");
     $wlctext2 = file_get_contents("data/$chat_id2/gpwlc.txt");
     $warnlists2 = file_get_contents("data/$chat_id2/settings/warnlists.txt");
@@ -395,15 +334,6 @@ if ($data == "settings") {
 						['text' => 'Settings🏷', 'callback_data' => 'group_settings'],
 					],
 					[
-						['text' => 'Media📍', 'callback_data' => 'group_media'],
-					],
-					[
-						['text' => 'Bot and Warn🔆', 'callback_data' => 'floodandwarn'],
-					],
-					[
-						['text' => 'Admin lock⚙️', 'callback_data' => 'adminlock'],
-					],
-					[
 						['text' => 'Ban List⛔️', 'callback_data' => 'banlist'],
 					],
 					[
@@ -426,87 +356,6 @@ if ($data == "settings") {
 					],
 					[
 						['text' => 'Channel📡', 'url' => 'https://telegram.me/' . $channel . ''],
-					]
-				]
-			])
-		]));
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-if ($data == "adminlock") {
-	if ($admin == $from_id2 || $owner2 == $from_id2) {
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'Admin Settings  (Modlist Settings)  :
-❌ = unlock
-	✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '📃Lock Kick', 'callback_data' => 'nolock'], ['text' => $_kick, 'callback_data' => 'lock_kick']
-					],
-					[
-						['text' => '📃Lock Ban', 'callback_data' => 'nolock'], ['text' => $_ban, 'callback_data' => 'lock_ban']
-					],
-					[
-						['text' => '📃Lock UnBan', 'callback_data' => 'nolock'], ['text' => $_unban, 'callback_data' => 'lock_unban']
-					],
-					[
-						['text' => '📃Lock MuteUser', 'callback_data' => 'nolock'], ['text' => $_muteuser, 'callback_data' => 'lock_muteuser']
-					],
-					[
-						['text' => '📃Lock Settings', 'callback_data' => 'nolock'], ['text' => $_settings, 'callback_data' => 'lock_settings']
-					],
-					[
-						['text' => '📃Lock Media', 'callback_data' => 'nolock'], ['text' => $_media, 'callback_data' => 'lock_media']
-					],
-					[
-						['text' => '📃Lock Warn/UnWarn', 'callback_data' => 'nolock'], ['text' => $_warn, 'callback_data' => 'lock_warn']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "فقط اونر گروه میتواند به این بخش دست رسی داشته باشد! 🏷",
-		]);
-	}
-}
-
-if ($data == "floodandwarn") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "✅") {
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'Bot && Warn Settings⚙️',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => 'Lock Commands💬', 'callback_data' => 'nolock'], ['text' => $_lockcmd, 'callback_data' => 'lock_cmd']
-					],
-					[
-						['text' => 'Flood Sensitivity🖌', 'callback_data' => 'nolock'],
-					],
-					[
-						['text' => '⬇️', 'callback_data' => 'minflood'], ['text' => $_floods, 'callback_data' => 'flood'], ['text' => '⬆️', 'callback_data' => 'maxflood'],
-					],
-					[
-						['text' => 'Warns🖌', 'callback_data' => 'nolock'],
-					],
-					[
-						['text' => '⬇️', 'callback_data' => 'minwarn'], ['text' => $warnlists2, 'callback_data' => 'warn'], ['text' => '⬆️', 'callback_data' => 'maxwarn'],
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
 					]
 				]
 			])
@@ -753,49 +602,22 @@ if ($data == "group_settings") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -810,282 +632,8 @@ if ($data == "group_settings") {
 		]);
 	}
 }
-//----------Flood and Warn settings----------\\
-if ($data == "minflood") {
-	if ($admin == $from_id2 || $owner2 == $from_id2) {
-		if ($_floods == 3) {
-			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update_obj->callback_query->id,
-				'text' => "تعداد سیل باید بین 3 تا 15 باشد ! 🏷",
-			]);
-		}
-		if ($_floods > 3) {
-			$setflood = $_floods - 1;
-			save("data/$chat_id2/settings/floods.txt", "$setflood");
-			var_dump(send_reply('editMessageText', [
-				'chat_id' => $chat_id2,
-				'message_id' => $message_id2,
-				"text" => 'Bot && Warn Settings⚙️',
-				'reply_markup' => json_encode([
-					'inline_keyboard' => [
-						[
-							['text' => 'Lock Commands💬', 'callback_data' => 'nolock'], ['text' => $_lockcmd, 'callback_data' => 'lock_cmd']
-						],
-						[
-							['text' => 'Flood Sensitivity🖌', 'callback_data' => 'nolock'],
-						],
-						[
-							['text' => '⬇️', 'callback_data' => 'minflood'], ['text' => "$setflood", 'callback_data' => 'flood'], ['text' => '⬆️', 'callback_data' => 'maxflood'],
-						],
-						[
-							['text' => 'Warns🖌', 'callback_data' => 'nolock'],
-						],
-						[
-							['text' => '⬇️', 'callback_data' => 'minwarn'], ['text' => $warnlists2, 'callback_data' => 'warn'], ['text' => '⬆️', 'callback_data' => 'maxwarn'],
-						],
-						[
-							['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-						]
-					]
-				])
-			]));
-		} else {
-			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update_obj->callback_query->id,
-				'text' => "شما ادمین نیستید! 🏷",
-			]);
-		}
-	}
-}
 
-if ($data == "maxflood") {
-	if ($admin == $from_id2 || $owner2 == $from_id2) {
-		if ($_floods == 15) {
-			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update_obj->callback_query->id,
-				'text' => "تعداد سیل باید بین 3 تا 15 باشد ! 🏷",
-			]);
-		}
-		if ($_floods < 15) {
-			$setflood = $_floods + 1;
-			save("data/$chat_id2/settings/floods.txt", "$setflood");
-			var_dump(send_reply('editMessageText', [
-				'chat_id' => $chat_id2,
-				'message_id' => $message_id2,
-				"text" => 'Bot && Warn Settings⚙️',
-				'reply_markup' => json_encode([
-					'inline_keyboard' => [
-						[
-							['text' => 'Lock Commands💬', 'callback_data' => 'nolock'], ['text' => $_lockcmd, 'callback_data' => 'lock_cmd']
-						],
-						[
-							['text' => 'Flood Sensitivity🖌', 'callback_data' => 'nolock'],
-						],
-						[
-							['text' => '⬇️', 'callback_data' => 'minflood'], ['text' => "$setflood", 'callback_data' => 'flood'], ['text' => '⬆️', 'callback_data' => 'maxflood'],
-						],
-						[
-							['text' => 'Warns🖌', 'callback_data' => 'nolock'],
-						],
-						[
-							['text' => '⬇️', 'callback_data' => 'minwarn'], ['text' => $warnlists2, 'callback_data' => 'warn'], ['text' => '⬆️', 'callback_data' => 'maxwarn'],
-						],
-						[
-							['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-						]
-					]
-				])
-			]));
-		} else {
-			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update_obj->callback_query->id,
-				'text' => "شما ادمین نیستید! 🏷",
-			]);
-		}
-	}
-}
-
-
-if ($data == "minwarn") {
-	if ($admin == $from_id2 || $owner2 == $from_id2) {
-		if ($warnlists2 == 1) {
-			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update_obj->callback_query->id,
-				'text' => "تعداد اخطار باید بین 1 تا 9 باشد ! 🏷",
-			]);
-		}
-		if ($warnlists2 > 1) {
-			$setwarn = $warnlists2 - 1;
-			save("data/$chat_id2/settings/warnlists.txt", "$setwarn");
-			var_dump(send_reply('editMessageText', [
-				'chat_id' => $chat_id2,
-				'message_id' => $message_id2,
-				"text" => 'Bot && Warn Settings⚙️',
-				'reply_markup' => json_encode([
-					'inline_keyboard' => [
-						[
-							['text' => 'Lock Commands💬', 'callback_data' => 'nolock'], ['text' => $_lockcmd, 'callback_data' => 'lock_cmd']
-						],
-						[
-							['text' => 'Flood Sensitivity🖌', 'callback_data' => 'nolock'],
-						],
-						[
-							['text' => '⬇️', 'callback_data' => 'minflood'], ['text' => $_floods, 'callback_data' => 'flood'], ['text' => '⬆️', 'callback_data' => 'maxflood'],
-						],
-						[
-							['text' => 'Warns🖌', 'callback_data' => 'nolock'],
-						],
-						[
-							['text' => '⬇️', 'callback_data' => 'minwarn'], ['text' => "$setwarn", 'callback_data' => 'warn'], ['text' => '⬆️', 'callback_data' => 'maxwarn'],
-						],
-						[
-							['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-						]
-					]
-				])
-			]));
-		} else {
-			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update_obj->callback_query->id,
-				'text' => "شما ادمین نیستید! 🏷",
-			]);
-		}
-	}
-}
-
-if ($data == "maxwarn") {
-	if ($admin == $from_id2 || $owner2 == $from_id2) {
-		if ($warnlists2 == 9) {
-			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update_obj->callback_query->id,
-				'text' => "تعداد اخطار باید بین 1 تا 9 باشد ! 🏷",
-			]);
-		}
-		if ($warnlists2 < 9) {
-			$setwarn = $warnlists2 + 1;
-			save("data/$chat_id2/settings/warnlists.txt", "$setwarn");
-			var_dump(send_reply('editMessageText', [
-				'chat_id' => $chat_id2,
-				'message_id' => $message_id2,
-				"text" => 'Bot && Warn Settings⚙️',
-				'reply_markup' => json_encode([
-					'inline_keyboard' => [
-						[
-							['text' => 'Lock Commands💬', 'callback_data' => 'nolock'], ['text' => $_lockcmd, 'callback_data' => 'lock_cmd']
-						],
-						[
-							['text' => 'Flood Sensitivity🖌', 'callback_data' => 'nolock'],
-						],
-						[
-							['text' => '⬇️', 'callback_data' => 'minflood'], ['text' => $_floods, 'callback_data' => 'flood'], ['text' => '⬆️', 'callback_data' => 'maxflood'],
-						],
-						[
-							['text' => 'Warns🖌', 'callback_data' => 'nolock'],
-						],
-						[
-							['text' => '⬇️', 'callback_data' => 'minwarn'], ['text' => "$setwarn", 'callback_data' => 'warn'], ['text' => '⬆️', 'callback_data' => 'maxwarn'],
-						],
-						[
-							['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-						]
-					]
-				])
-			]));
-		} else {
-			send_reply('answerCallbackQuery', [
-				'callback_query_id' => $update_obj->callback_query->id,
-				'text' => "شما ادمین نیستید! 🏷",
-			]);
-		}
-	}
-}
-
-
-if ($data == "lock_cmd" && $_lockcmd == "❌") {
-	if ($admin == $from_id2 || $owner2 == $from_id2) {
-		save("data/$chat_id2/settings/cmd.txt", "✅");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'Bot && Warn Settings⚙️',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => 'Lock Commands💬', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_cmd']
-					],
-					[
-						['text' => 'Flood Sensitivity🖌', 'callback_data' => 'nolock'],
-					],
-					[
-						['text' => '⬇️', 'callback_data' => 'minflood'], ['text' => $_floods, 'callback_data' => 'flood'], ['text' => '⬆️', 'callback_data' => 'maxflood'],
-					],
-					[
-						['text' => 'Warns🖌', 'callback_data' => 'nolock'],
-					],
-					[
-						['text' => '⬇️', 'callback_data' => 'minwarn'], ['text' => "$warnlists2", 'callback_data' => 'warn'], ['text' => '⬆️', 'callback_data' => 'maxwarn'],
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "دستورات برای کاربران غیر فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما اونر نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_cmd" && $_lockcmd == "✅") {
-	if ($admin == $from_id2 || $owner2 == $from_id2) {
-		save("data/$chat_id2/settings/cmd.txt", "❌");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'Bot && Warn Settings⚙️',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => 'Lock Commands💬', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_cmd']
-					],
-					[
-						['text' => 'Flood Sensitivity🖌', 'callback_data' => 'nolock'],
-					],
-					[
-						['text' => '⬇️', 'callback_data' => 'minflood'], ['text' => $_floods, 'callback_data' => 'flood'], ['text' => '⬆️', 'callback_data' => 'maxflood'],
-					],
-					[
-						['text' => 'Warns🖌', 'callback_data' => 'nolock'],
-					],
-					[
-						['text' => '⬇️', 'callback_data' => 'minwarn'], ['text' => "$warnlists2", 'callback_data' => 'warn'], ['text' => '⬆️', 'callback_data' => 'maxwarn'],
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "دستورات برای کاربران فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما اونر نیستید! 🏷",
-		]);
-	}
-}
-    
-    //----------lock and unlock admin settings----------\\
+//----------lock and unlock admin settings----------\\
 if ($data == "lock_kick" && $_kick == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2) {
 		save("data/$chat_id2/settings/kick.txt", "✅");
@@ -1803,155 +1351,6 @@ if ($data == "lock_warn" && $_warn == "✅") {
 
     
 //----------lock and unlock by button----------\\
-if ($data == "lock_flood" && $_flood == "❌") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/flood.txt", "✅");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل سیل فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_flood" && $_flood == "✅") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/flood.txt", "❌");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل سیل غیر فعال شد ❌",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
 
 if ($data == "lock_links" && $_link == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
@@ -1966,49 +1365,22 @@ if ($data == "lock_links" && $_link == "❌") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -2041,49 +1413,22 @@ if ($data == "lock_links" && $_link == "✅") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -2103,157 +1448,6 @@ if ($data == "lock_links" && $_link == "✅") {
 	}
 }
 
-if ($data == "lock_tag" && $_tag == "❌") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/tag.txt", "✅");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل هشتگ فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_tag" && $_tag == "✅") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/tag.txt", "❌");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل هشتگ غیر فعال شد ❌",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-
 if ($data == "lock_username" && $_username == "❌") {
 	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
 		save("data/$chat_id2/settings/username.txt", "✅");
@@ -2267,49 +1461,22 @@ if ($data == "lock_username" && $_username == "❌") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -2342,49 +1509,22 @@ if ($data == "lock_username" && $_username == "✅") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -2395,156 +1535,6 @@ if ($data == "lock_username" && $_username == "✅") {
 		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل یوزرنیم غیر فعال شد ❌",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_number" && $_num == "❌") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/num.txt", "✅");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل عدد فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_number" && $_num == "✅") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/num.txt", "❌");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل عدد غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
@@ -2567,49 +1557,22 @@ if ($data == "lock_web" && $_web == "❌") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -2642,49 +1605,22 @@ if ($data == "lock_web" && $_web == "✅") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -2695,156 +1631,6 @@ if ($data == "lock_web" && $_web == "✅") {
 		send_reply('answerCallbackQuery', [
 			'callback_query_id' => $update_obj->callback_query->id,
 			'text' => "قفل وبسایت غیر فعال شد ❌",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_chat" && $_chat == "❌") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/chat.txt", "✅");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل چت فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_chat" && $_chat == "✅") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/chat.txt", "❌");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل چت غیر فعال شد ❌",
 		]);
 	} else {
 		send_reply('answerCallbackQuery', [
@@ -2867,49 +1653,22 @@ if ($data == "lock_fwd" && $_fwd == "❌") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -2942,49 +1701,22 @@ if ($data == "lock_fwd" && $_fwd == "✅") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -3017,49 +1749,22 @@ if ($data == "lock_reply" && $_reply == "❌") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -3092,49 +1797,22 @@ if ($data == "lock_reply" && $_reply == "✅") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -3168,49 +1846,22 @@ if ($data == "lock_edit" && $_edit == "❌") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -3243,49 +1894,22 @@ if ($data == "lock_edit" && $_edit == "✅") {
 			'reply_markup' => json_encode([
 				'inline_keyboard' => [
 					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
+						['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
 					],
 					[
 						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
 					],
 					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
 						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
 					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
+				// 	[
+				// 		['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
+				// 	],
 					[
 						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
 					],
 					[
 						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
 					],
 					[
 						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
@@ -3304,753 +1928,6 @@ if ($data == "lock_edit" && $_edit == "✅") {
 		]);
 	}
 }
-
-
-if ($data == "lock_eng" && $_eng == "❌") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/eng.txt", "✅");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل انگلیسی فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_eng" && $_eng == "✅") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/eng.txt", "❌");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل انگلیسی غیر فعال شد ❌",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_arab" && $_arab == "❌") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/arab.txt", "✅");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل عربی/فارسی فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_arab" && $_arab == "✅") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/arab.txt", "❌");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل عربی/فارسی غیر فعال شد ❌",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-
-if ($data == "lock_join" && $_join == "❌") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/join.txt", "✅");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل عضویت فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_join" && $_join == "✅") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/join.txt", "❌");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل عضویت غیر فعال شد ❌",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-
-if ($data == "lock_kickme" && $_kickme == "❌") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/kickme.txt", "✅");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل اخراج فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_kickme" && $_kickme == "✅") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/kickme.txt", "❌");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot, 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل اخراج غیر فعال شد ❌",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_bots" && $_bot == "❌") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/bot.txt", "✅");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => "✅", 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل وروود ربات فعال شد ✅",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-}
-
-if ($data == "lock_bots" && $_bot == "✅") {
-	if ($admin == $from_id2 || $owner2 == $from_id2 || strpos($modlist2, "$from_id2") !== false && $_settings == "❌") {
-		save("data/$chat_id2/settings/bot.txt", "❌");
-		var_dump(send_reply('editMessageText', [
-			'chat_id' => $chat_id2,
-			'message_id' => $message_id2,
-			"text" => 'SuperGroup/Group Settings Manager⚙️
-
-❌ = unlock
- ✅ = lock',
-			'reply_markup' => json_encode([
-				'inline_keyboard' => [
-					[
-						['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood, 'callback_data' => 'lock_flood']
-					],
-					[
-						['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link, 'callback_data' => 'lock_links']
-					],
-					[
-						['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag, 'callback_data' => 'lock_tag']
-					],
-					[
-						['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username, 'callback_data' => 'lock_username']
-					],
-					[
-						['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num, 'callback_data' => 'lock_number']
-					],
-					[
-						['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web, 'callback_data' => 'lock_web']
-					],
-					[
-						['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat, 'callback_data' => 'lock_chat']
-					],
-					[
-						['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd, 'callback_data' => 'lock_fwd']
-					],
-					[
-						['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply, 'callback_data' => 'lock_reply']
-					],
-					[
-						['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit, 'callback_data' => 'lock_edit']
-					],
-					[
-						['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng, 'callback_data' => 'lock_eng']
-					],
-					[
-						['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab, 'callback_data' => 'lock_arab']
-					],
-					[
-						['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join, 'callback_data' => 'lock_join']
-					],
-					[
-						['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => "❌", 'callback_data' => 'lock_bots']
-					],
-					[
-						['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme, 'callback_data' => 'lock_kickme']
-					],
-					[
-						['text' => '🔙Back To Menu', 'callback_data' => 'settings'],
-					]
-				]
-			])
-		]));
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "قفل وروود ربات غیر فعال شد ❌",
-		]);
-	} else {
-		send_reply('answerCallbackQuery', [
-			'callback_query_id' => $update_obj->callback_query->id,
-			'text' => "شما ادمین نیستید! 🏷",
-		]);
-	}
-    }
 
     
 //-------End Lock and Unlock-------\\
@@ -5265,8 +3142,7 @@ if ($data == "startpv") {
 		'message_id' => $message_id2,
 		'text' => "سلام $name2 ✋️
 
-به ربات ضد اسپم رایگان $botname خوش امدی😄
-امکاناتی بی نظیر در رباتی بدون افی! رایگان و با سرعت بی نظیر!🌐
+به ربات مدیریت گروه و ضد اسپم  $botname خوش امدی😄
 شما هم می توانید با استفاده از دکمه اضافه کردن ربات در گروه ، گروه خود را با ضد اسپم api ما امن کنید!♻️
 ✅با امکانات بی نظیری به پیشرو شما امدیم!
 
@@ -5294,7 +3170,7 @@ if ($data == "helpcm") {
 		"text" => "	I دستورات ربات $botname👾
 
 /start : 
-کنسل کردن فرستادن گیف و برگشتن به حالت عادی 
+کنسل کردن دستور قبلی (فرستادن گیف و..) و برگشتن به حالت عادی 
 /newgif : 
 فرستادن گیف های انحصاری مخصوص گروه خودتان
 ➖➖➖➖➖➖
@@ -5307,12 +3183,10 @@ I در اورد از اخراج دائمی
 ➖➖➖➖➖➖
 🌐(/!#)settings
 I تنظیمات
-🔑(/!#)lock (links|flood|tag|username|chat|english|arabic|forward|reply|edit|join|kickme)
+🔑(/!#)lock (links|username|chat|reply|edit|join)// forward
 I قفل کردن
-🔑(/!#)unlock (links|flood|tag|username|chat|english|arabic|forward|reply|edit|join|kickme)
+🔑(/!#)unlock (links|username|chat|reply|edit|join)// forward
 I آزاد کردن
-🔑(/!#)setflood (number)
-I تعیین سیل
 🔑(/!#)mute (sticker|photo|video|voice|music|gif|document|location|contact|game)
 I قفل کردن
 🔑(/!#)unmute (sticker|photo|video|voice|music|gif|document|location|contact|game)
@@ -5379,8 +3253,6 @@ I تنظیمات کل گروه
 I اخطار های من
 ℹ️(/!#)id
 I مشخصات
-🔰(/!#)kickme
-I اخراج کردن خود
 🔰(/!#)ping
 I اطلاع پیدا کردن از وضعیت ربات
 ➖➖➖➖➖➖",
@@ -5674,6 +3546,11 @@ if (isset ($update_obj->message)) {
     
     $chat_id = $update_obj->message->chat->id;
     
+    // if ( !file_exists("data/$chat_id") ) {
+    //     mkdir("data");
+    //     mkdir("data/$chat_id");
+    //     mkdir("data/$chat_id/settings");
+    // }
     
     $message_id = $update_obj->message->message_id;
     $from_id = $update_obj->message->from->id;
@@ -5683,7 +3560,7 @@ if (isset ($update_obj->message)) {
     $username = $update_obj->message->from->username;
     $gpname = $update_obj->message->chat->title;
     $textmessage = isset($update_obj->message->text) ? $update_obj->message->text : '';
-    $txtmsg = $update_obj->message->text;
+    $txtmsg = isset( $update_obj->message->text) ?  $update_obj->message->text : "";
     
     $forward = isset($update_obj->message->forward_from) ? $update_obj->message->forward_from : "";
     $photo = isset($update_obj->message->photo) ? $update_obj->message->photo : "";
@@ -5701,6 +3578,75 @@ if (isset ($update_obj->message)) {
     $voice = isset($update_obj->message->voice) ? $update_obj->message->voice : "";
 
     $chatsuper = str_replace("-", "", $chat_id);
+	$creator = getcreator($chat_id, $token);
+    
+    
+//     if ($type2 == "supergroup" || $type2 == "group") {
+// 		if (!file_exists("data/$chat_id/owner.txt")) {
+			
+// 		}
+// 	}
+    if ($type2 == "group" || $type2 == "supergroup") {
+		if (!file_exists("data/$chat_id")) {
+			mkdir("data");
+			mkdir("data/$chat_id");
+			mkdir("data/$chat_id/settings");
+			mkdir("data/$chat_id/member");
+			mkdir("data/$chat_id/banlist");
+			mkdir("data/$chat_id/whitelist");
+			save("data/$chat_id/gpwlc.txt", "");
+			save("data/$chat_id/gpbye.txt", "");
+			save("data/$chat_id/modlist.txt", "");
+			save("data/$chat_id/banlist/list.txt", "");
+			save("data/$chat_id/whitelist/list.txt", "");
+			save("data/$chat_id/gplink.txt", "none");
+			save("data/$chat_id/rules.txt", "none");
+			save("data/$chat_id/owner.txt", "" . $creator['id'] . "");
+			save("data/$chat_id2/settings/warnlist2.txt" , "");
+			save("data/$chat_id/settings/bot.txt", "❌");
+			save("data/$chat_id/settings/warnlists.txt", "4");
+			save("data/$chat_id/settings/modlist.txt", "");
+			save("data/$chat_id/settings/filterword.txt", "");
+			save("data/$chat_id/settings/link.txt", "✅");
+			save("data/$chat_id/settings/join.txt", "❌");
+			save("data/$chat_id/settings/location.txt", "❌");
+			save("data/$chat_id/settings/username.txt", "❌");
+			save("data/$chat_id/settings/game.txt", "❌");
+			save("data/$chat_id/settings/contact.txt", "❌");
+			save("data/$chat_id/settings/edit.txt", "❌");
+			save("data/$chat_id/settings/chat.txt", "❌");
+			save("data/$chat_id/settings/eng.txt", "❌");
+			save("data/$chat_id/settings/fwd.txt", "❌");
+			save("data/$chat_id/settings/reply.txt", "❌");
+			save("data/$chat_id/settings/arab.txt", "❌");
+			save("data/$chat_id/settings/web.txt", "❌");
+			save("data/$chat_id/settings/sticker.txt", "❌");
+			save("data/$chat_id/settings/photo.txt", "❌");
+			save("data/$chat_id/settings/video.txt", "❌");
+			save("data/$chat_id/settings/voice.txt", "❌");
+			save("data/$chat_id/settings/music.txt", "❌");
+			save("data/$chat_id/settings/gif.txt", "❌");
+			save("data/$chat_id/settings/document.txt", "❌");
+			save("data/$chat_id/settings/settings.txt", "❌");
+			save("data/$chat_id/settings/media.txt", "❌");
+			save("data/$chat_id/settings/ban.txt", "❌");
+			save("data/$chat_id/settings/kick.txt", "❌");
+			save("data/$chat_id/settings/unban.txt", "❌");
+			save("data/$chat_id/settings/warn.txt", "❌");
+			save("data/$chat_id/settings/warnsettings.txt", "❌");
+			save("data/$chat_id/settings/warnmedia.txt", "❌");
+			save("data/$chat_id/settings/bot.txt", "❌");
+		}
+		if (!file_exists("data/$chat_id/muteuserlist.txt")) {
+			save("data/$chat_id/muteuserlist.txt", "");
+		}
+		if (!file_exists("data/$chat_id/settings/muteuser.txt")) {
+			save("data/$chat_id/settings/muteuser.txt", "❌");
+		}
+		if (!file_exists("data/$chat_id/settings/cmd.txt")) {
+			save("data/$chat_id/settings/cmd.txt", "❌");
+		}
+	}
     
     $owner = file_get_contents("data/$chat_id/owner.txt");
     $modlist = file_get_contents("data/$chat_id/modlist.txt");
@@ -5711,7 +3657,6 @@ if (isset ($update_obj->message)) {
 	$userlist = file_get_contents("users.txt");
 	$grouplist = file_get_contents("groups.txt");
 	$supergrouplist = file_get_contents("supergroups.txt");
-	$creator = getcreator($chat_id, $token);
 	$getuserprofile = getUserProfilePhotos($token, $from_id);
 	$cuphoto = $getuserprofile->total_count;
 	$getuserphoto = $getuserprofile->photos[0][0]->file_id;
@@ -5719,10 +3664,13 @@ if (isset ($update_obj->message)) {
     // $ekhtar = file_get_contents("data/$chat_id/member/$from_id.txt");
     // $gplist = file_get_contents("data/$chat_id");
 // i'm not sure where these variable are for so i listed them here, hopefully if we encounter an err, we'll still have them to uncomment them.
-// #$gpsettings = {"$chat_id":{"owner":"".$creator['id']."","modlist":"","filterword":"","whitelist":"","muteuserlist":"","banlist":"","gpwlc":"","gpbye":"","gplink":"","rules":"","botandwarn":{"floods":"5","warnlists":"4","cmd":"❌"},"adminlock":{"warnmedia":"❌","warnsettings":"❌","warn":"❌","unban":"❌","ban":"❌","kick":"❌"},"settings":"❌","media":"❌","gpsettings":{"flood":"✅","link":"✅","join":"❌","username":"❌","tag":"❌","chat":"❌","eng":"❌","fwd":"❌","arab":"❌","web":"❌","num":"❌","reply":"❌","edit":"❌","kickme":"❌","bot":"❌"},"gpmedia":{"gif":"❌","video":"❌","music":"❌","voice":"❌","photo":"❌","sticker":"❌","game":"❌","contact":"❌","document":"❌","location":"❌"}}};
 // $gpis = json_decode(file_get_contents("gplist.js"));
 // $linkjsa = $gpis->test->gplink;
+
+
     $filterlist = file_get_contents("data/$chat_id/settings/filterword.txt");
+
+	
     //-------settings
     $muteuserlist = file_get_contents("data/$chat_id/muteuserlist.txt");
     
@@ -5733,22 +3681,12 @@ if (isset ($update_obj->message)) {
     //-------
     $_lockcmd2 = file_get_contents("data/$chat_id/settings/cmd.txt");
     $_link2 = file_get_contents("data/$chat_id/settings/link.txt");
-    $_bot2 = file_get_contents("data/$chat_id/settings/bot.txt");
-    $_flood2 = file_get_contents("data/$chat_id/settings/flood.txt");
     $_edit2 = file_get_contents("data/$chat_id/settings/edit.txt");
-    $_chat2 = file_get_contents("data/$chat_id/settings/chat.txt");
-    $_tag2 = file_get_contents("data/$chat_id/settings/tag.txt");
     $_username2 = file_get_contents("data/$chat_id/settings/username.txt");
     $_fwd2 = file_get_contents("data/$chat_id/settings/fwd.txt");
     $_reply2 = file_get_contents("data/$chat_id/settings/reply.txt");
-    $_eng2 = file_get_contents("data/$chat_id/settings/eng.txt");
-    $_arab2 = file_get_contents("data/$chat_id/settings/arab.txt");
     $_web2 = file_get_contents("data/$chat_id/settings/web.txt");
-    $_num2 = file_get_contents("data/$chat_id/settings/num.txt");
-    $_kickme2 = file_get_contents("data/$chat_id/settings/kickme.txt");
-    $_join2 = file_get_contents("data/$chat_id/settings/join.txt");
-    $_floods2 = file_get_contents("data/$chat_id/settings/floods.txt");
-    
+
     $_contact2 = file_get_contents("data/$chat_id/settings/contact.txt");
     $_game2 = file_get_contents("data/$chat_id/settings/game.txt");
     $_location2 = file_get_contents("data/$chat_id/settings/location.txt");
@@ -5794,69 +3732,7 @@ if (isset ($update_obj->message)) {
 		}
 	}
 	
-	if ($type2 == "group" || $type2 == "supergroup") {
-		if (!file_exists("data/$chat_id")) {
-			mkdir("data/$chat_id");
-			mkdir("data/$chat_id/settings");
-			mkdir("data/$chat_id/member");
-			mkdir("data/$chat_id/banlist");
-			mkdir("data/$chat_id/whitelist");
-			save("data/$chat_id/settings/bot.txt", "❌");
-			save("data/$chat_id/gpwlc.txt", "");
-			save("data/$chat_id/gpbye.txt", "");
-			save("data/$chat_id/modlist.txt", "");
-			save("data/$chat_id/settings/floods.txt", "3");
-			save("data/$chat_id/banlist/list.txt", "");
-			save("data/$chat_id/whitelist/list.txt", "");
-			save("data/$chat_id/gplink.txt", "none");
-			save("data/$chat_id/settings/warnlists.txt", "4");
-			save("data/$chat_id/settings/modlist.txt", "");
-			save("data/$chat_id/rules.txt", "none");
-			save("data/$chat_id/settings/filterword.txt", "");
-			save("data/$chat_id/settings/link.txt", "✅");
-			save("data/$chat_id/settings/flood.txt", "✅");
-			save("data/$chat_id/settings/join.txt", "❌");
-			save("data/$chat_id/settings/location.txt", "❌");
-			save("data/$chat_id/settings/username.txt", "❌");
-			save("data/$chat_id/settings/game.txt", "❌");
-			save("data/$chat_id/settings/contact.txt", "❌");
-			save("data/$chat_id/settings/edit.txt", "❌");
-			save("data/$chat_id/settings/tag.txt", "❌");
-			save("data/$chat_id/settings/chat.txt", "❌");
-			save("data/$chat_id/settings/eng.txt", "❌");
-			save("data/$chat_id/settings/fwd.txt", "❌");
-			save("data/$chat_id/settings/kickme.txt", "❌");
-			save("data/$chat_id/settings/reply.txt", "❌");
-			save("data/$chat_id/settings/arab.txt", "❌");
-			save("data/$chat_id/settings/num.txt", "❌");
-			save("data/$chat_id/settings/web.txt", "❌");
-			save("data/$chat_id/settings/sticker.txt", "❌");
-			save("data/$chat_id/settings/photo.txt", "❌");
-			save("data/$chat_id/settings/video.txt", "❌");
-			save("data/$chat_id/settings/voice.txt", "❌");
-			save("data/$chat_id/settings/music.txt", "❌");
-			save("data/$chat_id/settings/gif.txt", "❌");
-			save("data/$chat_id/settings/document.txt", "❌");
-			save("data/$chat_id/settings/settings.txt", "❌");
-			save("data/$chat_id/settings/media.txt", "❌");
-			save("data/$chat_id/settings/ban.txt", "❌");
-			save("data/$chat_id/settings/kick.txt", "❌");
-			save("data/$chat_id/settings/unban.txt", "❌");
-			save("data/$chat_id/settings/warn.txt", "❌");
-			save("data/$chat_id/settings/warnsettings.txt", "❌");
-			save("data/$chat_id/settings/warnmedia.txt", "❌");
-			save("data/$chat_id/settings/bot.txt", "❌");
-		}
-		if (!file_exists("data/$chat_id/muteuserlist.txt")) {
-			save("data/$chat_id/muteuserlist.txt", "");
-		}
-		if (!file_exists("data/$chat_id/settings/muteuser.txt")) {
-			save("data/$chat_id/settings/muteuser.txt", "❌");
-		}
-		if (!file_exists("data/$chat_id/settings/cmd.txt")) {
-			save("data/$chat_id/settings/cmd.txt", "❌");
-		}
-	}
+	
 	
 	if ($type2 == "group") {
 		if (strpos($grouplist, "$chat_id") == false) {
@@ -5881,11 +3757,7 @@ if (isset ($update_obj->message)) {
 		}
 	}
 	
-	if ($type2 == "supergroup" || $type2 == "group") {
-		if (!file_exists("data/$chat_id/owner.txt")) {
-			save("data/$chat_id/owner.txt", "" . $creator['id'] . "");
-		}
-	}
+
 	
 	if ($type2 == "channel") {
 		send_reply('leaveChat', [
@@ -5930,12 +3802,64 @@ if (isset ($update_obj->message)) {
 		
 	}
 
+    $firstname = $update_obj->message->from->first_name;
+    $lastname = $update_obj->message->from->last_name;
+    $username = $update_obj->message->from->username;
+    if (stripos($textmessage, "@") !== false) {
+			if ($_username2 == "✅") {
+				sleep(2.5);
+				send_reply('deletemessage', [
+					'chat_id' => $update_obj->message->chat->id,
+					'message_id' => $update_obj->message->message_id
+				]);
+			}
+	}
+	
+	if (stripos($textmessage, "http") !== false || stripos($textmessage, "www") !== false) {
+			if ($_web2 == "✅") {
+				sleep(2.5);
+				send_reply('deletemessage', [
+					'chat_id' => $update_obj->message->chat->id,
+					'message_id' => $update_obj->message->message_id
+				]);
+			}
+	}
+	
+	if (is_there_any_similar_word($textmessage , $filterlist , $chat_id ) !== false) { // stripos($filterlist , $textmessage) !== false
+	    send_reply ('sendMessage' , ['chat_id' => $update_obj->message->chat->id , 'text' => "hi"]);
+// 			if ($from_id !== $admin && $from_id !== $owner && $from_id != $modlist && $whitelist != $from_id) {
+				// sleep(2.5);
+				// send_reply('deletemessage', [
+				// 	'chat_id' => $update_obj->message->chat->id,
+				// 	'message_id' => $update_obj->message->message_id
+				// ]);
+// 			}
+	}
+
+	if (stripos($textmessage, "t.me") !== false || stripos($textmessage, "telegram.me") !== false) {
+		if ($_link2 == "✅") {
+			sleep(2.5);
+			send_reply('deletemessage', [
+				'chat_id' => $update_obj->message->chat->id,
+				'message_id' => $update_obj->message->message_id
+			]);
+		}
+	}
+	
+// 	if ($forward != "") {
+// 	    send_reply('sendmessage' , ['chat_id' => $update_obj->message->chat->id , 'text' => "in"]);
+// 		if ($_fwd2 == "✅") {
+// 			sleep(2.5);
+// 			send_reply('deletemessage', [
+// 				'chat_id' => $update_obj->message->chat->id,
+// 				'message_id' => $update_obj->message->message_id
+// 			]);
+// 		}
+// 	}
+			
     // inline gif
     require_once 'recieve_gif.php';
     if (isset ($update_obj->message->reply_to_message)) {
-        $firstname = $update_obj->message->from->first_name;
-        $lastname = $update_obj->message->from->last_name;
-        $username = $update_obj->message->from->username;
         
         $text_replied = isset($update_obj->message->reply_to_message->text) ? 
                 $update_obj->message->reply_to_message->text : "";
@@ -5986,25 +3910,6 @@ if (isset ($update_obj->message)) {
         // }
 
 		if ($from_id !== $admin && $from_id != $owner && $from_id != $modlist && $whitelist != $from_id) {
-
-			if ($_flood2 == "✅") {
-				$timing = date("Y-m-d-h-i-sa");
-				$timing = str_replace("am", "", $timing);
-		
-				$metti_khan = file_get_contents("flood/$timing-$from_id.txt");
-				$timing_spam = $metti_khan + 1;
-				file_put_contents("flood/$timing-$from_id.txt", "$timing_spam");
-		
-				$metti_khan2 = file_get_contents("flood/$timing-$from_id.txt");
-				if ($metti_khan2 >= $_floods2) {
-					send_reply('kickChatMember', [
-						'chat_id' => $update_obj->message->chat->id,
-						'user_id' => $update_obj->message->from->id
-					]);
-					unlink("flood/$timing-$from_id.txt");
-					return false;
-				}
-			}
 		
 			if (stripos($muteuserlist, "$from_id") !== false) {
 				sleep(2.5);
@@ -6012,113 +3917,6 @@ if (isset ($update_obj->message)) {
 					'chat_id' => $update_obj->message->chat->id,
 					'message_id' => $update_obj->message->message_id
 				]);
-			}
-		
-			if (stripos($textmessage, "t.me") !== false || stripos($textmessage, "telegram.me") !== false) {
-				if ($_link2 == "✅") {
-					sleep(2.5);
-					send_reply('deletemessage', [
-						'chat_id' => $update_obj->message->chat->id,
-						'message_id' => $update_obj->message->message_id
-					]);
-				}
-			}
-		
-			if (
-				stripos($textmessage, "a") !== false || stripos($textmessage, "s") !== false || stripos($textmessage, "d") !== false || stripos($textmessage, "f") !== false || stripos($textmessage, "g") !== false || stripos($textmessage, "h") !== false || stripos($textmessage, "j") !== false || stripos($textmessage, "k") !== false || stripos($textmessage, "l") !== false || stripos($textmessage, "z") !== false || stripos($textmessage, "x") !== false || stripos($textmessage, "c") !== false || stripos($textmessage, "v") !== false || stripos($textmessage, "b") !== false || stripos($textmessage, "n") !== false || stripos($textmessage, "m") !== false || stripos($textmessage, "q") !== false || stripos($textmessage, "w") !== false || stripos($textmessage, "e") !== false || stripos($textmessage, "r") !== false || stripos($textmessage, "t") !== false || stripos($textmessage, "y") !== false || stripos($textmessage, "u") !== false || stripos($textmessage, "i") !== false
-				|| stripos($textmessage, "o") !== false || stripos($textmessage, "p") !== false
-			) {
-				if ($_eng2 == "✅") {
-					sleep(2.5);
-					send_reply('deletemessage', [
-						'chat_id' => $update_obj->message->chat->id,
-						'message_id' => $update_obj->message->message_id
-					]);
-				}
-			}
-		
-			if (
-				stripos($textmessage, "ش") !== false || stripos($textmessage, "س") !== false || stripos($textmessage, "ی") !== false || stripos($textmessage, "ب") !== false || stripos($textmessage, "ل") !== false || stripos($textmessage, "ا") !== false || stripos($textmessage, "ت") !== false || stripos($textmessage, "ن") !== false || stripos($textmessage, "م") !== false || stripos($textmessage, "پ") !== false || stripos($textmessage, "ط") !== false || stripos($textmessage, "ظ") !== false || stripos($textmessage, "ز") !== false || stripos($textmessage, "ژ") !== false || stripos($textmessage, "د") !== false || stripos($textmessage, "ر") !== false || stripos($textmessage, "ک") !== false || stripos($textmessage, "و") !== false || stripos($textmessage, "ج") !== false || stripos($textmessage, "گ") !== false || stripos($textmessage, "چ") !== false || stripos($textmessage, "ح") !== false || stripos($textmessage, "ه") !== false || stripos($textmessage, "خ") !== false
-				|| stripos($textmessage, "ف") !== false || stripos($textmessage, "ع") !== false
-			) {
-				if ($_arab2 == "✅") {
-					sleep(2.5);
-					send_reply('deletemessage', [
-						'chat_id' => $update_obj->message->chat->id,
-						'message_id' => $update_obj->message->message_id
-					]);
-				}
-			}
-		
-			if (stripos($textmessage, "#") !== false) {
-				if ($_tag2 == "✅") {
-					sleep(2.5);
-					send_reply('deletemessage', [
-						'chat_id' => $update_obj->message->chat->id,
-						'message_id' => $update_obj->message->message_id
-					]);
-				}
-			}
-		
-			if (stripos($textmessage, "@") !== false) {
-				if ($_username2 == "✅") {
-					sleep(2.5);
-					send_reply('deletemessage', [
-						'chat_id' => $update_obj->message->chat->id,
-						'message_id' => $update_obj->message->message_id
-					]);
-				}
-			}
-		
-			if ($textmessage != null) {
-				if ($_chat2 == "✅") {
-					sleep(2.5);
-					send_reply('deletemessage', [
-						'chat_id' => $update_obj->message->chat->id,
-						'message_id' => $update_obj->message->message_id
-					]);
-				}
-			}
-		
-			if (stripos($textmessage, "1") !== false || stripos($textmessage, "2") !== false || stripos($textmessage, "3") !== false || stripos($textmessage, "4") !== false || stripos($textmessage, "5") !== false || stripos($textmessage, "6") !== false || stripos($textmessage, "7") !== false || stripos($textmessage, "8") !== false || stripos($textmessage, "9") !== false || stripos($textmessage, "0") !== false) {
-				if ($_num2 == "✅") {
-					sleep(2.5);
-					send_reply('deletemessage', [
-						'chat_id' => $update_obj->message->chat->id,
-						'message_id' => $update_obj->message->message_id
-					]);
-				}
-			}
-		
-			if (stripos($textmessage, "https") !== false || stripos($textmessage, "www") !== false) {
-				if ($_web2 == "✅") {
-					sleep(2.5);
-					send_reply('deletemessage', [
-						'chat_id' => $update_obj->message->chat->id,
-						'message_id' => $update_obj->message->message_id
-					]);
-				}
-			}
-		
-			if (strpos($filterlist, $textmessage) !== false) {
-				if ($from_id !== $admin && $from_id !== $owner && $from_id != $modlist && $whitelist != $from_id) {
-					sleep(2.5);
-					send_reply('deletemessage', [
-						'chat_id' => $update_obj->message->chat->id,
-						'message_id' => $update_obj->message->message_id
-					]);
-				}
-			}
-		
-		
-			if ($forward != null) {
-				if ($_fwd2 == "✅") {
-					sleep(2.5);
-					send_reply('deletemessage', [
-						'chat_id' => $update_obj->message->chat->id,
-						'message_id' => $update_obj->message->message_id
-					]);
-				}
 			}
 		
 			if ($game != null) {
@@ -6231,6 +4029,10 @@ if (isset ($update_obj->message)) {
 				}
 			}
 		}
+
+
+
+
 
 		if ($replied_id != null && $from_id == $admin || $replied_id != null && $from_id == $owner) {
 			if ($textmessage == '/del' || $textmessage == '!del' || $textmessage == '#del') {
@@ -6768,6 +4570,7 @@ if (isset ($update_obj->message)) {
 
 			// $replied_id
 	}
+	// end reply_to_message
 
 
 
@@ -6784,27 +4587,22 @@ if ($textmessage == "Yes i am sure" && $admin == $from_id || $textmessage == "Ye
 	save("data/$chat_id/banlist/list.txt", "");
 	save("data/$chat_id/whitelist/list.txt", "");
 	save("data/$chat_id/gplink.txt", "none");
-	save("data/$chat_id/settings/floods.txt", "3");
-	save("data/$chat_id/settings/warnlists.txt", "4");
 	save("data/$chat_id/rules.txt", "none");
+	save("data/$chat_id/settings/warnlists.txt", "4");
 	save("data/$chat_id/settings/filterword.txt", "");
 	save("data/$chat_id/settings/bot.txt", "❌");
 	save("data/$chat_id/settings/link.txt", "✅");
-	save("data/$chat_id/settings/flood.txt", "✅");
 	save("data/$chat_id/settings/join.txt", "❌");
 	save("data/$chat_id/settings/location.txt", "❌");
 	save("data/$chat_id/settings/username.txt", "❌");
 	save("data/$chat_id/settings/game.txt", "❌");
 	save("data/$chat_id/settings/contact.txt", "❌");
 	save("data/$chat_id/settings/edit.txt", "❌");
-	save("data/$chat_id/settings/tag.txt", "❌");
 	save("data/$chat_id/settings/chat.txt", "❌");
 	save("data/$chat_id/settings/eng.txt", "❌");
 	save("data/$chat_id/settings/fwd.txt", "❌");
-	save("data/$chat_id/settings/kickme.txt", "❌");
 	save("data/$chat_id/settings/reply.txt", "❌");
 	save("data/$chat_id/settings/arab.txt", "❌");
-	save("data/$chat_id/settings/num.txt", "❌");
 	save("data/$chat_id/settings/web.txt", "❌");
 	save("data/$chat_id/settings/sticker.txt", "❌");
 	save("data/$chat_id/settings/photo.txt", "❌");
@@ -6841,15 +4639,6 @@ if ($textmessage == '/settings' || $textmessage == '!settings' || $textmessage =
 				'inline_keyboard' => [
 					[
 						['text' => 'Settings🏷', 'callback_data' => 'group_settings'],
-					],
-					[
-						['text' => 'Media📍', 'callback_data' => 'group_media'],
-					],
-					[
-						['text' => 'Bot and Warn🔆', 'callback_data' => 'floodandwarn'],
-					],
-					[
-						['text' => 'Admin lock⚙️', 'callback_data' => 'adminlock'],
 					],
 					[
 						['text' => 'Ban List⛔️', 'callback_data' => 'banlist'],
@@ -6994,56 +4783,6 @@ if ($textmessage == '/unlock web' || $textmessage == '!unlock web' || $textmessa
 		);
 	}
 }
-if ($textmessage == '/lock number' || $textmessage == '!lock number' || $textmessage == '#lock number') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/num.txt", "✅");
-		send_reply('sendMessage', [
-			'chat_id' => $update_obj->message->chat->id,
-			'text' => '#Done
-*Number has been locked*',
-			'parse_mode' => "MarkDown"
-		]);
-	}
-}
-if ($textmessage == '/unlock number' || $textmessage == '!unlock number' || $textmessage == '#unlock number') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/num.txt", "❌");
-		send_reply(
-			'sendMessage',
-			[
-				'chat_id' => $chat_id,
-				'text' => '#Done
-*Number has been unlocked*',
-				'parse_mode' => "MarkDown"
-			]
-		);
-	}
-}
-if ($textmessage == '/lock tag' || $textmessage == '!lock tag' || $textmessage == '#lock tag') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/tag.txt", "✅");
-		send_reply('sendMessage', [
-			'chat_id' => $update_obj->message->chat->id,
-			'text' => '#Done
-*Tag has been locked*',
-			'parse_mode' => "MarkDown"
-		]);
-	}
-}
-if ($textmessage == '/unlock tag' || $textmessage == '!unlock tag' || $textmessage == '#unlock tag') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/tag.txt", "❌");
-		send_reply(
-			'sendMessage',
-			[
-				'chat_id' => $chat_id,
-				'text' => '#Done
-*Tag has been unlocked*',
-				'parse_mode' => "MarkDown"
-			]
-		);
-	}
-}
 if ($textmessage == '/lock username' || $textmessage == '!lock username' || $textmessage == '#lock username') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/username.txt", "✅");
@@ -7070,59 +4809,32 @@ if ($textmessage == '/unlock username' || $textmessage == '!unlock username' || 
 	}
 }
 
-if ($textmessage == '/lock flood' || $textmessage == '!lock flood' || $textmessage == '#lock flood') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/flood.txt", "✅");
-		send_reply(
-			'sendMessage',
-			[
-				'chat_id' => $chat_id,
-				'text' => '#Done
-*Flood has been locked*',
-				'parse_mode' => "MarkDown"
-			]
-		);
-	}
-}
-if ($textmessage == '/unlock flood' || $textmessage == '!unlock flood' || $textmessage == '#unlock flood') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/flood.txt", "❌");
-		send_reply(
-			'sendMessage',
-			[
-				'chat_id' => $chat_id,
-				'text' => '#Done
-*Flood has been unlocked*',
-				'parse_mode' => "MarkDown"
-			]
-		);
-	}
-}
-if ($textmessage == '/lock forward' || $textmessage == '!lock forward' || $textmessage == '#lock forward') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/fwd.txt", "✅");
-		send_reply('sendMessage', [
-			'chat_id' => $update_obj->message->chat->id,
-			'text' => '#Done
-*Forward has been locked*',
-			'parse_mode' => "MarkDown"
-		]);
-	}
-}
-if ($textmessage == '/unlock forward' || $textmessage == '!unlock forward' || $textmessage == '#unlock forward') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/fwd.txt", "❌");
-		send_reply(
-			'sendMessage',
-			[
-				'chat_id' => $chat_id,
-				'text' => '#Done
-*Forward has been unlocked*',
-				'parse_mode' => "MarkDown"
-			]
-		);
-	}
-}
+// if ($textmessage == '/lock forward' || $textmessage == '!lock forward' || $textmessage == '#lock forward') {
+// 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
+// 		save("data/$chat_id/settings/fwd.txt", "✅");
+// 		send_reply('sendMessage', [
+// 			'chat_id' => $update_obj->message->chat->id,
+// 			'text' => '#Done
+// *Forward has been locked*',
+// 			'parse_mode' => "MarkDown"
+// 		]);
+// 	}
+// }
+// if ($textmessage == '/unlock forward' || $textmessage == '!unlock forward' || $textmessage == '#unlock forward') {
+// 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
+// 		save("data/$chat_id/settings/fwd.txt", "❌");
+// 		send_reply(
+// 			'sendMessage',
+// 			[
+// 				'chat_id' => $chat_id,
+// 				'text' => '#Done
+// *Forward has been unlocked*',
+// 				'parse_mode' => "MarkDown"
+// 			]
+// 		);
+// 	}
+// }
+
 if ($textmessage == '/lock reply' || $textmessage == '!lock reply' || $textmessage == '#lock reply') {
 	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
 		save("data/$chat_id/settings/reply.txt", "✅");
@@ -7173,84 +4885,7 @@ if ($textmessage == '/unlock edit' || $textmessage == '!unlock edit' || $textmes
 		);
 	}
 }
-if ($textmessage == '/lock english' || $textmessage == '!lock english'  || $textmessage == '#lock english') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/eng.txt", "✅");
-		send_reply('sendMessage', [
-			'chat_id' => $update_obj->message->chat->id,
-			'text' => '#Done
-*English has been locked*',
-			'parse_mode' => "MarkDown"
-		]);
-	}
-}
-if ($textmessage == '/unlock english' || $textmessage == '!unlock english' || $textmessage == '#unlock english') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/eng.txt", "❌");
-		send_reply(
-			'sendMessage',
-			[
-				'chat_id' => $chat_id,
-				'text' => '#Done
-*English has been unlocked*',
-				'parse_mode' => "MarkDown"
-			]
-		);
-	}
-}
-if ($textmessage == '/lock kickme' || $textmessage == '!lock kickme' || $textmessage == '#lock kickme') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/kickme.txt", "✅");
-		send_reply('sendMessage', [
-			'chat_id' => $update_obj->message->chat->id,
-			'text' => '#Done
-*Kickme has been locked*',
-			'parse_mode' => "MarkDown"
-		]);
-	}
-}
-if ($textmessage == '/unlock kickme' || $textmessage == '!unlock kickme' || $textmessage == '#unlock kickme') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/kickme.txt", "❌");
-		send_reply(
-			'sendMessage',
-			[
-				'chat_id' => $chat_id,
-				'text' => '#Done
-*Kickme has been unlocked*',
-				'parse_mode' => "MarkDown"
-			]
-		);
-	}
-}
-if ($textmessage == '/lock arabic' || $textmessage == '!lock arabic' || $textmessage == '#lock arabic') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/arab.txt", "✅");
-		send_reply(
-			'sendMessage',
-			[
-				'chat_id' => $chat_id,
-				'text' => '#Done
-*Arabic has been locked*',
-				'parse_mode' => "MarkDown"
-			]
-		);
-	}
-}
-if ($textmessage == '/unlock arabic' || $textmessage == '!unlock arabic' || $textmessage == '#unlock arabic') {
-	if ($admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false && $_settings2 == "❌") {
-		save("data/$chat_id/settings/arab.txt", "❌");
-		send_reply(
-			'sendMessage',
-			[
-				'chat_id' => $chat_id,
-				'text' => '#Done
-*Arabic has been unlocked*',
-				'parse_mode' => "MarkDown"
-			]
-		);
-	}
-}
+
 
 //-------Start Mute and Unmute by text-------\\
 if ($textmessage == '/mute contact' || $textmessage == '!mute contact' || $textmessage == '#mute contact') {
@@ -7600,12 +5235,10 @@ I در اورد از اخراج دائمی
 ➖➖➖➖➖➖
 🌐(/!#)settings
 I تنظیمات
-🔑(/!#)lock (links|flood|tag|username|chat|english|arabic|forward|reply|edit|join|kickme)
+🔑(/!#)lock (links|username|chat|reply|edit|join)// forward
 I قفل کردن
-🔑(/!#)unlock (links|flood|tag|username|chat|english|arabic|forward|reply|edit|join|kickme)
+🔑(/!#)unlock (links|username|chat|reply|edit|join)// forward
 I آزاد کردن
-🔑(/!#)setflood (number)
-I تعیین سیل
 🔑(/!#)mute (sticker|photo|video|voice|music|gif|document|location|contact|game)
 I قفل کردن
 🔑(/!#)unmute (sticker|photo|video|voice|music|gif|document|location|contact|game)
@@ -7672,8 +5305,6 @@ I تنظیمات کل گروه
 I اخطار های من
 ℹ️(/!#)id
 I مشخصات
-🔰(/!#)kickme
-I اخراج کردن خود
 🔰(/!#)ping
 I اطلاع پیدا کردن از وضعیت ربات
 ➖➖➖➖➖➖
@@ -7685,22 +5316,22 @@ I اطلاع پیدا کردن از وضعیت ربات
 }
 
 //-------End Mute and UnMute
-	if (stripos($username, "Bot") !== false || stripos($username, "bot") !== false) {
-		if ($_bot2 == "✅") {
-			send_reply('sendMessage', [
-				'chat_id' => $update_obj->message->chat->id,
-				'text' => '#ربات_اخراج_شد
-											اوردن ربات در گروه ممنوع است. ',
-				'parse_mode' => 'HTML',
-				'reply_to_message_id' => $update_obj->message->message_id,
-				'disable_web_page_preview' => true
-			]);
-			send_reply('kickChatMember', [
-				'chat_id' => $update_obj->message->chat->id,
-				'user_id' => $update_obj->message->from->id
-			]);
-		}
-	}
+// if (stripos($username, "Bot") !== false || stripos($username, "bot") !== false) {
+// 	if ($_bot2 == "✅") {
+// 		send_reply('sendMessage', [
+// 			'chat_id' => $update_obj->message->chat->id,
+// 			'text' => '#ربات_اخراج_شد
+// 										اوردن ربات در گروه ممنوع است. ',
+// 			'parse_mode' => 'HTML',
+// 			'reply_to_message_id' => $update_obj->message->message_id,
+// 			'disable_web_page_preview' => true
+// 		]);
+// 		send_reply('kickChatMember', [
+// 			'chat_id' => $update_obj->message->chat->id,
+// 			'user_id' => $update_obj->message->from->id
+// 		]);
+// 	}
+// }
 
 	if ($joinmember != null && $wlctext != "") {
 		send_reply('sendMessage', [
@@ -7719,13 +5350,6 @@ I اطلاع پیدا کردن از وضعیت ربات
 			'parse_mode' => 'HTML',
 			'reply_to_message_id' => $update_obj->message->message_id,
 			'disable_web_page_preview' => true
-		]);
-	}
-
-	if ($textmessage == "/kickme" || $textmessage == "!kickme" || $textmessage == "#kickme") {
-		send_reply('kickChatMember', [
-			'chat_id' => $update_obj->message->chat->id,
-			'user_id' => $update_obj->message->from->id
 		]);
 	}
 
@@ -8283,45 +5907,6 @@ if (strpos($textmessage, "#setwarn ") !== false) {
 	}
 }
 
-if (strpos($textmessage, "/setflood ") !== false) {
-	if ($from_id == $admin || $from_id == $owner || strpos($modlist, "$from_id") !== false && $_settings == "❌") {
-		$text = str_replace("/setflood ", "", $textmessage);
-		if ($text >= 3 && $text <= 15) {
-			save("data/$chat_id/settings/floods.txt", "$text");
-			SendMessage($chat_id, "تعدار سیل اپدیت شد");
-		}
-		if ($text <= 2 && $text <= 16) {
-			SendMessage($chat_id, "تعدار سیل باید بین 3 تا 15 باشد");
-		}
-	}
-}
-
-if (strpos($textmessage, "!setflood ") !== false) {
-	if ($from_id == $admin || $from_id == $owner || strpos($modlist, "$from_id") !== false && $_settings == "❌") {
-		$text = str_replace("!setflood ", "", $textmessage);
-		if ($text >= 3 && $text <= 15) {
-			save("data/$chat_id/settings/floods.txt", "$text");
-			SendMessage($chat_id, "تعدار سیل اپدیت شد");
-		}
-		if ($text <= 2 && $text <= 16) {
-			SendMessage($chat_id, "تعدار سیل باید بین 3 تا 15 باشد");
-		}
-	}
-}
-
-if (strpos($textmessage, "#setflood ") !== false) {
-	if ($from_id == $admin || $from_id == $owner || strpos($modlist, "$from_id") !== false && $_settings == "❌") {
-		$text = str_replace("#setflood ", "", $textmessage);
-		if ($text >= 3 && $text <= 15) {
-			save("data/$chat_id/settings/floods.txt", "$text");
-			SendMessage($chat_id, "تعدار سیل اپدیت شد");
-		}
-		if ($text <= 2 && $text <= 16) {
-			SendMessage($chat_id, "تعدار سیل باید بین 3 تا 15 باشد");
-		}
-	}
-}
-
 if ($_lockcmd2 == "❌" || $admin == $from_id || $owner == $from_id || strpos($modlist, "$from_id") !== false || $type2 == "private") {
 
 	if ($textmessage == "/id" || $textmessage == "!id" || $textmessage == "#id") {
@@ -8400,52 +5985,22 @@ your warn
 							['text' => '🏷Settings', 'callback_data' => 'nolock'],
 						],
 						[
-							['text' => '🏷Flood', 'callback_data' => 'nolock'], ['text' => $_flood2, 'callback_data' => 'lock']
-						],
-						[
-							['text' => '🏷Flood sensitivity', 'callback_data' => 'nolock'], ['text' => $_floods2, 'callback_data' => 'lock_floods']
-						],
-						[
-							['text' => '🏷Links', 'callback_data' => 'nolock'], ['text' => $_link2, 'callback_data' => 'lock']
-						],
-						[
-							['text' => '🏷Tag', 'callback_data' => 'nolock'], ['text' => $_tag2, 'callback_data' => 'lock']
+							['text' => '🏷Telegram Links', 'callback_data' => 'nolock'], ['text' => $_link2, 'callback_data' => 'lock']
 						],
 						[
 							['text' => '🏷Username', 'callback_data' => 'nolock'], ['text' => $_username2, 'callback_data' => 'lock']
 						],
 						[
-							['text' => '🏷Number', 'callback_data' => 'nolock'], ['text' => $_num2, 'callback_data' => 'lock']
-						],
-						[
 							['text' => '🏷Web', 'callback_data' => 'nolock'], ['text' => $_web2, 'callback_data' => 'lock']
 						],
-						[
-							['text' => '🏷Chat', 'callback_data' => 'nolock'], ['text' => $_chat2, 'callback_data' => 'lock']
-						],
-						[
-							['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd2, 'callback_data' => 'lock']
-						],
+				// 		[
+				// 			['text' => '🏷Forward', 'callback_data' => 'nolock'], ['text' => $_fwd2, 'callback_data' => 'lock']
+				// 		],
 						[
 							['text' => '🏷Reply', 'callback_data' => 'nolock'], ['text' => $_reply2, 'callback_data' => 'lock']
 						],
 						[
 							['text' => '🏷Edit', 'callback_data' => 'nolock'], ['text' => $_edit2, 'callback_data' => 'lock']
-						],
-						[
-							['text' => '🏷English', 'callback_data' => 'nolock'], ['text' => $_eng2, 'callback_data' => 'lock']
-						],
-						[
-							['text' => '🏷Arabic', 'callback_data' => 'nolock'], ['text' => $_arab2, 'callback_data' => 'lock']
-						],
-						[
-							['text' => '🏷Join', 'callback_data' => 'nolock'], ['text' => $_join2, 'callback_data' => 'lock']
-						],
-						[
-							['text' => '🏷Bots', 'callback_data' => 'nolock'], ['text' => $_bot2, 'callback_data' => 'lock']
-						],
-						[
-							['text' => '🏷Kickme', 'callback_data' => 'nolock'], ['text' => $_kickme2, 'callback_data' => 'lock']
 						],
 						[
 							['text' => '📍Media Settings', 'callback_data' => 'nolock'],
@@ -8606,6 +6161,16 @@ function apiRequest($method, $parameters) {
 	// 	}
 // }
 
+function is_there_any_similar_word($text , $filterlist , $chat_id) {
+    $row = str_getcsv($filterlist, "\n"); // array
+    $count = count ($row);
+    for ($i = 0 ; $i < $count ; $i++) {
+        // if (stripos ( $text , $row[$i]) !== 0) 
+            // return true; //stripos ( $text , $row[$i]);
+            send_reply('sendMessage' , ['chat_id' => $chat_id , 'text' => stripos ( $text , $row[$i]) ] );
+    }
+    return false;
+}
 
 function send_reply($method, $post_params = []) {
     $url = $GLOBALS['bot_url'] . "/" . $method;
